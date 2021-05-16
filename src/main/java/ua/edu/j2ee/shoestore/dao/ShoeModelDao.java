@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface ShoeModelDao extends Dao<ShoeModel> {
 
-    List<ShoeModel> getAllByStatus(ShoeStatus status);
+    List<ShoeModel> getAllByStatus(String status);
 
 }
