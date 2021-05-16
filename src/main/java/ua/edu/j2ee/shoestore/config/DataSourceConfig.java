@@ -16,7 +16,7 @@ public class DataSourceConfig {
     @Value("${spring.datasource.jndi-name}")
     private String dataSourceName;
 
-    @Bean(destroyMethod = "")
+    @Bean()
     public DataSource OracleDataSource() throws NamingException {
         Hashtable<String, String> hashtable = new Hashtable<>();
         hashtable.put(Context.INITIAL_CONTEXT_FACTORY, "weblogic.jndi.WLInitialContextFactory");
@@ -24,7 +24,7 @@ public class DataSourceConfig {
 
         Context context = new InitialContext(hashtable);
         DataSource dataSource = (DataSource) context.lookup(dataSourceName);
-        //context.close();
+        context.close();
         return dataSource;
     }
 }

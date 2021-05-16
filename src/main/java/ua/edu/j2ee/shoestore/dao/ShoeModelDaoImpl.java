@@ -104,11 +104,11 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
     }
 
     @Override
-    public List<ShoeModel> getAllByStatus(ShoeStatus status) {
+    public List<ShoeModel> getAllByStatus(String status) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM MODELS " +
                     "WHERE MODELID = ANY (SELECT DISTINCT MODELID FROM PRODUCTS WHERE STATUS = ?)");
-            ps.setString(1, status.toString());
+            ps.setString(1, status);
             ResultSet rs = ps.executeQuery();
 
             List<ShoeModel> models = new LinkedList<>();
