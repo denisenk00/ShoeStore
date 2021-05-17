@@ -56,13 +56,14 @@ public class UserDaoImpl implements UserDao {
     public void save(User user) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO " +
-                    "USERS (USERID, NAME, SURNAME, PHONE, EMAIL, PASSWORD) " +
-                    "VALUES (USERID_SEQ.nextval, ?, ?, ?, ?, ?)");
+                    "USERS (USERID, NAME, SURNAME, PHONE, EMAIL, PASSWORD, ROLE) " +
+                    "VALUES (USERID_SEQ.nextval, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, user.getName());
             ps.setString(2, user.getSurname());
             ps.setString(3, user.getPhone());
             ps.setString(4, user.getEmail());
             ps.setString(5, user.getPassword());
+            ps.setString(6, user.getRole());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant save user");
@@ -92,8 +93,9 @@ public class UserDaoImpl implements UserDao {
         String phone = resultSet.getString("phone");
         String email = resultSet.getString("email");
         String password = resultSet.getString("password");
+        String role = resultSet.getString("role");
 
-        return new User(id, name, surname, phone, email, password);
+        return new User(id, name, surname, phone, email, password, role);
     }
 
     @Override
