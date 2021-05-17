@@ -1,10 +1,8 @@
 package ua.edu.j2ee.shoestore.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ua.edu.j2ee.shoestore.model.ShoeModel;
-import ua.edu.j2ee.shoestore.model.ShoeStatus;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
