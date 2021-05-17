@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Repository
-public class UserDaoImpl implements Dao<User> {
+public class UserDaoImpl implements UserDao {
 
 
     private DataSource dataSource;
@@ -94,5 +94,18 @@ public class UserDaoImpl implements Dao<User> {
         String password = resultSet.getString("password");
 
         return new User(id, name, surname, phone, email, password);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS WHERE EMAIL = ?");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return extractUser(rs);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException("Cant get user with email " + email);
+        }
     }
 }
