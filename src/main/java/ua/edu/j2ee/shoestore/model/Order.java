@@ -6,7 +6,7 @@ import java.util.List;
 public class Order {
 
     private int id = -1;
-    private int customerId;
+    private int userId;
     private double totalPrice;
     private LocalDate orderDate;
     private List<Integer> shoeIdList;
@@ -15,9 +15,9 @@ public class Order {
 
     }
 
-    public Order(int id, int customerId, double totalPrice, LocalDate orderDate, List<Integer> shoeIdList) {
+    public Order(int id, int userId, double totalPrice, LocalDate orderDate, List<Integer> shoeIdList) {
         this.id = id;
-        this.customerId = customerId;
+        this.userId = userId;
         this.totalPrice = totalPrice;
         this.orderDate = orderDate;
         this.shoeIdList = shoeIdList;
@@ -31,12 +31,12 @@ public class Order {
         this.id = id;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public double getTotalPrice() {

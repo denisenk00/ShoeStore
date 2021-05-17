@@ -16,7 +16,7 @@ public class DataSourceConfig {
     @Value("${spring.datasource.jndi-name}")
     private String dataSourceName;
 
-    @Bean()
+    @Bean
     public DataSource OracleDataSource() throws NamingException {
         Hashtable<String, String> hashtable = new Hashtable<>();
         hashtable.put(Context.INITIAL_CONTEXT_FACTORY, "weblogic.jndi.WLInitialContextFactory");

@@ -1,10 +1,9 @@
 package ua.edu.j2ee.shoestore.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import ua.edu.j2ee.shoestore.model.Customer;
 import ua.edu.j2ee.shoestore.model.Order;
+import ua.edu.j2ee.shoestore.model.User;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -58,9 +57,9 @@ public class OrderDaoImpl implements OrderDao {
             PreparedStatement orderStatement;
             PreparedStatement priceStatement;
             orderStatement = connection.prepareStatement("INSERT INTO " +
-                    "ORDERS (ORDERID, CUSTOMERID, PRICE, ORDERDATE)  " +
+                    "ORDERS (ORDERID, USERID, PRICE, ORDERDATE)  " +
                     "VALUES (ORDERID_SEQ.nextval, ?, ?, ?)");
-            orderStatement.setInt(1, order.getCustomerId());
+            orderStatement.setInt(1, order.getUserId());
             orderStatement.setDouble(2, order.getTotalPrice());
             orderStatement.setDate(3, Date.valueOf(order.getOrderDate()));
             orderStatement.executeUpdate();
@@ -92,11 +91,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getOrdersByCustomer(Customer customer) {
+    public List<Order> getOrdersByUser(User user) {
         List<Order> orders = new LinkedList<>();
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ORDERS WHERE CUSTOMERID = ?");
-            ps.setInt(1, customer.getId());
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ORDERS WHERE USERID = ?");
+            ps.setInt(1, user.getId());
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -106,13 +105,13 @@ public class OrderDaoImpl implements OrderDao {
             return orders;
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant get order history for " +
-                    customer.getSurname() + ' ' + customer.getName());
+                    user.getSurname() + ' ' + user.getName());
         }
     }
 
     private Order extractOrder(Connection connection, ResultSet orderResultSet) throws SQLException {
         int id = orderResultSet.getInt("orderid");
-        int customerId = orderResultSet.getInt("customerid");
+        int userId = orderResultSet.getInt("userid");
         double totalPrice = orderResultSet.getDouble("price");
         LocalDate orderDate = orderResultSet.getDate("orderdate").toLocalDate();
 
@@ -124,6 +123,6 @@ public class OrderDaoImpl implements OrderDao {
             shoeIdList.add(detailsResultSet.getInt("productid"));
         }
 
-        return new Order(id, customerId, totalPrice, orderDate, shoeIdList);
+        return new Order(id, userId, totalPrice, orderDate, shoeIdList);
     }
 }
