@@ -1,10 +1,8 @@
 package ua.edu.j2ee.shoestore.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ua.edu.j2ee.shoestore.model.ShoeModel;
-import ua.edu.j2ee.shoestore.model.ShoeStatus;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -104,11 +102,11 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
     }
 
     @Override
-    public List<ShoeModel> getAllByStatus(ShoeStatus status) {
+    public List<ShoeModel> getAllByStatus(String status) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM MODELS " +
                     "WHERE MODELID = ANY (SELECT DISTINCT MODELID FROM PRODUCTS WHERE STATUS = ?)");
-            ps.setString(1, status.toString());
+            ps.setString(1, status);
             ResultSet rs = ps.executeQuery();
 
             List<ShoeModel> models = new LinkedList<>();
