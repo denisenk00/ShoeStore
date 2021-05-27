@@ -21,4 +21,6 @@ public class UserServiceImpl implements UserService {
     private boolean emailExists(String email) {
         return userDao.getByEmail(email) != null;
     }
+
+
 }
