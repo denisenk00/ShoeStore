@@ -107,7 +107,8 @@ public class UserDaoImpl implements UserDao {
             rs.next();
             return extractUser(rs);
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get user with email " + email);
+            //throw new RuntimeException("Cant get user with email " + email);
+            return null;
         }
     }
 }
