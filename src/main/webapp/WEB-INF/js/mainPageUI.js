@@ -121,9 +121,9 @@ $(function (){
             })
         }
 
-        const promise = getModels(wishedSeasons, wishedTypes, wishedBrands, wishedColors,
+        const promise = setFilters(wishedSeasons, wishedTypes, wishedBrands, wishedColors,
             wishedSizes, wishedGenders, minPrice, maxPrice);
-        promise.then(onModelsReceived)
+        promise.then(getModels(1).then(onModelsReceived)).then(getPagination(1).then(onPaginationReceived));
     });
 
     function onModelsReceived(models){
@@ -149,8 +149,16 @@ $(function (){
             price.innerHTML = el[3];
         })
         var table = document.getElementsByTagName('table').item(0);
-        table.innerHTML = "";
         table.appendChild(tbody);
+    }
+    function onPaginationReceived(pagination){
+        var oldPagination = document.getElementById("pagination");
+        oldPagination.remove();
+        var newPagination = document.createElement("div");
+        newPagination.setAttribute("id", "pagination");
+        var blockBody = document.getElementById("block-body");
+        newPagination.innerHTML = pagination;
+        blockBody.appendChild(newPagination);
     }
 });
 

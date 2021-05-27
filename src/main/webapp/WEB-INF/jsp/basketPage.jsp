@@ -14,11 +14,13 @@
 <head>
     <title>ShoeStore - basket</title>
 </head>
+<style>
+    <%@include file='../css/basketPage.css' %>
+</style>
 <body>
-${fdsf}
     <div id="block-body">
         <header>
-            <h1 id="logo">ShoeStore</h1>
+            <h1 id="logo"><a href="index?page=1">ShoeStore</a></h1>
             <nav class="navpanel">
                 <ul>
                     <li><a href="">logIn/logOut</a></li>
@@ -27,7 +29,7 @@ ${fdsf}
             </nav>
         </header>
         <div id="mainpart">
-            <h4>Список товаров</h4>
+            <h2>Корзина</h2>
             <table>
                 <thead>
                     <tr>
@@ -43,34 +45,27 @@ ${fdsf}
                     </tr>
                 </thead>
                 <tbody>
-                    <%
-                        List<Shoe> wishedShoes = (List<Shoe>) request.getSession().getAttribute("wishedShoes");
-                        List<ShoeModel> shoeModels = (List<ShoeModel>) request.getSession().getAttribute("models");
-                        for (Shoe shoe: wishedShoes) {
-                            for (ShoeModel model: shoeModels) {
-                                if(shoe.getModelId() == model.getId()){ %>
-                                    <tr>
-                                        <td><%= model.getBrand() %></td>
-                                        <td>
-                                            <a href="#"><%= model.getName() %></a>
-                                        </td>
-                                        <td><%= model.getGender() %></td>
-                                        <td><%= model.getSeason() %></td>
-                                        <td><%= model.getType() %></td>
-                                        <td><%= model.getColor() %></td>
-                                        <td><%= shoe.getSize() %></td>
-                                        <td><%= model.getPrice() %></td>
-                                        <td>
-                                            <a href="">Удалить</a>
-                                        </td>
-                                    </tr>
-
-                    <%            }
-                            }
-
-                        }
-                    %>
-
+                    <c:forEach var="shoe" items="${wishedShoes}">
+                        <c:forEach var="model" items="${models}">
+                            <c:if test="${model.id == shoe.modelId}">
+                                <tr>
+                                    <td>${model.brand}</td>
+                                    <td>
+                                        <a href="#">${model.name}</a>
+                                    </td>
+                                    <td>${model.gender}</td>
+                                    <td>${model.season}</td>
+                                    <td>${model.type}</td>
+                                    <td>${model.color}</td>
+                                    <td>${shoe.size}</td>
+                                    <td>${model.price}</td>
+                                    <td>
+                                        <a href="#">Удалить</a>
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                    </c:forEach>
                 </tbody>
             </table>
             <button id="book">Заказать</button>

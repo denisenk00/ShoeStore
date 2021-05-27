@@ -110,7 +110,7 @@
                 </tbody>
             </table>
         </div>
+        <div id="pagination">${pagination}</div>
     </div>
-    <div id="pagination">${pagination}</div>
 </body>
 </html>

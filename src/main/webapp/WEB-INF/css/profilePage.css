@@ -4,6 +4,15 @@ header{
     width: auto;
 }
 
+#block-body{
+    width: auto;
+}
+
+#logo a{
+    text-decoration: none;
+    color: #C0C0C0;
+}
+
 #logo{
     float: left;
     color: #C0C0C0;
@@ -13,12 +22,6 @@ header{
     margin-left: 150px;
     margin-top: 20px;
 }
-
-#logo a{
-    text-decoration: none;
-    color: #C0C0C0;
-}
-
 .navpanel{
     float: right;
     height: 80px;
@@ -45,7 +48,7 @@ header{
     width: 90%;
 }
 
-#mainpart table{
+#orders table{
     margin-top: 40px;
     width: 70%;
     text-align: center;
@@ -54,31 +57,29 @@ header{
     border-collapse: separate;
     border-spacing: 0px;
 }
-table thead tr {
+#orders table thead tr {
     color: #ffffff;
     font-weight: bold;
     background: gray;
 }
-table tbody tr td{
+#orders table tbody tr td{
     border-right: 1px solid #dfdfdf;
 }
 
-table tr td:last-child {
+#orders table tr td:last-child {
     border-right: 0px;
 }
-table tbody tr:nth-child(1n) {
+#orders table tbody tr:nth-child(1n) {
     background: #f6f6f6;
 }
-table tbody tr:nth-child(2n) {
+#orders table tbody tr:nth-child(2n) {
     background: #e6e6e6;
 }
-table tbody tr:hover {
+#orders table tbody tr:hover {
     background: #ffe8e8;
     transition-duration: 0.6s;
 }
 
-#book{
-    margin-top: 40px;
-    margin-left: 80px;
-    height: 20px;
+#exit{
+    margin-left: 30px;
 }

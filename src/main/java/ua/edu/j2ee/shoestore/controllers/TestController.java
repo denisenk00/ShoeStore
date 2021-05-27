@@ -5,11 +5,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ua.edu.j2ee.shoestore.dao.SupplierDaoImpl;
+import ua.edu.j2ee.shoestore.model.Customer;
+import ua.edu.j2ee.shoestore.model.Order;
 import ua.edu.j2ee.shoestore.model.Shoe;
 import ua.edu.j2ee.shoestore.model.ShoeModel;
+
+import javax.annotation.Generated;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -119,5 +125,35 @@ public class TestController {
         return modelAndView;
     }
 
+    @GetMapping(path = "/profile")
+    public ModelAndView profile(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("profilePage");
+        Customer customer = new Customer(0, "Ivan", "Tsarevich", "+38099900888");
+        List<Order> orders = new LinkedList<>();
+        List<Integer> shoeid = new LinkedList<>();
+        shoeid.add(1);
+        shoeid.add(2);
+        shoeid.add(3);
+        orders.add(new Order(0, 0, 250, java.time.LocalDate.now(), shoeid));
+        orders.add(new Order(2, 0, 360, java.time.LocalDate.now(), shoeid));
+        modelAndView.addObject("customer", customer);
+        modelAndView.addObject("orders", orders);
+        return modelAndView;
+    }
+
+    @GetMapping("/model")
+    public ModelAndView model(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("shoeModelPage");
+        List<Integer> sizes = new LinkedList<>();
+        sizes.add(35);
+        sizes.add(40);
+        sizes.add(42);
+
+        modelAndView.addObject("model", new ShoeModel(10, "Zx Flux", "Adidas", 2500, "Cross", 2, "Winter", "Red", "Male", 15));
+        modelAndView.addObject("modelSizes", sizes);
+        return modelAndView;
+    }
 }
 

@@ -165,15 +165,15 @@ table tbody tr td{
 table tr td:last-child {
     border-right: 0px;
 }
+table tbody tr:hover {
+    background: #ffe8e8;
+    transition-duration: 0.6s;
+}
 table tbody tr:nth-child(1n) {
     background: #f6f6f6;
 }
 table tbody tr:nth-child(2n) {
     background: #e6e6e6;
-}
-table tbody tr:hover {
-    background: #ffe8e8;
-    transition-duration: 0.6s;
 }
 
 #filterbutton{
