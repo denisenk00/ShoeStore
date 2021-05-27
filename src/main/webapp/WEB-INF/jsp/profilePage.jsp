@@ -32,18 +32,22 @@
         </header>
         <div id="mainpart">
             <h2>Профиль</h2>
-            <table id="customer-info">
+            <table id="user-info">
                 <tr>
                     <td>Имя: </td>
-                    <td id="customer-name">${customer.name}</td>
+                    <td id="user-name">${user.name}</td>
                 </tr>
                 <tr>
                     <td>Фамилия: </td>
-                    <td id="customer-surname">${customer.surname}</td>
+                    <td id="user-surname">${user.surname}</td>
                 </tr>
                 <tr>
                     <td>Телефон: </td>
-                    <td id="customer-phone">${customer.phone}</td>
+                    <td id="user-phone">${user.phone}</td>
+                </tr>
+                <tr>
+                    <td>Почта: </td>
+                    <td id="user-email">${user.email}</td>
                 </tr>
             </table>
             <br>

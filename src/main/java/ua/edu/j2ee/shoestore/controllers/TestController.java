@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ua.edu.j2ee.shoestore.dao.SupplierDaoImpl;
-import ua.edu.j2ee.shoestore.model.Customer;
+import ua.edu.j2ee.shoestore.model.User;
 import ua.edu.j2ee.shoestore.model.Order;
 import ua.edu.j2ee.shoestore.model.Shoe;
 import ua.edu.j2ee.shoestore.model.ShoeModel;
@@ -129,7 +129,7 @@ public class TestController {
     public ModelAndView profile(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("profilePage");
-        Customer customer = new Customer(0, "Ivan", "Tsarevich", "+38099900888");
+        User user = new User(0, "Ivan", "Tsarevich", "+38099900888", "dasda@gmail.com", "dasdsa", "user");
         List<Order> orders = new LinkedList<>();
         List<Integer> shoeid = new LinkedList<>();
         shoeid.add(1);
@@ -137,7 +137,7 @@ public class TestController {
         shoeid.add(3);
         orders.add(new Order(0, 0, 250, java.time.LocalDate.now(), shoeid));
         orders.add(new Order(2, 0, 360, java.time.LocalDate.now(), shoeid));
-        modelAndView.addObject("customer", customer);
+        modelAndView.addObject("user", user);
         modelAndView.addObject("orders", orders);
         return modelAndView;
     }
