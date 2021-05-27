@@ -1,0 +1,85 @@
+header{
+    height: 80px;
+    background-color:black;
+    width: auto;
+}
+
+#block-body{
+    width: auto;
+}
+
+#logo a{
+    text-decoration: none;
+    color: #C0C0C0;
+}
+
+#logo{
+    float: left;
+    color: #C0C0C0;
+    font: 30px Georgia;
+    height: 20px;
+    display: block;
+    margin-left: 150px;
+    margin-top: 20px;
+}
+.navpanel{
+    float: right;
+    height: 80px;
+    width: 450px;
+}
+.navpanel ul li{
+    list-style: none;
+    float: left;
+    text-align: right;
+}
+.navpanel ul li a{
+    display: block;
+    width: 171px;
+    text-decoration: none;
+    font-size: 20px;
+    height: 10px;
+    padding-top: 10px;
+    cursor: pointer;
+    color: #C0C0C0;
+}
+
+#mainpart{
+    float: right;
+    width: 90%;
+}
+
+#orders table{
+    margin-top: 40px;
+    width: 70%;
+    text-align: center;
+    border-bottom: 2px solid #dfdfdf;
+    border-radius: 6px;
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+#orders table thead tr {
+    color: #ffffff;
+    font-weight: bold;
+    background: gray;
+}
+#orders table tbody tr td{
+    border-right: 1px solid #dfdfdf;
+}
+
+#orders table tr td:last-child {
+    border-right: 0px;
+}
+#orders table tbody tr:nth-child(1n) {
+    background: #f6f6f6;
+}
+#orders table tbody tr:nth-child(2n) {
+    background: #e6e6e6;
+}
+#orders table tbody tr:hover {
+    background: #ffe8e8;
+    transition-duration: 0.6s;
+}
+
+#exit{
+    margin-left: 30px;
+}

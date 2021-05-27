@@ -1,0 +1,192 @@
+header{
+    height: 80px;
+    background-color:black;
+    width: auto;
+}
+
+#block-body{
+    width: auto;
+}
+
+#logo{
+    float: left;
+    color: #C0C0C0;
+    font: 30px Georgia;
+    height: 20px;
+    display: block;
+    margin-left: 150px;
+    margin-top: 20px;
+}
+.navpanel{
+    float: right;
+    height: 80px;
+    width: 450px;
+}
+.navpanel ul li{
+    list-style: none;
+    float: left;
+    text-align: right;
+}
+.navpanel ul li a{
+    display: block;
+    width: 171px;
+    text-decoration: none;
+    font-size: 20px;
+    height: 10px;
+    padding-top: 10px;
+    cursor: pointer;
+    color: #C0C0C0;
+}
+
+
+.checkselect {
+    position: relative;
+    display: inline-block;
+    min-width: 200px;
+    text-align: left;
+}
+.checkselect-control {
+    position: relative;
+    padding: 0 !important;
+}
+.checkselect-control select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    padding-left: 5px;
+    height: 30px;
+}
+.checkselect-over {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    cursor: pointer;
+}
+.checkselect-popup {
+    display: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    position: absolute;
+    top: 100%;
+    left: 0px;
+    border: 1px solid #dadada;
+    border-top: none;
+    background: #fff;
+    z-index: 9999;
+    overflow: auto;
+    user-select: none;
+}
+.checkselect label {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 4px 6px 4px 25px;
+    font-weight: normal;
+    font-size: 1em;
+    line-height: 1.1;
+    cursor: pointer;
+}
+.checkselect-popup input {
+    position: absolute;
+    top: 5px;
+    left: 8px;
+    margin: 0 !important;
+    padding: 0;
+}
+.checkselect-popup label:hover {
+    background: #03a2ff;
+    color: #fff;
+}
+.checkselect-popup fieldset {
+    display: block;
+    margin:  0;
+    padding: 0;
+    border: none;
+}
+.checkselect-popup fieldset input {
+    left: 15px;
+}
+.checkselect-popup fieldset label {
+    padding-left: 32px;
+}
+.checkselect-popup legend {
+    display: block;
+    margin: 0;
+    padding: 5px 8px;
+    font-weight: 700;
+    font-size: 1em;
+    line-height: 1.1;
+}
+
+.filters{
+    float: left;
+    width: 18%;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.price-area input{
+    height: 30px;
+}
+#maxprice{
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+#mainpart{
+    float: right;
+    width: 75%;
+}
+
+#mainpart table{
+    width: 100%;
+    text-align: center;
+    border-bottom: 2px solid #dfdfdf;
+    border-radius: 6px;
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+table thead tr {
+    color: #ffffff;
+    font-weight: bold;
+    background: gray;
+}
+table tbody tr td{
+    border-right: 1px solid #dfdfdf;
+}
+
+table tr td:last-child {
+    border-right: 0px;
+}
+table tbody tr:hover {
+    background: #ffe8e8;
+    transition-duration: 0.6s;
+}
+table tbody tr:nth-child(1n) {
+    background: #f6f6f6;
+}
+table tbody tr:nth-child(2n) {
+    background: #e6e6e6;
+}
+
+#filterbutton{
+    width: 100px;
+    margin-bottom: 100px;
+    height: 25px;
+}
+
+#pagination{
+    float: left;
+    margin-top: 40px;
+    margin-left: 50%;
+    margin-bottom: 40px;
+}
+
+
