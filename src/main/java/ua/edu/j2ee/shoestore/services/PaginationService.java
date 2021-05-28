@@ -1,15 +1,28 @@
-package ua.edu.j2ee.shoestore.controllers;
+package ua.edu.j2ee.shoestore.services;
 
 
-public class PaginationController {
+import java.util.LinkedList;
+import java.util.List;
+
+public class PaginationService {
     private int totalItems;
     private int itemsPerPage;
     private int currentPageNumber;
+    private List items;
 
-    public PaginationController(int totalItems, int itemsPerPage, int currentPageNumber) {
+    public PaginationService(int totalItems, int itemsPerPage, int currentPageNumber, List items) {
         this.totalItems = totalItems;
         this.itemsPerPage = itemsPerPage;
         this.currentPageNumber = currentPageNumber;
+        this.items = items;
+    }
+
+    public List getItems() {
+        return items;
+    }
+
+    public void setItems(List items) {
+        this.items = items;
     }
 
     public void setTotalItems(int totalItems) {
@@ -36,6 +49,19 @@ public class PaginationController {
     public void setItemsPerPage(int itemsPerPage) {
         this.itemsPerPage = itemsPerPage;
     }
+
+    public List makeBatchOfItems(){
+        if(totalItems <= itemsPerPage){
+            return items;
+        }
+        List batchOfItems = new LinkedList();
+        int beginIndex = itemsPerPage * (currentPageNumber - 1);
+        for(int i = beginIndex; i < beginIndex + itemsPerPage || i < items.size(); i++){
+            batchOfItems.add(items.get(i));
+        }
+        return batchOfItems;
+    }
+
 
     public String makePagingLinks(String pageLocation, String addToRequest) {
         String ret = "";
@@ -87,3 +113,4 @@ public class PaginationController {
     }
 
 }
+
