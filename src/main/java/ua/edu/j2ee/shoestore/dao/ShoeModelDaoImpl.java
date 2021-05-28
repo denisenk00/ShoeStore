@@ -9,8 +9,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class ShoeModelDaoImpl implements ShoeModelDao {
@@ -117,5 +119,113 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant get shoe models");
         }
+    }
+
+    @Override
+    public Set<String> getExistingBrands() {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT BRAND FROM MODELS");
+            ResultSet rs = ps.executeQuery();
+
+            Set<String> brands = new HashSet<>();
+            while (rs.next()) {
+                brands.add(extractBrand(rs));
+            }
+            return brands;
+        } catch (SQLException sqlException) {
+            throw new RuntimeException("Cant get existing brands");
+        }
+    }
+
+    @Override
+    public double getExistingMinPrice() {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT MIN(PRICE) FROM MODELS");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return extractPrice(rs);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException("Cant get minimal price");
+        }
+    }
+
+    @Override
+    public double getExistingMaxPrice() {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT MAX(PRICE) FROM MODELS");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return extractPrice(rs);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException("Cant get max price");
+        }
+    }
+
+    @Override
+    public Set<String> getExistingTypes() {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT TYPE FROM MODELS");
+            ResultSet rs = ps.executeQuery();
+
+            Set<String> types = new HashSet<>();
+            while (rs.next()) {
+                types.add(extractType(rs));
+            }
+            return types;
+        } catch (SQLException sqlException) {
+            throw new RuntimeException("Cant get existing types");
+        }
+    }
+
+    @Override
+    public Set<String> getExistingColors() {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT COLOR FROM MODELS");
+            ResultSet rs = ps.executeQuery();
+
+            Set<String> colors = new HashSet<>();
+            while (rs.next()) {
+                colors.add(extractColor(rs));
+            }
+            return colors;
+        } catch (SQLException sqlException) {
+            throw new RuntimeException("Cant get existing colors");
+        }
+    }
+
+    @Override
+    public Set<Integer> getExistingSizes() {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT 'SIZE' FROM PRODUCTS");
+            ResultSet rs = ps.executeQuery();
+
+            Set<Integer> sizes = new HashSet<>();
+            while (rs.next()) {
+                sizes.add(extractSize(rs));
+            }
+            return sizes;
+        } catch (SQLException sqlException) {
+            throw new RuntimeException("Cant get existing sizes");
+        }
+    }
+
+    private String extractBrand(ResultSet resultSet) throws SQLException {
+        return resultSet.getString("brand");
+    }
+
+    private String extractType(ResultSet resultSet) throws SQLException {
+        return resultSet.getString("type");
+    }
+
+    private String extractColor(ResultSet resultSet) throws SQLException {
+        return resultSet.getString("color");
+    }
+
+    private Integer extractSize(ResultSet resultSet) throws SQLException {
+        return resultSet.getInt("size");
+    }
+
+    private double extractPrice(ResultSet resultSet) throws SQLException {
+        return resultSet.getDouble("price");
     }
 }
