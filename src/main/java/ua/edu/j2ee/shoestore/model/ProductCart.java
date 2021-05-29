@@ -51,4 +51,40 @@ public class ProductCart {
     public void removeFromCart(Shoe shoe) {
         shoeList.add(shoe);
     }
+
+    public List<Shoe> getShoeList() {
+        return shoeList;
+    }
+
+    public Set<String> getWishedBrands() {
+        return wishedBrands;
+    }
+
+    public Set<String> getWishedTypes() {
+        return wishedTypes;
+    }
+
+    public Set<String> getWishedSeasons() {
+        return wishedSeasons;
+    }
+
+    public Set<String> getWishedColors() {
+        return wishedColors;
+    }
+
+    public Set<String> getWishedGenders() {
+        return wishedGenders;
+    }
+
+    public Set<Integer> getWishedSizes() {
+        return wishedSizes;
+    }
+
+    public double getWishedMaxPrice() {
+        return wishedMaxPrice;
+    }
+
+    public double getWishedMinPrice() {
+        return wishedMinPrice;
+    }
 }
