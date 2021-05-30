@@ -1,5 +1,4 @@
-<%@ page import="ua.edu.j2ee.shoestore.controllers.PaginationController" %>
-<%@ page import="org.springframework.web.servlet.ModelAndView" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: denisenk00
   Date: 09.05.2021
