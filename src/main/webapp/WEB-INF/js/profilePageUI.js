@@ -16,22 +16,13 @@ $(function (){
                 var newSurname = $("#new-surname").val();
                 var newPhone = $("#new-phone").val();
                 var newEmail = $("#new-email").val();
-                var reWord = /[A-Z][a-z]+/;
-                if(newName.match(reWord) && newSurname.match(reWord) && checkNumber(newPhone) && checkEmail(newEmail)){
+                if(checkNameWord(newName) && checkNameWord(newSurname) && checkPhoneNumber(newPhone) && checkEmail(newEmail)){
                     form.remove();
                     const promise = editUserInfo(newName, newSurname, newPhone, newEmail);
                     promise.then(changeUserInfo(newName, newSurname, newPhone, newEmail));
                 }else {
                     alert("Некорректные данные");
                 }
-                function checkNumber(AStr) {
-                    AStr = AStr.replace(/[\s\-]/g, '');
-                    return AStr.match(/^((\+?3)?8)?((0\(\d{2}\)?)|(\(0\d{2}\))|(0\d{2}))\d{7}$/) != null;
-                }
-                function checkEmail(email){
-                    return email.match(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/) != null;
-                }
-
             })
             function changeUserInfo(name, surname, phone, email){
                 var userName = document.getElementById("user-name");
@@ -44,5 +35,4 @@ $(function (){
                 userEmail.nodeValue = phone;
             }
     })
-
 });

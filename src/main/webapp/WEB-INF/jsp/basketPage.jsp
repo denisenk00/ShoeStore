@@ -1,6 +1,3 @@
-<%@ page import="ua.edu.j2ee.shoestore.model.Shoe" %>
-<%@ page import="java.util.List" %>
-<%@ page import="ua.edu.j2ee.shoestore.model.ShoeModel" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
