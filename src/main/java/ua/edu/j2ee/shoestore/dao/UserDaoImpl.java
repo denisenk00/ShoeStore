@@ -86,6 +86,32 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public User getByEmail(String email) {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS WHERE EMAIL = ?");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return extractUser(rs);
+        } catch (SQLException sqlException) {
+            return null;
+        }
+    }
+
+    @Override
+    public User getByPhone(String phone) {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS WHERE PHONE = ?");
+            ps.setString(1, phone);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return extractUser(rs);
+        } catch (SQLException sqlException) {
+            return null;
+        }
+    }
+
     private User extractUser(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("userid");
         String name = resultSet.getString("name");
@@ -96,19 +122,5 @@ public class UserDaoImpl implements UserDao {
         String role = resultSet.getString("role");
 
         return new User(id, name, surname, phone, email, password, role);
-    }
-
-    @Override
-    public User getByEmail(String email) {
-        try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS WHERE EMAIL = ?");
-            ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            return extractUser(rs);
-        } catch (SQLException sqlException) {
-            //throw new RuntimeException("Cant get user with email " + email);
-            return null;
-        }
     }
 }

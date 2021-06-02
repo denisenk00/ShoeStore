@@ -6,4 +6,6 @@ public interface UserDao extends Dao<User> {
 
     User getByEmail(String email);
 
+    User getByPhone(String phone);
+
 }
