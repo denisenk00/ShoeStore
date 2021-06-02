@@ -1,0 +1,22 @@
+header{
+    height: 80px;
+    background-color:black;
+    width: auto;
+}
+
+body{
+    width: auto;
+}
+
+#logo{
+    float: left;
+    color: #C0C0C0;
+    font: 30px Georgia;
+    height: 20px;
+    display: block;
+    margin-left: 150px;
+    margin-top: 20px;
+}
+h2{
+    margin-bottom: 30px;
+}

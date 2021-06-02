@@ -1,6 +1,6 @@
 package ua.edu.j2ee.shoestore.model;
 
-import java.util.List;
+import java.util.*;
 
 public class User {
 
@@ -11,6 +11,7 @@ public class User {
     private String email;
     private String password;
     private String role;
+    private ProductCart productCart;
 
     public User() {
 
@@ -24,6 +25,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+        productCart = new ProductCart();
     }
 
     public int getId() {
@@ -80,5 +82,9 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public ProductCart getProductCart() {
+        return productCart;
     }
 }
