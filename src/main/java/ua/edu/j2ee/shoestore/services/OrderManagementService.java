@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface OrderManagementService {
 
-    void createOrder(ProductCart cart);
+    void createOrder(int userId, ProductCart cart);
 
-    List<Order> getOrderHistory(User user);
+    List<Order> getOrderHistory(int userId);
 
 }

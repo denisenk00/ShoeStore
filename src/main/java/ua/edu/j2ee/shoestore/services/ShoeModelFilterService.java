@@ -15,4 +15,13 @@ public interface ShoeModelFilterService {
                                               Set<String> wishedColors,
                                               Set<String> wishedGenders,
                                               Set<Integer> wishedSizes);
+
+    List<ShoeModel> getModelsByFilters(Set<String> wishedBrands,
+                                       double minPrice,
+                                       double maxPrice,
+                                       Set<String> wishedTypes,
+                                       Set<String> wishedSeasons,
+                                       Set<String> wishedColors,
+                                       Set<String> wishedGenders,
+                                       Set<Integer> wishedSizes);
 }

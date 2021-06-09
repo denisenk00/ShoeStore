@@ -45,8 +45,8 @@ public class ProductCart {
         shoeCart.put(modelId, size);
     }
 
-    public void removeFromCart(int modelId) {
-        shoeCart.remove(modelId);
+    public void removeFromCart(int modelId, int size) {
+        shoeCart.remove(modelId, size);
     }
 
     public Map<Integer, Integer> getShoeCart() {

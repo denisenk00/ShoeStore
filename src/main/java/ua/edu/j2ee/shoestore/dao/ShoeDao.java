@@ -16,4 +16,6 @@ public interface ShoeDao extends Dao<Shoe> {
 
     List<Shoe> getAllByModel(int modelId);
 
+    Shoe getAnyExistingByParams(int modelId, int size);
+
 }
