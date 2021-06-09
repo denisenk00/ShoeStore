@@ -2,7 +2,7 @@ package ua.edu.j2ee.shoestore.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.edu.j2ee.shoestore.model.User;
+import ua.edu.j2ee.shoestore.model.CustomUser;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -24,23 +24,23 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAll() {
+    public List<CustomUser> getAll() {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS");
             ResultSet rs = ps.executeQuery();
 
-            List<User> users = new LinkedList<>();
+            List<CustomUser> customUsers = new LinkedList<>();
             while (rs.next()) {
-                users.add(extractUser(rs));
+                customUsers.add(extractUser(rs));
             }
-            return users;
+            return customUsers;
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant get all users");
         }
     }
 
     @Override
-    public User get(int id) {
+    public CustomUser get(int id) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS WHERE USERID = ?");
             ps.setInt(1, id);
@@ -53,17 +53,17 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void save(User user) {
+    public void save(CustomUser customUser) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO " +
                     "USERS (USERID, NAME, SURNAME, PHONE, EMAIL, PASSWORD, ROLE) " +
                     "VALUES (USERID_SEQ.nextval, ?, ?, ?, ?, ?, ?)");
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getSurname());
-            ps.setString(3, user.getPhone());
-            ps.setString(4, user.getEmail());
-            ps.setString(5, user.getPassword());
-            ps.setString(6, user.getRole());
+            ps.setString(1, customUser.getName());
+            ps.setString(2, customUser.getSurname());
+            ps.setString(3, customUser.getPhone());
+            ps.setString(4, customUser.getEmail());
+            ps.setString(5, customUser.getPassword());
+            ps.setString(6, customUser.getRole());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant save user");
@@ -71,23 +71,23 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void update(User user) {
+    public void update(CustomUser customUser) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("UPDATE USERS " +
                     "SET NAME = ?, SURNAME = ?, PHONE = ?, PASSWORD = ? WHERE USERID = ?");
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getSurname());
-            ps.setString(3, user.getPhone());
-            ps.setString(4, user.getPassword());
-            ps.setInt(5, user.getId());
+            ps.setString(1, customUser.getName());
+            ps.setString(2, customUser.getSurname());
+            ps.setString(3, customUser.getPhone());
+            ps.setString(4, customUser.getPassword());
+            ps.setInt(5, customUser.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant update user " + user.getId());
+            throw new RuntimeException("Cant update user " + customUser.getId());
         }
     }
 
     @Override
-    public User getByEmail(String email) {
+    public CustomUser getByEmail(String email) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS WHERE EMAIL = ?");
             ps.setString(1, email);
@@ -100,7 +100,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getByPhone(String phone) {
+    public CustomUser getByPhone(String phone) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM USERS WHERE PHONE = ?");
             ps.setString(1, phone);
@@ -112,7 +112,7 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    private User extractUser(ResultSet resultSet) throws SQLException {
+    private CustomUser extractUser(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("userid");
         String name = resultSet.getString("name");
         String surname =  resultSet.getString("surname");
@@ -121,6 +121,6 @@ public class UserDaoImpl implements UserDao {
         String password = resultSet.getString("password");
         String role = resultSet.getString("role");
 
-        return new User(id, name, surname, phone, email, password, role);
+        return new CustomUser(id, name, surname, phone, email, password, role);
     }
 }

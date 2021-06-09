@@ -3,7 +3,7 @@ package ua.edu.j2ee.shoestore.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.edu.j2ee.shoestore.model.Order;
-import ua.edu.j2ee.shoestore.model.User;
+import ua.edu.j2ee.shoestore.model.CustomUser;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -91,11 +91,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getOrdersByUser(User user) {
+    public List<Order> getOrdersByUser(CustomUser customUser) {
         List<Order> orders = new LinkedList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM ORDERS WHERE USERID = ?");
-            ps.setInt(1, user.getId());
+            ps.setInt(1, customUser.getId());
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -105,7 +105,7 @@ public class OrderDaoImpl implements OrderDao {
             return orders;
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant get order history for " +
-                    user.getSurname() + ' ' + user.getName());
+                    customUser.getSurname() + ' ' + customUser.getName());
         }
     }
 

@@ -1,8 +1,6 @@
 package ua.edu.j2ee.shoestore.model;
 
-import java.util.*;
-
-public class User {
+public class CustomUser /* implements UserDetails*/ {
 
     private int id = -1;
     private String name;
@@ -13,11 +11,7 @@ public class User {
     private String role;
     private ProductCart productCart;
 
-    public User() {
-
-    }
-
-    public User(int id, String name, String surname, String phone, String email, String password, String role) {
+    public CustomUser(int id, String name, String surname, String phone, String email, String password, String role) {
         this.id = id;
         this.name = name;
         this.surname = surname;
