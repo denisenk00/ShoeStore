@@ -54,31 +54,31 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public void save(Order order) {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement orderStatement;
-            PreparedStatement priceStatement;
-            orderStatement = connection.prepareStatement("INSERT INTO " +
+            PreparedStatement orderSt;
+            PreparedStatement priceSt;
+            orderSt = connection.prepareStatement("INSERT INTO " +
                     "ORDERS (ORDERID, USERID, PRICE, ORDERDATE)  " +
                     "VALUES (ORDERID_SEQ.nextval, ?, ?, ?)");
-            orderStatement.setInt(1, order.getUserId());
-            orderStatement.setDouble(2, order.getTotalPrice());
-            orderStatement.setDate(3, Date.valueOf(order.getOrderDate()));
-            orderStatement.executeUpdate();
+            orderSt.setInt(1, order.getUserId());
+            orderSt.setDouble(2, order.getTotalPrice());
+            orderSt.setDate(3, Date.valueOf(order.getOrderDate()));
+            orderSt.executeUpdate();
 
-            orderStatement = connection.prepareStatement("INSERT INTO " +
+            orderSt = connection.prepareStatement("INSERT INTO " +
                     "ORDERDETAILS (ORDERID, PRODUCTID, PRICE) VALUES (?, ?, ?)");
-            priceStatement = connection.prepareStatement("SELECT PRICE " +
+            priceSt = connection.prepareStatement("SELECT PRICE " +
                     "FROM MODELS, PRODUCTS WHERE MODELS.MODELID = PRODUCTS.MODELID AND PRODUCTS.PRODUCTID = ?");
-            orderStatement.setInt(1, order.getId());
+            orderSt.setInt(1, order.getId());
             for (int shoeId : order.getShoeIdList()) {
-                orderStatement.setInt(2, shoeId);
-                priceStatement.setInt(1, shoeId);
+                orderSt.setInt(2, shoeId);
+                priceSt.setInt(1, shoeId);
 
-                ResultSet priceSet = priceStatement.executeQuery();
+                ResultSet priceSet = priceSt.executeQuery();
                 priceSet.next();
                 double price = priceSet.getDouble("price");
 
-                orderStatement.setDouble(3, price);
-                orderStatement.executeUpdate();
+                orderSt.setDouble(3, price);
+                orderSt.executeUpdate();
             }
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant save order " + order.getId());
