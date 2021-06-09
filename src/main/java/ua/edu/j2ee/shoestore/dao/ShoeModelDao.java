@@ -21,4 +21,6 @@ public interface ShoeModelDao extends Dao<ShoeModel> {
 
     Set<Integer> getExistingSizes();
 
+    Set<Integer> getExistingSizesByModelId(int id);
+
 }
