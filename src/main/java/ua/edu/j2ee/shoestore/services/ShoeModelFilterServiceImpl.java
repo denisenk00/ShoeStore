@@ -45,4 +45,31 @@ public class ShoeModelFilterServiceImpl implements ShoeModelFilterService {
 
         return filteredModels;
     }
+
+    @Override
+    public List<ShoeModel> getModelsByFilters(Set<String> wishedBrands,
+                                                     double minPrice,
+                                                     double maxPrice,
+                                                     Set<String> wishedTypes,
+                                                     Set<String> wishedSeasons,
+                                                     Set<String> wishedColors,
+                                                     Set<String> wishedGenders,
+                                                     Set<Integer> wishedSizes) {
+
+        List<ShoeModel> allModelsInStock = shoeModelDao.getAll();
+        List<ShoeModel> filteredModels;
+
+        filteredModels = allModelsInStock.stream()
+                .filter(model -> (maxPrice == 0 || model.getPrice() >= minPrice && model.getPrice() <= maxPrice)
+                        && (wishedBrands.isEmpty() || wishedBrands.contains(model.getBrand()))
+                        && (wishedTypes.isEmpty() || wishedTypes.contains(model.getType()))
+                        && (wishedSeasons.isEmpty() || wishedSeasons.contains(model.getSeason()))
+                        && (wishedColors.isEmpty() || wishedColors.contains(model.getColor()))
+                        && (wishedGenders.isEmpty() || wishedGenders.contains(model.getGender()))
+                        && (wishedSizes.isEmpty() || shoeDao.getAllByModel(model.getId()).stream()
+                        .anyMatch(shoe -> wishedSizes.contains(shoe.getSize()))))
+                .collect(Collectors.toList());
+
+        return filteredModels;
+    }
 }
