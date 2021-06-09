@@ -209,6 +209,24 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
         }
     }
 
+    @Override
+    public Set<Integer> getExistingSizesByModelId(int id) {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT 'SIZE' " +
+                    "FROM PRODUCTS WHERE MODELID = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            Set<Integer> sizes = new HashSet<>();
+            while (rs.next()) {
+                sizes.add(extractSize(rs));
+            }
+            return sizes;
+        } catch (SQLException sqlException) {
+            throw new RuntimeException("Cant get existing sizes for model " + id);
+        }
+    }
+
     private String extractBrand(ResultSet resultSet) throws SQLException {
         return resultSet.getString("brand");
     }
