@@ -54,31 +54,20 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public void save(Order order) {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement orderSt;
-            PreparedStatement priceSt;
-            orderSt = connection.prepareStatement("INSERT INTO " +
+            PreparedStatement ps;
+            ps = connection.prepareStatement("INSERT INTO " +
                     "ORDERS (ORDERID, USERID, PRICE, ORDERDATE)  " +
                     "VALUES (ORDERID_SEQ.nextval, ?, ?, ?)");
-            orderSt.setInt(1, order.getUserId());
-            orderSt.setDouble(2, order.getTotalPrice());
-            orderSt.setDate(3, Date.valueOf(order.getOrderDate()));
-            orderSt.executeUpdate();
+            ps.setInt(1, order.getUserId());
+            ps.setDouble(2, order.getTotalPrice());
+            ps.setDate(3, Date.valueOf(order.getOrderDate()));
+            ps.executeUpdate();
 
-            orderSt = connection.prepareStatement("INSERT INTO " +
-                    "ORDERDETAILS (ORDERID, PRODUCTID, PRICE) VALUES (?, ?, ?)");
-            priceSt = connection.prepareStatement("SELECT PRICE " +
-                    "FROM MODELS, PRODUCTS WHERE MODELS.MODELID = PRODUCTS.MODELID AND PRODUCTS.PRODUCTID = ?");
-            orderSt.setInt(1, order.getId());
+            ps = connection.prepareStatement("INSERT INTO " +
+                    "ORDERDETAILS (ORDERID, PRODUCTID) VALUES (ORDERID_SEQ.currval, ?)");
             for (int shoeId : order.getShoeIdList()) {
-                orderSt.setInt(2, shoeId);
-                priceSt.setInt(1, shoeId);
-
-                ResultSet priceSet = priceSt.executeQuery();
-                priceSet.next();
-                double price = priceSet.getDouble("price");
-
-                orderSt.setDouble(3, price);
-                orderSt.executeUpdate();
+                ps.setInt(1, shoeId);
+                ps.executeUpdate();
             }
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant save order " + order.getId());
@@ -91,11 +80,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getOrdersByUser(User user) {
+    public List<Order> getOrdersByUser(int id) {
         List<Order> orders = new LinkedList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM ORDERS WHERE USERID = ?");
-            ps.setInt(1, user.getId());
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -104,8 +93,7 @@ public class OrderDaoImpl implements OrderDao {
 
             return orders;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get order history for " +
-                    user.getSurname() + ' ' + user.getName());
+            throw new RuntimeException("Cant get order history for user " + id);
         }
     }
 
