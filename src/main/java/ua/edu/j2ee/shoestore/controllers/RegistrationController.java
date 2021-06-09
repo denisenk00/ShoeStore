@@ -12,12 +12,19 @@ import ua.edu.j2ee.shoestore.services.UserService;
 @Controller
 public class RegistrationController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/registration")
     public ModelAndView registration(){
-        return new ModelAndView("registrationPage");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("registrationPage");
+        modelAndView.addObject("user", new User());
+        return modelAndView;
     }
 
     @PostMapping("/registration")

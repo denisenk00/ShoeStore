@@ -1,6 +1,7 @@
 package ua.edu.j2ee.shoestore.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,6 @@ import java.util.Set;
 @Controller
 @RequestMapping("/store")
 public class StoreController {
-    private final int itemsPerPage = 25;
 
     private ShoeModelFilterService modelFilterService;
     private ShoeModelDao modelDao;
@@ -44,7 +44,7 @@ public class StoreController {
                                                                               userProductCart.getWishedColors(),
                                                                               userProductCart.getWishedGenders(),
                                                                               userProductCart.getWishedSizes());
-        PaginationService paginationService = new PaginationService(models.size(), itemsPerPage, currentPage, models);
+        PaginationService paginationService = new PaginationService(models.size(), 25, currentPage, models);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("mainPage");
         modelAndView.addObject("allTypes", modelDao.getExistingTypes());
@@ -71,7 +71,7 @@ public class StoreController {
         user.getProductCart().updateFilters(brands, types, seasons, colors, genders, sizes, minPrice, maxPrice);
     }
 
-    @GetMapping("/getModels")
+    @GetMapping("/getModelsByUser")
     @ResponseBody
     public List<ShoeModel> getModels(@AuthenticationPrincipal User user){
         ProductCart userProductCart = user.getProductCart();
@@ -98,11 +98,13 @@ public class StoreController {
     public ModelAndView basket(@AuthenticationPrincipal User user){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("basketPage");
-        modelAndView.addObject("wishedShoes", user.getProductCart().getShoeList());
+        modelAndView.addObject("wishedShoes", user.getProductCart().getShoeCart());
         modelAndView.addObject("models", modelDao.getAllByStatus("IN_STOCK"));
         return modelAndView;
     }
-
-
-
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/adminPanel")
+    public ModelAndView adminPanel(){
+        return new ModelAndView("adminPanel");
+    }
 }
