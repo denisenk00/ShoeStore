@@ -45,6 +45,12 @@ public class ShoeModelController {
         return modelAndView;
     }
 
+    @GetMapping("/modelByShoe")
+    public String modelPageByShoe(@RequestParam(name="shoeId") int shoeId){
+        Shoe shoe = shoeDao.get(shoeId);
+        return "redirect:/model?id=".concat(String.valueOf(shoe.getModelId()));
+    }
+
     @GetMapping("/admin/allModels")
     @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView allModels(@AuthenticationPrincipal User user,
@@ -79,18 +85,16 @@ public class ShoeModelController {
     public String addModel(@RequestParam(name="name") String name, @RequestParam(name="brand") String brand,
                            @RequestParam(name="price") double price, @RequestParam(name="type") String type,
                            @RequestParam(name="season") String season, @RequestParam(name = "supplierId") int supplierId,
-                           @RequestParam(name="color") String color, @RequestParam(name="gender") String gender,
-                           @RequestParam(name="amount", defaultValue = "0") int amount){
-        ShoeModel shoeModel = new ShoeModel(0, name, brand, price, type, amount, season, color, gender, supplierId);
+                           @RequestParam(name="color") String color, @RequestParam(name="gender") String gender){
+        ShoeModel shoeModel = new ShoeModel(0, name, brand, price, type, season, color, gender, supplierId);
         modelDao.save(shoeModel);
         return "redirect:/admin/allModels";
     }
 
     @PostMapping("/updateModel")
     @PreAuthorize("hasRole('ADMIN')")
-    public void updateModel(@RequestParam(name="id") int id, @RequestParam(name="price") double price, @RequestParam(name="amount") int amount){
+    public void updateModel(@RequestParam(name="id") int id, @RequestParam(name="price") double price){
         ShoeModel shoeModel = modelDao.get(id);
-        shoeModel.setAmount(amount);
         shoeModel.setPrice(price);
         modelDao.update(shoeModel);
     }
@@ -106,5 +110,6 @@ public class ShoeModelController {
         modelAndView.addObject("shoes", shoes);
         return modelAndView;
     }
+
 
 }
