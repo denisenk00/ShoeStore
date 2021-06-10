@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
@@ -26,8 +25,8 @@
             <h1 id="logo">ShoeStore</h1>
             <nav class="navpanel">
                 <ul>
-                    <li><a href="">logIn/logOut</a></li>
-                    <li><a href="basketPage.jsp">Корзина</a></li>
+                    <li><a href="/store/profile">Профиль</a></li>
+                    <li><a href="/store/basket">Корзина</a></li>
                 </ul>
             </nav>
         </header>
@@ -65,8 +64,8 @@
             </div>
             <h3>Стать</h3>
             <div class="checkselect">
-                <label><input class="gender" type="checkbox" value="Male">Male</label>
-                <label><input class="gender" type="checkbox"  value="Female">Female</label>
+                <label><input class="gender" type="checkbox" value="Мужская">Мужская</label>
+                <label><input class="gender" type="checkbox"  value="Женская">Женская</label>
             </div>
             <h3>Цена</h3>
             <div class="price-area">
@@ -97,7 +96,7 @@
                        <tr>
                           <td>${model.brand}</td>
                            <td>
-                               <a href="shoeModel/${model.id}">${model.name}</a>
+                               <a href="model?id=${model.id}">${model.name}</a>
                            </td>
                            <td>${model.gender}</td>
                            <td>${model.season}</td>
