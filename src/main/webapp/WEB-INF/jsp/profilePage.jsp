@@ -7,6 +7,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 <html>
 <head>
     <title>ShoeStore - Profile</title>
@@ -22,11 +23,11 @@
 <body>
     <div id="block-body">
          <header>
-             <h1 id="logo"><a href="index?page=1">ShoeStore</a></h1>
+             <h1 id="logo"><a href="/store/">ShoeStore</a></h1>
              <nav class="navpanel">
                 <ul>
-                    <li><a href="#">logIn/logOut</a></li>
-                    <li><a href="#">Корзина</a></li>
+                    <li><a href="/store/profile">Профиль</a></li>
+                    <li><a href="/store/basket">Корзина</a></li>
                 </ul>
             </nav>
         </header>
@@ -52,7 +53,10 @@
             </table>
             <br>
             <button id="edit-info">Изменить данные</button>
-            <button id="exit">Выйти из аккаунта</button>
+            <security:authorize access="hasRole('ADMIN')">
+                <button id="admin-panel">Перейти в админ-панель</button>
+            </security:authorize>
+            <button id="logout">Выйти из аккаунта</button>
             <div id="edit-info-form"></div>
             <div id="orders">
                 <h3>Архив заказов</h3>
@@ -61,8 +65,8 @@
                          <tr>
                             <th>id</th>
                             <th>Дата заказа</th>
-                            <th>id Товара</th>
                             <th>Стоимость заказа</th>
+                            <th>id Товара</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,15 +74,15 @@
                             <tr>
                                 <td>${order.id}</td>
                                 <td>${order.orderDate}</td>
-                                <td></td>
                                 <td>${order.totalPrice}</td>
+                                <td></td>
                             </tr>
-                             <c:forEach var="shoeid" items="${order.shoeIdList}">
+                             <c:forEach var="shoeId" items="${order.shoeIdList}">
                                  <tr>
                                      <td></td>
                                      <td></td>
-                                     <td><a href="model?shoeid=${shoeid}">${shoeid}</a></td>
                                      <td></td>
+                                     <td><a href="/modelByShoe?shoeId=${shoeId}">${shoeId}</a></td>
                                  </tr>
                              </c:forEach>
                         </c:forEach>

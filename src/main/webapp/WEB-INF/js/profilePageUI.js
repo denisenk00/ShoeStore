@@ -18,7 +18,7 @@ $(function (){
                 var newEmail = $("#new-email").val();
                 if(checkNameWord(newName) && checkNameWord(newSurname) && checkPhoneNumber(newPhone) && checkEmail(newEmail)){
                     form.remove();
-                    const promise = editUserInfo(newName, newSurname, newPhone, newEmail);
+                    const promise = postUserInfo(newName, newSurname, newPhone, newEmail);
                     promise.then(changeUserInfo(newName, newSurname, newPhone, newEmail));
                 }else {
                     alert("Некорректные данные");
@@ -32,7 +32,13 @@ $(function (){
                 var userPhone = document.getElementById("user-phone");
                 userPhone.nodeValue = phone;
                 var userEmail = document.getElementById("user-email");
-                userEmail.nodeValue = phone;
+                userEmail.nodeValue = email;
             }
+    })
+    $("#logout").click(function (){
+        logout();
+    })
+    $("#admin-panel").click(function (){
+        goToAdminPanel();
     })
 });
