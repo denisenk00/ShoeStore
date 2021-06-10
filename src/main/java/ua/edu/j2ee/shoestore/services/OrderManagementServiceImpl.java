@@ -9,7 +9,6 @@ import ua.edu.j2ee.shoestore.dao.ShoeModelDao;
 import ua.edu.j2ee.shoestore.model.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
