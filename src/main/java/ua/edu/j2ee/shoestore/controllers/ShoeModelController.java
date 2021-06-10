@@ -63,7 +63,8 @@ public class ShoeModelController {
                 userProductCart.getWishedSeasons(),
                 userProductCart.getWishedColors(),
                 userProductCart.getWishedGenders(),
-                userProductCart.getWishedSizes());
+                userProductCart.getWishedSizes(),
+                null);
         PaginationService paginationService = new PaginationService(allModels.size(), 25, currentPage, allModels);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("allModels");
