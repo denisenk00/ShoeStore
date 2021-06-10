@@ -90,7 +90,7 @@ public class StoreController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("profilePage");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("orders", orderDao.getOrdersByUser(user));
+        modelAndView.addObject("orders", orderDao.getOrdersByUser(user.getId()));
         return modelAndView;
     }
 
