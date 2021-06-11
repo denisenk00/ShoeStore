@@ -13,15 +13,19 @@
         <style>
             <%@include file='../css/shoeModelPage.css' %>
         </style>
+        <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+        <script>
+            <%@include file='../js/shoeModelPage.js' %>
+        </script>
     </head>
     <body>
         <div id="block-body">
             <header>
-                <h1 id="logo"><a href="index?page=1">ShoeStore</a></h1>
+                <h1 id="logo"><a href="/store/">ShoeStore</a></h1>
                 <nav class="navpanel">
                     <ul>
-                        <li><a href="#">logIn/logOut</a></li>
-                        <li><a href="#">Корзина</a></li>
+                        <li><a href="/store/profile">Профиль</a></li>
+                        <li><a href="/store/basket">Корзина</a></li>
                     </ul>
                 </nav>
             </header>
@@ -64,6 +68,7 @@
                         </td>
                     </tr>
                 </table>
+                <div id="model-id"hidden>${model.id}</div>
                 <button id="addToBasket">Добавить в корзину</button>
             </div>
         </div>

@@ -1,12 +1,9 @@
 package ua.edu.j2ee.shoestore.model;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ProductCart {
-    private List<Shoe> shoeList;
+    private Map<Integer, Integer> shoeCart;
     private Set<String> wishedBrands;
     private Set<String> wishedTypes;
     private Set<String> wishedSeasons;
@@ -17,7 +14,7 @@ public class ProductCart {
     private double wishedMinPrice;
 
     public ProductCart() {
-        shoeList = new LinkedList<>();
+        shoeCart = new HashMap<>();
         wishedBrands = new HashSet<>();
         wishedTypes = new HashSet<>();
         wishedSeasons = new HashSet<>();
@@ -44,16 +41,16 @@ public class ProductCart {
         this.wishedMinPrice = wishedMinPrice;
     }
 
-    public void addToCart(Shoe shoe) {
-        shoeList.add(shoe);
+    public void addToCart(int modelId, int size) {
+        shoeCart.put(modelId, size);
     }
 
-    public void removeFromCart(Shoe shoe) {
-        shoeList.add(shoe);
+    public void removeFromCart(int modelId, int size) {
+        shoeCart.remove(modelId, size);
     }
 
-    public List<Shoe> getShoeList() {
-        return shoeList;
+    public Map<Integer, Integer> getShoeCart() {
+        return shoeCart;
     }
 
     public Set<String> getWishedBrands() {

@@ -57,17 +57,16 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
     public void save(ShoeModel model) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO " +
-                    "MODELS (MODELID, NAME, BRAND, PRICE, TYPE, AMOUNT, SEASON, COLOR, GENDER, SUPPLIERID) " +
-                    "VALUES (MODELID_SEQ.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    "MODELS (MODELID, NAME, BRAND, PRICE, TYPE, SEASON, COLOR, GENDER, SUPPLIERID) " +
+                    "VALUES (MODELID_SEQ.nextval, ?, ?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, model.getName());
             ps.setString(2, model.getBrand());
             ps.setDouble(3, model.getPrice());
             ps.setString(4, model.getType());
-            ps.setInt(5, model.getAmount());
-            ps.setString(6, model.getSeason());
-            ps.setString(7, model.getColor());
-            ps.setString(8, model.getGender());
-            ps.setInt(9, model.getSupplierId());
+            ps.setString(5, model.getSeason());
+            ps.setString(6, model.getColor());
+            ps.setString(7, model.getGender());
+            ps.setInt(8, model.getSupplierId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant save shoe model");
@@ -78,10 +77,9 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
     public void update(ShoeModel model) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("UPDATE MODELS " +
-                    "SET PRICE = ?, AMOUNT = ? WHERE MODELID = ?");
+                    "SET PRICE = ? WHERE MODELID = ?");
             ps.setDouble(1, model.getPrice());
-            ps.setInt(2, model.getAmount());
-            ps.setInt(3, model.getId());
+            ps.setInt(2, model.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant update shoe model");
@@ -94,13 +92,12 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
         String brand = resultSet.getString("brand");
         double price = resultSet.getDouble("price");
         String type = resultSet.getString("type");
-        int amount = resultSet.getInt("amount");
         String season = resultSet.getString("season");
         String color = resultSet.getString("color");
         String gender = resultSet.getString("gender");
         int supplierId = resultSet.getInt("supplierid");
 
-        return new ShoeModel(id, name, brand, price, type, amount, season, color, gender, supplierId);
+        return new ShoeModel(id, name, brand, price, type, season, color, gender, supplierId);
     }
 
     @Override
@@ -206,6 +203,24 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             return sizes;
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant get existing sizes");
+        }
+    }
+
+    @Override
+    public Set<Integer> getExistingSizesByModelId(int id) {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT 'SIZE' " +
+                    "FROM PRODUCTS WHERE MODELID = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            Set<Integer> sizes = new HashSet<>();
+            while (rs.next()) {
+                sizes.add(extractSize(rs));
+            }
+            return sizes;
+        } catch (SQLException sqlException) {
+            throw new RuntimeException("Cant get existing sizes for model " + id);
         }
     }
 

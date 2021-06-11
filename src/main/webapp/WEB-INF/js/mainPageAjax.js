@@ -1,5 +1,5 @@
 function setFilters(seasons, types, brands, colors,  sizes, genders, minPrice, maxPrice){
-    var url = "setfilters?seasons=";
+    var url = "updateFilters?seasons=";
     function urlBuilder(currentValue, index, arr){
         url = url.concat(currentValue);
         if(index != arr.length-1) url = url.concat("+");
@@ -15,19 +15,19 @@ function setFilters(seasons, types, brands, colors,  sizes, genders, minPrice, m
     sizes.forEach(urlBuilder);
     url = url.concat("&genders=");
     genders.forEach(urlBuilder);
-    url = url.concat("&minprice=").concat(minPrice);
-    url = url.concat("&maxprice=").concat(maxPrice);
+    url = url.concat("&minPrice=").concat(minPrice);
+    url = url.concat("&maxPrice=").concat(maxPrice);
     const promise = $.ajax(url);
     return promise;
 }
 function getModels(currentPage){
-    var url = "?page=".concat(currentPage);
+    var url = "getModelsByFilter?page=".concat(currentPage);
     const promise = $.ajax(url);
     return promise;
 }
 
 function getPagination(currentPage){
-    var url = "?page=".concat(currentPage);
+    var url = "getPaginationByFilter?page=".concat(currentPage);
     const promise = $.ajax(url);
     return promise;
 }

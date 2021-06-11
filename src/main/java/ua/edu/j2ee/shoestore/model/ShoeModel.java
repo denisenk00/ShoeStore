@@ -9,7 +9,6 @@ public class ShoeModel {
     private String brand;
     private double price;
     private String type;
-    private int amount;
     private String season;
     private String color;
     private String gender;
@@ -20,13 +19,12 @@ public class ShoeModel {
     }
 
     public ShoeModel(int id, String name, String brand, double price, String type,
-                     int amount, String season, String color, String gender, int supplierId) {
+                     String season, String color, String gender, int supplierId) {
         this.id = id;
         this.name = name;
         this.brand = brand;
         this.price = price;
         this.type = type;
-        this.amount = amount;
         this.season = season;
         this.color = color;
         this.gender = gender;
@@ -71,14 +69,6 @@ public class ShoeModel {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 
     public String getSeason() {

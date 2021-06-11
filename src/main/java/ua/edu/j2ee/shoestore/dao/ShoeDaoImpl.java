@@ -23,6 +23,7 @@ public class ShoeDaoImpl implements ShoeDao {
     }
 
 
+
     @Override
     public List<Shoe> getAll() {
         try (Connection connection = dataSource.getConnection()) {
@@ -56,13 +57,13 @@ public class ShoeDaoImpl implements ShoeDao {
     @Override
     public void save(Shoe shoe) {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO " +
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO " +
                     "PRODUCTS (PRODUCTID, MODELID, \"SIZE\", STATUS) " +
                     "VALUES (PRODUCTID_SEQ.nextval, ?, ?, ?)");
-            preparedStatement.setInt(1, shoe.getModelId());
-            preparedStatement.setInt(2, shoe.getSize());
-            preparedStatement.setString(3, shoe.getStatus());
-            preparedStatement.executeUpdate();
+            ps.setInt(1, shoe.getModelId());
+            ps.setInt(2, shoe.getSize());
+            ps.setString(3, shoe.getStatus());
+            ps.executeUpdate();
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant save shoe");
         }
@@ -71,11 +72,11 @@ public class ShoeDaoImpl implements ShoeDao {
     @Override
     public void update(Shoe shoe) {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE PRODUCTS " +
+            PreparedStatement ps = connection.prepareStatement("UPDATE PRODUCTS " +
                     "SET STATUS = ? WHERE PRODUCTID = ?");
-            preparedStatement.setString(1, shoe.getStatus());
-            preparedStatement.setInt(2, shoe.getId());
-            preparedStatement.executeUpdate();
+            ps.setString(1, shoe.getStatus());
+            ps.setInt(2, shoe.getId());
+            ps.executeUpdate();
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant update shoe " + shoe.getId());
         }
@@ -96,6 +97,21 @@ public class ShoeDaoImpl implements ShoeDao {
             return shoes;
         } catch (SQLException sqlException) {
             throw new RuntimeException("Cant get shoes");
+        }
+    }
+
+    @Override
+    public Shoe getAnyExistingByParams(int modelId, int size) {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM PRODUCTS " +
+                    "WHERE MODELID = ? AND \"SIZE\" = ?");
+            preparedStatement.setInt(1, modelId);
+            preparedStatement.setInt(1, size);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return extractShoe(resultSet);
+        } catch (SQLException sqlException) {
+            throw new RuntimeException("Cant get shoe of model " + modelId + " and of size " + size);
         }
     }
 

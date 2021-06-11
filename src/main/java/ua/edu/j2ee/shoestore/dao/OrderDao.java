@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface OrderDao extends Dao<Order> {
 
-    List<Order> getOrdersByUser(User user);
+    List<Order> getOrdersByUser(int id);
 
 }
