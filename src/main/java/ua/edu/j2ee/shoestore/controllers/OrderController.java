@@ -24,7 +24,7 @@ public class OrderController {
     @PostMapping("/create")
     public String createOrder(@AuthenticationPrincipal User user){
         ProductCart userCart = user.getProductCart();
-        orderService.createOrder(userCart);
+        orderService.createOrder(user.getId(), userCart);
         return "redirect:/store/basket";
     }
 

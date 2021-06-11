@@ -36,14 +36,15 @@ public class StoreController {
     public ModelAndView mainPage(@RequestParam(name="page", required = false, defaultValue = "1") int currentPage,
                                  @AuthenticationPrincipal User user){
         ProductCart userProductCart = user.getProductCart();
-        List<ShoeModel> models = modelFilterService.getModelsInStockByFilters(userProductCart.getWishedBrands(),
+        List<ShoeModel> models = modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
                                                                               userProductCart.getWishedMinPrice(),
                                                                               userProductCart.getWishedMaxPrice(),
                                                                               userProductCart.getWishedTypes(),
                                                                               userProductCart.getWishedSeasons(),
                                                                               userProductCart.getWishedColors(),
                                                                               userProductCart.getWishedGenders(),
-                                                                              userProductCart.getWishedSizes());
+                                                                              userProductCart.getWishedSizes(),
+                                                                              "IN_STOCK");
         PaginationService paginationService = new PaginationService(models.size(), 25, currentPage, models);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("mainPage");
@@ -75,14 +76,15 @@ public class StoreController {
     @ResponseBody
     public List<ShoeModel> getModels(@AuthenticationPrincipal User user){
         ProductCart userProductCart = user.getProductCart();
-        return modelFilterService.getModelsInStockByFilters(userProductCart.getWishedBrands(),
+        return modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
                                                             userProductCart.getWishedMinPrice(),
                                                             userProductCart.getWishedMaxPrice(),
                                                             userProductCart.getWishedTypes(),
                                                             userProductCart.getWishedSeasons(),
                                                             userProductCart.getWishedColors(),
                                                             userProductCart.getWishedGenders(),
-                                                            userProductCart.getWishedSizes());
+                                                            userProductCart.getWishedSizes(),
+                                                            "IN_STOCK");
     }
 
     @GetMapping("/profile")
@@ -90,7 +92,7 @@ public class StoreController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("profilePage");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("orders", orderDao.getOrdersByUser(user));
+        modelAndView.addObject("orders", orderDao.getOrdersByUser(user.getId()));
         return modelAndView;
     }
 
