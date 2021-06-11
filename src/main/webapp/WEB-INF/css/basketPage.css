@@ -1,51 +1,9 @@
-header{
-    height: 80px;
-    background-color:black;
-    width: auto;
-}
-
-#logo{
-    float: left;
-    color: #C0C0C0;
-    font: 30px Georgia;
-    height: 20px;
-    display: block;
-    margin-left: 150px;
-    margin-top: 20px;
-}
-
-#logo a{
-    text-decoration: none;
-    color: #C0C0C0;
-}
-
-.navpanel{
-    float: right;
-    height: 80px;
-    width: 450px;
-}
-.navpanel ul li{
-    list-style: none;
-    float: left;
-    text-align: right;
-}
-.navpanel ul li a{
-    display: block;
-    width: 171px;
-    text-decoration: none;
-    font-size: 20px;
-    height: 10px;
-    padding-top: 10px;
-    cursor: pointer;
-    color: #C0C0C0;
-}
-
-#mainpart{
+#main-part{
     float: right;
     width: 90%;
 }
 
-#mainpart table{
+#main-part table{
     margin-top: 40px;
     width: 70%;
     text-align: center;

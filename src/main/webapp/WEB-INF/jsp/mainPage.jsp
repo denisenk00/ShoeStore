@@ -8,29 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<head>
-    <title>ShoeStore</title>
-    <style>
-        <%@include file='../css/mainPage.css' %>
-    </style>
-    <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        <%@include file='../js/mainPageUI.js' %>
-        <%@include file='../js/mainPageAjax.js'%>
-    </script>
-</head>
-<body>
-    <div id="block-body">
-        <header>
-            <h1 id="logo">ShoeStore</h1>
-            <nav class="navpanel">
-                <ul>
-                    <li><a href="/store/profile">Профиль</a></li>
-                    <li><a href="/store/basket">Корзина</a></li>
-                </ul>
-            </nav>
-        </header>
-
+    <head>
+        <title>ShoeStore</title>
+        <style>
+            <%@include file='../css/mainPage.css' %>
+        </style>
+        <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+        <script>
+            <%@include file='../js/mainPageUI.js' %>
+            <%@include file='../js/mainPageAjax.js'%>
+        </script>
+    </head>
+    <body>
+        <jsp:include page="header.jsp" />
         <div class="filters">
             <h3>Сезон</h3>
             <div class="checkselect">
@@ -74,41 +64,38 @@
             </div>
             <button id="filterbutton">Фильтровать</button>
         </div>
-        <div id="mainpart">
+        <div id="main-part">
             <h2>Shoes</h2>
             <br>
             <table>
                 <thead>
                     <tr>
-                      <th>Бренд</th>
-                      <th>Название</th>
-                      <th>Стать</th>
-                      <th>Сезон</th>
-                      <th>Тип</th>
-                      <th>Цвет</th>
-                      <th>Цена</th>
+                        <th>Бренд</th>
+                        <th>Название</th>
+                        <th>Стать</th>
+                        <th>Сезон</th>
+                        <th>Тип</th>
+                        <th>Цвет</th>
+                        <th>Цена</th>
                     </tr>
                 </thead>
                 <tbody id="models">
-
-
                     <c:forEach var="model" items="${allShoeModel}">
-                       <tr>
-                          <td>${model.brand}</td>
-                           <td>
-                               <a href="model?id=${model.id}">${model.name}</a>
-                           </td>
-                           <td>${model.gender}</td>
-                           <td>${model.season}</td>
-                           <td>${model.type}</td>
-                           <td>${model.color}</td>
-                           <td>${model.price}</td>
+                        <tr>
+                            <td>${model.brand}</td>
+                            <td>
+                                <a href="model?id=${model.id}">${model.name}</a>
+                            </td>
+                            <td>${model.gender}</td>
+                            <td>${model.season}</td>
+                            <td>${model.type}</td>
+                            <td>${model.color}</td>
+                            <td>${model.price}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
         </div>
         <div id="pagination">${pagination}</div>
-    </div>
-</body>
+    </body>
 </html>
