@@ -1,12 +1,10 @@
 package ua.edu.j2ee.shoestore.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.edu.j2ee.shoestore.dao.Dao;
 import ua.edu.j2ee.shoestore.model.Supplier;
@@ -26,13 +24,22 @@ public class SupplierController {
     }
 
     @GetMapping("/admin/allSuppliers")
-    public ModelAndView allSuppliers(@RequestParam(name="page") int pageNumber){
+    public ModelAndView allSuppliers(@RequestParam(name="page", defaultValue = "1") int pageNumber){
         List<Supplier> suppliers = supplierDao.getAll();
         PaginationService paginationService = new PaginationService(suppliers.size(), 25, pageNumber, suppliers);
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("suppliersPage");
         modelAndView.addObject("suppliers", paginationService.makeBatchOfItems());
         modelAndView.addObject("pagination", paginationService.makePagingLinks("admin/allSuppliers", ""));
         return modelAndView;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/getAllSuppliers")
+    @ResponseBody
+    public List<Supplier> getAllSuppliersJson(){
+        List<Supplier> allSuppliers = supplierDao.getAll();
+        return allSuppliers;
     }
 
     @PostMapping("/addSupplier")
@@ -54,9 +61,8 @@ public class SupplierController {
     }
 
     @PostMapping("/updateSupplier")
-    public String updateSupplier(@ModelAttribute("supplier") Supplier supplier){
+    public void updateSupplier(@ModelAttribute("supplier") Supplier supplier){
         supplierDao.update(supplier);
-        return "redirect:/admin/allSuppliers";
     }
 
 }

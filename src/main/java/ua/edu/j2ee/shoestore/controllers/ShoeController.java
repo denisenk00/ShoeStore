@@ -27,4 +27,10 @@ public class ShoeController {
         shoe.setStatus(status);
         shoeDao.update(shoe);
     }
+
+    @PostMapping("/add")
+    public void add(@RequestParam(name = "size") int size, @RequestParam(name = "modelId") int modelId,
+                    @RequestParam(name = "status") String status){
+        shoeDao.save(new Shoe(modelId, size, status));
+    }
 }

@@ -48,6 +48,14 @@ public class StoreController {
         PaginationService paginationService = new PaginationService(models.size(), 25, currentPage, models);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("mainPage");
+        modelAndView.addObject("wishedTypes", userProductCart.getWishedTypes());
+        modelAndView.addObject("wishedBrands", userProductCart.getWishedBrands());
+        modelAndView.addObject("wishedSizes", userProductCart.getWishedSizes());
+        modelAndView.addObject("wishedColors", userProductCart.getWishedColors());
+        modelAndView.addObject("wishedMinPrice", userProductCart.getWishedMinPrice());
+        modelAndView.addObject("wishedMaxPrice", userProductCart.getWishedMaxPrice());
+        modelAndView.addObject("wishedGenders", userProductCart.getWishedGenders());
+        modelAndView.addObject("wishedSeasons", userProductCart.getWishedSeasons());
         modelAndView.addObject("allTypes", modelDao.getExistingTypes());
         modelAndView.addObject("allBrands", modelDao.getExistingBrands());
         modelAndView.addObject("allSizes", modelDao.getExistingSizes());
@@ -72,19 +80,41 @@ public class StoreController {
         user.getProductCart().updateFilters(brands, types, seasons, colors, genders, sizes, minPrice, maxPrice);
     }
 
-    @GetMapping("/getModelsByUser")
+    @GetMapping("/getModelsByFilter")
     @ResponseBody
-    public List<ShoeModel> getModels(@AuthenticationPrincipal User user){
+    public List<ShoeModel> getModels(@AuthenticationPrincipal User user, @RequestParam(name = "page", defaultValue = "1") int page){
         ProductCart userProductCart = user.getProductCart();
-        return modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
-                                                            userProductCart.getWishedMinPrice(),
-                                                            userProductCart.getWishedMaxPrice(),
-                                                            userProductCart.getWishedTypes(),
-                                                            userProductCart.getWishedSeasons(),
-                                                            userProductCart.getWishedColors(),
-                                                            userProductCart.getWishedGenders(),
-                                                            userProductCart.getWishedSizes(),
-                                                            "IN_STOCK");
+        List<ShoeModel> allModels = modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
+                userProductCart.getWishedMinPrice(),
+                userProductCart.getWishedMaxPrice(),
+                userProductCart.getWishedTypes(),
+                userProductCart.getWishedSeasons(),
+                userProductCart.getWishedColors(),
+                userProductCart.getWishedGenders(),
+                userProductCart.getWishedSizes(),
+                "IN_STOCK");
+        PaginationService paginationService = new PaginationService(allModels.size(), 25, page, allModels);
+        return paginationService.makeBatchOfItems();
+    }
+
+    @GetMapping("/getPaginationByFilter")
+    @ResponseBody
+    public String getPagination(@AuthenticationPrincipal User user, @RequestParam(name = "page", defaultValue = "1") int page,
+                                @RequestParam(name = "pageLocation") String pageLocation){
+        String status = null;
+        if(pageLocation.equals("")) status = "IN_STOCK";
+        ProductCart userProductCart = user.getProductCart();
+        List<ShoeModel> allModels = modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
+                userProductCart.getWishedMinPrice(),
+                userProductCart.getWishedMaxPrice(),
+                userProductCart.getWishedTypes(),
+                userProductCart.getWishedSeasons(),
+                userProductCart.getWishedColors(),
+                userProductCart.getWishedGenders(),
+                userProductCart.getWishedSizes(),
+                status);
+        PaginationService paginationService = new PaginationService(allModels.size(), 25, page, allModels);
+        return paginationService.makePagingLinks(pageLocation, "");
     }
 
     @GetMapping("/profile")
@@ -108,5 +138,13 @@ public class StoreController {
     @GetMapping("/adminPanel")
     public ModelAndView adminPanel(){
         return new ModelAndView("adminPanel");
+    }
+
+    @GetMapping("/removeFilters")
+    public String removeFiltersAndGo(@AuthenticationPrincipal User user, @RequestParam(name = "goTo") String location){
+        user.setProductCart(new ProductCart());
+        if(location.equals("mainPage")) return "redirect:/store/";
+        if(location.equals("adminPanel")) return "redirect:/store/adminPanel";
+        else return null;
     }
 }
