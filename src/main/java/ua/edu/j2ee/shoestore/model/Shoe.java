@@ -11,6 +11,12 @@ public class Shoe {
 
     }
 
+    public Shoe(int modelId, int size, String status) {
+        this.modelId = modelId;
+        this.size = size;
+        this.status = status;
+    }
+
     public Shoe(int id, int modelId, int size, String status) {
         this.id = id;
         this.modelId = modelId;

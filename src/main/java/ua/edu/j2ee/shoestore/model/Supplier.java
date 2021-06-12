@@ -14,6 +14,15 @@ public class Supplier {
 
     }
 
+    public Supplier(String company, String city, String country, String address, String phone, String postalCode) {
+        this.company = company;
+        this.city = city;
+        this.country = country;
+        this.address = address;
+        this.phone = phone;
+        this.postalCode = postalCode;
+    }
+
     public Supplier(int id, String company, String city, String country,
                     String address, String phone, String postalCode) {
         this.id = id;
