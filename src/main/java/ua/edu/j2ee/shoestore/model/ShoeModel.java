@@ -18,6 +18,17 @@ public class ShoeModel {
 
     }
 
+    public ShoeModel(String name, String brand, double price, String type, String season, String color, String gender, int supplierId) {
+        this.name = name;
+        this.brand = brand;
+        this.price = price;
+        this.type = type;
+        this.season = season;
+        this.color = color;
+        this.gender = gender;
+        this.supplierId = supplierId;
+    }
+
     public ShoeModel(int id, String name, String brand, double price, String type,
                      String season, String color, String gender, int supplierId) {
         this.id = id;
