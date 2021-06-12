@@ -1,49 +1,4 @@
 $(function (){
-    (function($) {
-        function setChecked(target) {
-            var checked = $(target).find("input[type='checkbox']:checked").length;
-            if (checked) {
-                $(target).find('select option:first').html('Выбрано: ' + checked);
-            } else {
-                $(target).find('select option:first').html('Выберите из списка');
-            }
-        }
-
-        $.fn.checkselect = function() {
-            this.wrapInner('<div class="checkselect-popup"></div>');
-            this.prepend(
-                '<div class="checkselect-control">' +
-                '<select class="form-control"><option></option></select>' +
-                '<div class="checkselect-over"></div>' +
-                '</div>'
-            );
-
-            this.each(function(){
-                setChecked(this);
-            });
-            this.find('input[type="checkbox"]').click(function(){
-                setChecked($(this).parents('.checkselect'));
-            });
-
-            this.parent().find('.checkselect-control').on('click', function(){
-                $popup = $(this).next();
-                $('.checkselect-popup').not($popup).css('display', 'none');
-                if ($popup.is(':hidden')) {
-                    $popup.css('display', 'block');
-                    $(this).find('select').focus();
-                } else {
-                    $popup.css('display', 'none');
-                }
-            });
-
-            $('html, body').on('click', function(e){
-                if ($(e.target).closest('.checkselect').length == 0){
-                    $('.checkselect-popup').css('display', 'none');
-                }
-            });
-        };
-    })(jQuery);
-
     $('.checkselect').checkselect();
     $("#filterbutton").click(function (){
         var wishedSeasons = [];
@@ -136,16 +91,16 @@ $(function (){
             var brand = tr.insertCell(0);
             var name = tr.insertCell(1);
             var gender = tr.insertCell(2);
-            var seasone = tr.insertCell(3);
+            var season = tr.insertCell(3);
             var type = tr.insertCell(4);
             var color = tr.insertCell(5);
             var price = tr.insertCell(6);
             brand.innerHTML = el[2];
             name.innerHTML = el[1];
-            gender.innerHTML = el[8];
-            seasone.innerHTML = el[6];
+            gender.innerHTML = el[7];
+            season.innerHTML = el[5];
             type.innerHTML = el[4];
-            color.innerHTML = el[7];
+            color.innerHTML = el[6];
             price.innerHTML = el[3];
         })
         var table = document.getElementsByTagName('table').item(0);
@@ -156,7 +111,7 @@ $(function (){
         oldPagination.remove();
         var newPagination = document.createElement("div");
         newPagination.setAttribute("id", "pagination");
-        var blockBody = document.getElementById("block-body");
+        var blockBody = document.getElementsByTagName("body").item(0);
         newPagination.innerHTML = pagination;
         blockBody.appendChild(newPagination);
     }

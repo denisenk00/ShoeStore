@@ -8,28 +8,19 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>ShoeStore - basket</title>
-</head>
-<style>
-    <%@include file='../css/basketPage.css' %>
-</style>
-<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
-<script>
-    <%@include file='../js/basketPage.js' %>
-</script>
-<body>
-    <div id="block-body">
-        <header>
-            <h1 id="logo"><a href="index?page=1">ShoeStore</a></h1>
-            <nav class="navpanel">
-                <ul>
-                    <li><a href="/store/profile">Профиль</a></li>
-                    <li><a href="/store/basket">Корзина</a></li>
-                </ul>
-            </nav>
-        </header>
-        <div id="mainpart">
+    <head>
+        <title>ShoeStore - basket</title>
+    </head>
+    <style>
+        <%@include file='../css/basketPage.css' %>
+    </style>
+    <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        <%@include file='../js/basketPage.js' %>
+    </script>
+    <body>
+        <jsp:include page="header.jsp" />
+        <div id="main-part">
             <h2>Корзина</h2>
             <table>
                 <thead>
@@ -71,6 +62,5 @@
             </table>
             <button id="book">Заказать</button>
         </div>
-    </div>
-</body>
+    </body>
 </html>

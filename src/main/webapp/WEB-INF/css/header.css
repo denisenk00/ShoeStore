@@ -1,0 +1,39 @@
+header{
+    height: 80px;
+    background-color:black;
+    width: auto;
+}
+#logo{
+    float: left;
+    color: #C0C0C0;
+    font: 30px Georgia;
+    height: 20px;
+    display: block;
+    margin-left: 150px;
+    margin-top: 20px;
+}
+.nav-panel{
+    float: right;
+    height: 80px;
+    width: 450px;
+}
+.nav-panel ul li{
+    list-style: none;
+    float: left;
+    text-align: right;
+}
+.nav-panel ul li a{
+    display: block;
+    width: 171px;
+    text-decoration: none;
+    font-size: 20px;
+    height: 10px;
+    padding-top: 10px;
+    cursor: pointer;
+    color: #C0C0C0;
+}
+
+#logo a{
+    text-decoration: none;
+    color: #C0C0C0;
+}

@@ -11,11 +11,11 @@ $(function (){
         }
         if(emailIsPresent(email)){
             event.preventDefault();
-            alert("Пользователь с таким email уже присутствует");
+            alert("Пользователь с таким email уже существует");
         }
         if(phoneNumberIsPresent(phone)){
             event.preventDefault();
-            alert("Пользователь с таким номером телефона уже присутствует");
+            alert("Пользователь с таким номером телефона уже существует");
         }
     })
 
