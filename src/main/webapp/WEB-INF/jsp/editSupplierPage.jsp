@@ -12,7 +12,7 @@
         <title>ShoeStore - edit supplier</title>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
+        <jsp:include page="headerForAdminPanel.jsp" />
         <p><a href="/admin/allSuppliers">Назад</a></p>
 
         <form:form action="updateSupplier" method="post" modelAttribute="supplier">

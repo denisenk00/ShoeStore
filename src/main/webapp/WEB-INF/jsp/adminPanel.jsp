@@ -11,7 +11,7 @@
         <title>ShoeStore - admin panel</title>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
+        <jsp:include page="headerForAdminPanel.jsp" />
         <h2>Админ панель</h2>
         <div id="options">
             <ul>

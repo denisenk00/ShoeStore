@@ -1,5 +1,5 @@
 $(function (){
-    $("#register").onclick(function (){
+    $("#register").click(function (){
         var name = document.getElementById("firstname");
         var surname = document.getElementById("surname");
         var phone = document.getElementById("phone");

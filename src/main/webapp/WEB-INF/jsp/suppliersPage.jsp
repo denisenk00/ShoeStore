@@ -13,11 +13,11 @@
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script>
             <%@include file='../js/suppliersPageUI.js'%>
-            <%@include file='../js/suppliersPageAjax.js'%>
+            <%@include file='../js/ajaxRequests.js'%>
         </script>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
+        <jsp:include page="headerForAdminPanel.jsp" />
         <p><a href="/store/adminPanel">Назад</a></p>
         <h2>Панель управления поставщиками</h2>
         <button id="new-supplier">Новый поставщик</button>

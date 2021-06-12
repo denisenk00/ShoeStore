@@ -13,11 +13,11 @@
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script>
             <%@include file='../js/editModelPageUI.js'%>
-            <%@include file="../js/editModePagelAjax.js"%>
+            <%@include file="../js/ajaxRequests.js"%>
         </script>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
+        <jsp:include page="headerForAdminPanel.jsp" />
         <p><a href="/admin/allModels">Назад</a></p>
         <h2>${model.brand} ${model.name}</h2>
         <div>

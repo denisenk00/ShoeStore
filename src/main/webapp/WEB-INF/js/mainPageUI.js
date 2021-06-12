@@ -9,8 +9,10 @@ $(function (){
         var wishedGenders = [];
         var minPrice = $('#minprice').val();
         var maxPrice = $('#maxprice').val();
+        var pageLocation = $('#page-location').val();
 
-
+        if(pageLocation == "mainPage") pageLocation = "store/";
+        if(pageLocation == "modelsPage") pageLocation = "admin/allModels";
         if(maxPrice < minPrice || minPrice < 0){
             alert("Некоректні дані");
             return;
@@ -78,7 +80,7 @@ $(function (){
 
         const promise = setFilters(wishedSeasons, wishedTypes, wishedBrands, wishedColors,
             wishedSizes, wishedGenders, minPrice, maxPrice);
-        promise.then(getModels(1).then(onModelsReceived)).then(getPagination(1).then(onPaginationReceived));
+        promise.then(getModels(1).then(onModelsReceived)).then(getPagination(1, pageLocation).then(onPaginationReceived));
     });
 
     function onModelsReceived(models){

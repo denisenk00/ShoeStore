@@ -17,10 +17,11 @@
         <script>
             <%@include file='../js/checkBoxSelectList.js' %>
             <%@include file='../js/mainPageUI.js' %>
-            <%@include file='../js/shoeModelsAjax.js'%>
+            <%@include file='../js/ajaxRequests.js'%>
         </script>
     </head>
     <body>
+        <div id="page-location"hidden>mainPage</div>
         <jsp:include page="header.jsp" />
         <div class="filters">
             <h3>Сезон</h3>
