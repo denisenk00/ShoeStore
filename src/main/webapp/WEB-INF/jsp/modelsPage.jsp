@@ -18,11 +18,12 @@
             <%@include file='../js/checkBoxSelectList.js'%>
             <%@include file='../js/modelsPageUI.js' %>
             <%@include file='../js/mainPageUI.js'%>
-            <%@include file='../js/shoeModelsAjax.js'%>
+            <%@include file='../js/ajaxRequests.js'%>
         </script>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
+    <div id="page-location"hidden>modelsPage</div>
+        <jsp:include page="headerForAdminPanel.jsp" />
         <div class="filters">
             <h3>Сезон</h3>
             <div class="checkselect">

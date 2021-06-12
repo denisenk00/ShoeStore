@@ -17,7 +17,7 @@
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script>
             <%@include file='../js/profilePageUI.js' %>
-            <%@include file='../js/profilePageAjax.js' %>
+            <%@include file='../js/ajaxRequests.js' %>
         </script>
     </head>
     <body>
