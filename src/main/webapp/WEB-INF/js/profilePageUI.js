@@ -1,5 +1,7 @@
 $(function (){
     $("#edit-info").click(function (){
+        var button = document.getElementById("edit-info");
+        button.disabled = true;
         var oldName = $("#user-name").val();
         var oldSurname = $("#user-surname").val();
         var oldPhone = $("#user-phone").val();
@@ -20,6 +22,7 @@ $(function (){
                     form.remove();
                     const promise = postUserInfo(newName, newSurname, newPhone, newEmail);
                     promise.then(changeUserInfo(newName, newSurname, newPhone, newEmail));
+                    button.disabled = false;
                 }else {
                     alert("Некорректные данные");
                 }
