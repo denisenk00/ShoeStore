@@ -12,7 +12,7 @@ public class CustomUser {
     private ProductCart productCart;
 
     public CustomUser() {
-        role = "ROLE_USER";
+        role = "USER";
         productCart = new ProductCart();
     }
 
