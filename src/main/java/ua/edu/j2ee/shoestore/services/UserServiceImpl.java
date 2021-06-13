@@ -20,11 +20,11 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);
     }
 
-    private boolean emailExists(String email) {
+    public boolean emailExists(String email) {
         return userDao.getByEmail(email) != null;
     }
 
-    private boolean phoneExists(String phone) {
+    public boolean phoneExists(String phone) {
         return userDao.getByPhone(phone) != null;
     }
 }

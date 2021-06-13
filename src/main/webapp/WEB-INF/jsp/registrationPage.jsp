@@ -16,6 +16,7 @@
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script>
             <%@include file='../js/registrationPage.js' %>
+            <%@include file='../js/validationData.js'%>
         </script>
     </head>
     <body>

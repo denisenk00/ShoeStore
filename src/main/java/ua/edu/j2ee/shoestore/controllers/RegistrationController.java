@@ -2,9 +2,7 @@ package ua.edu.j2ee.shoestore.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.edu.j2ee.shoestore.model.User;
 import ua.edu.j2ee.shoestore.services.UserService;
@@ -32,5 +30,16 @@ public class RegistrationController {
         userService.registerAccount(user);
     }
 
+    @GetMapping("/registration/checkPhoneNumber")
+    @ResponseBody
+    public boolean checkPhoneNumber(@RequestParam(name="number") String number){
+        return userService.phoneExists(number);
+    }
+
+    @GetMapping("/registration/checkEmail")
+    @ResponseBody
+    public boolean checkEmail(@RequestParam(name="email") String email){
+        return userService.emailExists(email);
+    }
 
 }
