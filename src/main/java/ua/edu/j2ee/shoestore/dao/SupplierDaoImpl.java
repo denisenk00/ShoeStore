@@ -13,15 +13,10 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository
 public class SupplierDaoImpl implements Dao<Supplier> {
 
-    private DataSource dataSource;
-
     @Autowired
-    public SupplierDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    private DataSource dataSource;
 
     @Override
     public List<Supplier> getAll() {
