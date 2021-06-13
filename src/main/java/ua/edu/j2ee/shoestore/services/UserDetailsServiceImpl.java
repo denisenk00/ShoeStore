@@ -30,10 +30,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User " + username + " was not found in the database");
         }
 
-        List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-
+        List<GrantedAuthority> grantList = new ArrayList<>();
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole());
-
         grantList.add(authority);
 
         UserDetails userDetails = (UserDetails) new User(user.getEmail(), //

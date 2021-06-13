@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+@Repository
 public class ShoeModelDaoImpl implements ShoeModelDao {
 
     @Autowired

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+@Repository
 public class SupplierDaoImpl implements Dao<Supplier> {
 
     @Autowired

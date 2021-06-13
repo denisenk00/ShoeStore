@@ -14,11 +14,7 @@ import java.util.Hashtable;
 
 @Configuration
 @PropertySource("classpath:application.properties")
-@ComponentScan(basePackages = {"ua.edu.j2ee.shoestore.config",
-        "ua.edu.j2ee.shoestore.controllers",
-        "ua.edu.j2ee.shoestore.dao",
-        "ua.edu.j2ee.shoestore.services",
-        "ua.edu.j2ee.shoestore.*"})
+@ComponentScan(basePackages = {"ua.edu.j2ee.shoestore.*"})
 public class DataSourceConfig {
 
     @Value("${datasource.name}")
