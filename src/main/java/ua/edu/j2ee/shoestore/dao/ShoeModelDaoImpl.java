@@ -14,15 +14,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-@Repository
 public class ShoeModelDaoImpl implements ShoeModelDao {
 
-    private DataSource dataSource;
-
     @Autowired
-    public ShoeModelDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    private DataSource dataSource;
 
     @Override
     public List<ShoeModel> getAll() {

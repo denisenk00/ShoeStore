@@ -24,22 +24,22 @@
         <jsp:include page="header.jsp" />
         <div id="main-part">
             <h2>Профиль</h2>
-            <table id="user-info">
+            <table id="customUser-info">
                 <tr>
                     <td>Имя: </td>
-                    <td id="user-name">${user.name}</td>
+                    <td id="customUser-name">${customUser.name}</td>
                 </tr>
                 <tr>
                     <td>Фамилия: </td>
-                    <td id="user-surname">${user.surname}</td>
+                    <td id="customUser-surname">${customUser.surname}</td>
                 </tr>
                 <tr>
                     <td>Телефон: </td>
-                    <td id="user-phone">${user.phone}</td>
+                    <td id="customUser-phone">${customUser.phone}</td>
                 </tr>
                 <tr>
                     <td>Почта: </td>
-                    <td id="user-email">${user.email}</td>
+                    <td id="customUser-email">${customUser.email}</td>
                 </tr>
             </table>
             <br>
