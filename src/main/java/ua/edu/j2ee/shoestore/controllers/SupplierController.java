@@ -46,7 +46,7 @@ public class SupplierController {
     public String addSupplier(@RequestParam(name="company") String company, @RequestParam(name="city") String city,
                               @RequestParam(name="country") String country, @RequestParam(name="address") String address,
                               @RequestParam(name="phone") String phone, @RequestParam(name="postalCode") String postalCode){
-        Supplier supplier = new Supplier(0, company, city, country, address, phone, postalCode);
+        Supplier supplier = new Supplier(company, city, country, address, phone, postalCode);
         supplierDao.save(supplier);
         return "redirect:/admin/allSuppliers";
     }
