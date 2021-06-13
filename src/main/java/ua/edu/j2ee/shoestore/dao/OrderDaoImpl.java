@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
+@Repository
 public class OrderDaoImpl implements OrderDao {
 
     @Autowired

@@ -15,11 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackages = {"ua.edu.j2ee.shoestore.config",
-        "ua.edu.j2ee.shoestore.controllers",
-        "ua.edu.j2ee.shoestore.dao",
-        "ua.edu.j2ee.shoestore.services",
-        "ua.edu.j2ee.shoestore.*"})
+@ComponentScan(basePackages = {"ua.edu.j2ee.shoestore.*"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -51,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/j_spring_security_check")
                 .loginPage("/login")
-                .defaultSuccessUrl("/store")
+                .defaultSuccessUrl("/store/")
                 .failureUrl("/login?error=true")
                 .usernameParameter("userName")
                 .passwordParameter("password")
