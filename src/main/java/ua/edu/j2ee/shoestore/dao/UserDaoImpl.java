@@ -12,16 +12,10 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository
 public class UserDaoImpl implements UserDao {
 
-
-    private DataSource dataSource;
-
     @Autowired
-    public UserDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    private DataSource dataSource;
 
     @Override
     public List<CustomUser> getAll() {

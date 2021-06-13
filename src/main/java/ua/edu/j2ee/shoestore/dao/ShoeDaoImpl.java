@@ -12,17 +12,10 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository
 public class ShoeDaoImpl implements ShoeDao {
 
-    private DataSource dataSource;
-
     @Autowired
-    public ShoeDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-
+    private DataSource dataSource;
 
     @Override
     public List<Shoe> getAll() {
