@@ -3,17 +3,20 @@ package ua.edu.j2ee.shoestore.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ua.edu.j2ee.shoestore.dao.ShoeDao;
 import ua.edu.j2ee.shoestore.dao.ShoeModelDao;
+import ua.edu.j2ee.shoestore.dao.UserDao;
+import ua.edu.j2ee.shoestore.model.CustomUser;
 import ua.edu.j2ee.shoestore.model.ProductCart;
 import ua.edu.j2ee.shoestore.model.Shoe;
 import ua.edu.j2ee.shoestore.model.ShoeModel;
-import ua.edu.j2ee.shoestore.model.User;
 import ua.edu.j2ee.shoestore.services.PaginationService;
 import ua.edu.j2ee.shoestore.services.ShoeModelFilterService;
 
@@ -22,18 +25,22 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
+@EnableWebMvc
 public class ShoeModelController {
 
     private ShoeModelDao modelDao;
     private ShoeModelFilterService modelFilterService;
     private ShoeDao shoeDao;
+    private UserDao userDao;
 
     @Autowired
-    public ShoeModelController(ShoeModelDao modelDao, ShoeModelFilterService modelFilterService, ShoeDao shoeDao) {
+    public ShoeModelController(ShoeModelDao modelDao, ShoeModelFilterService modelFilterService, ShoeDao shoeDao, UserDao userDao) {
         this.modelDao = modelDao;
         this.modelFilterService = modelFilterService;
         this.shoeDao = shoeDao;
+        this.userDao = userDao;
     }
+
 
     @GetMapping("/model")
     public ModelAndView modelPage(@RequestParam(name="id") int id){
@@ -54,9 +61,10 @@ public class ShoeModelController {
 
     @GetMapping("/admin/allModels")
     @PreAuthorize("hasRole('ADMIN')")
-    public ModelAndView allModels(@AuthenticationPrincipal User user,
+    public ModelAndView allModels(@AuthenticationPrincipal UserDetails userSession,
                                   @RequestParam(name="page", required = false, defaultValue = "1") int currentPage){
-        ProductCart userProductCart = user.getProductCart();
+        CustomUser customUser = userDao.getByEmail(userSession.getUsername());
+        ProductCart userProductCart = customUser.getProductCart();
         List<ShoeModel> allModels = modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
                 userProductCart.getWishedMinPrice(),
                 userProductCart.getWishedMaxPrice(),

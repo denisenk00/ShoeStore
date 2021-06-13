@@ -86,4 +86,8 @@ public class CustomUser {
     public ProductCart getProductCart() {
         return productCart;
     }
+
+    public void setProductCart(ProductCart productCart) {
+        this.productCart = productCart;
+    }
 }

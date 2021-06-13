@@ -6,12 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ua.edu.j2ee.shoestore.dao.ShoeDao;
 import ua.edu.j2ee.shoestore.model.Shoe;
 
 @Controller
 @PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("/shoe")
+@EnableWebMvc
 public class ShoeController {
 
     private ShoeDao shoeDao;

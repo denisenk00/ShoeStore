@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ua.edu.j2ee.shoestore.model.User;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import ua.edu.j2ee.shoestore.model.CustomUser;
 import ua.edu.j2ee.shoestore.services.UserService;
 
 @Controller
+@EnableWebMvc
 public class RegistrationController {
 
     private UserService userService;
@@ -21,12 +23,12 @@ public class RegistrationController {
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("registrationPage");
-        modelAndView.addObject("user", new User());
+        modelAndView.addObject("customUser", new CustomUser());
         return modelAndView;
     }
 
     @PostMapping("/registration")
-    public void registerUser(@ModelAttribute("user") User user){
+    public void registerUser(@ModelAttribute("user") CustomUser user){
         userService.registerAccount(user);
     }
 

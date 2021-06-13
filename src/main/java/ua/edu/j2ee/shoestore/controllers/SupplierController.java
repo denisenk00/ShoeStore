@@ -1,11 +1,11 @@
 package ua.edu.j2ee.shoestore.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ua.edu.j2ee.shoestore.dao.Dao;
 import ua.edu.j2ee.shoestore.model.Supplier;
 import ua.edu.j2ee.shoestore.services.PaginationService;
@@ -14,6 +14,7 @@ import java.util.List;
 
 @Controller
 @PreAuthorize("hasRole('ADMIN')")
+@EnableWebMvc
 public class SupplierController {
 
     private Dao<Supplier> supplierDao;

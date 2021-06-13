@@ -27,7 +27,7 @@
             <h2>Регистрация</h2>
             <p>Если вы уже зарегистрированы, нажмите</p>
             <p><a href="/login">ВОЙТИ</a></p>
-            <form:form action="registration" method="post" modelAttribute="user">
+            <form:form action="registration" method="post" modelAttribute="customUser">
                 <form:label path="name">Имя:</form:label>
                 <form:input path="name" id="firstname"/><br/>
 
