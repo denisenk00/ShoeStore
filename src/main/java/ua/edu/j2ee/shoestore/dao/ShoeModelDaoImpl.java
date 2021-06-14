@@ -17,12 +17,8 @@ import java.util.Set;
 @Repository
 public class ShoeModelDaoImpl implements ShoeModelDao {
 
-    private DataSource dataSource;
-
     @Autowired
-    public ShoeModelDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    private DataSource dataSource;
 
     @Override
     public List<ShoeModel> getAll() {
@@ -149,7 +145,7 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
     @Override
     public double getExistingMaxPrice() {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT MAX(PRICE) FROM MODELS");
+            PreparedStatement ps = connection.prepareStatement("SELECT MAX(PRICE) AS PRICE FROM MODELS");
             ResultSet rs = ps.executeQuery();
             rs.next();
             return extractPrice(rs);
