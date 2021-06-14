@@ -1,6 +1,14 @@
 package ua.edu.j2ee.shoestore.model;
 
-public class CustomUser {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class User implements UserDetails {
 
     private int id = -1;
     private String name;
@@ -11,12 +19,12 @@ public class CustomUser {
     private String role;
     private ProductCart productCart;
 
-    public CustomUser() {
-        role = "ROLE_USER";
+    public User() {
+        role = "USER";
         productCart = new ProductCart();
     }
 
-    public CustomUser(int id, String name, String surname, String phone, String email, String password, String role) {
+    public User(int id, String name, String surname, String phone, String email, String password, String role) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -67,8 +75,41 @@ public class CustomUser {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> grantList = new ArrayList<>();
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + getRole());
+        grantList.add(authority);
+        return grantList;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {

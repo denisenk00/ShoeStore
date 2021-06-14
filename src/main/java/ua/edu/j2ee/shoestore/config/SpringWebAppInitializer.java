@@ -23,7 +23,6 @@ public class SpringWebAppInitializer implements WebApplicationInitializer {
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
 
-
         ContextLoaderListener contextLoaderListener = new ContextLoaderListener(appContext);
 
         servletContext.addListener(contextLoaderListener);

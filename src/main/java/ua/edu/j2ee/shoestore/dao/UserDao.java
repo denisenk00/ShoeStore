@@ -1,11 +1,11 @@
 package ua.edu.j2ee.shoestore.dao;
 
-import ua.edu.j2ee.shoestore.model.CustomUser;
+import ua.edu.j2ee.shoestore.model.User;
 
-public interface UserDao extends Dao<CustomUser> {
+public interface UserDao extends Dao<User> {
 
-    CustomUser getByEmail(String email);
+    User getByEmail(String email);
 
-    CustomUser getByPhone(String phone);
+    User getByPhone(String phone);
 
 }
