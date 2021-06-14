@@ -145,7 +145,7 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
     @Override
     public double getExistingMaxPrice() {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT MAX(PRICE) FROM MODELS");
+            PreparedStatement ps = connection.prepareStatement("SELECT MAX(PRICE) AS PRICE FROM MODELS");
             ResultSet rs = ps.executeQuery();
             rs.next();
             return extractPrice(rs);
