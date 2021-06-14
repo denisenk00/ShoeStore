@@ -1,9 +1,9 @@
 package ua.edu.j2ee.shoestore.services;
 
-import ua.edu.j2ee.shoestore.model.CustomUser;
+import ua.edu.j2ee.shoestore.model.User;
 
 public interface UserService {
 
-    void registerAccount(CustomUser customUser);
+    void registerAccount(User user);
 
 }
