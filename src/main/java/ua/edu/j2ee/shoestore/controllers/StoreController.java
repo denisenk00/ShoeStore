@@ -3,6 +3,7 @@ package ua.edu.j2ee.shoestore.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -76,7 +77,8 @@ public class StoreController {
     }
 
     @PostMapping("/updateFilters")
-    public void updateFilters(@AuthenticationPrincipal UserDetails userSession,
+    @ResponseBody
+    public String updateFilters(@AuthenticationPrincipal UserDetails userSession,
                               @RequestParam("seasons") Set<String> seasons,
                               @RequestParam("types") Set<String> types,
                               @RequestParam("brands") Set<String> brands,
@@ -87,6 +89,7 @@ public class StoreController {
                               @RequestParam("maxPrice") double maxPrice){
         CustomUser customUser = userDao.getByEmail(userSession.getUsername());
         customUser.getProductCart().updateFilters(brands, types, seasons, colors, genders, sizes, minPrice, maxPrice);
+        return "{\"msg\":\"success\"}";
     }
 
     @GetMapping("/getModelsByFilter")
@@ -143,6 +146,7 @@ public class StoreController {
         CustomUser customUser = userDao.getByEmail(user.getUsername());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("basketPage");
+        System.out.println(customUser.getProductCart().getShoeCart().toString());
         modelAndView.addObject("wishedShoes", customUser.getProductCart().getShoeCart());
         modelAndView.addObject("models", modelDao.getAllByStatus("IN_STOCK"));
         return modelAndView;

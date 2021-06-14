@@ -1,9 +1,9 @@
 $(function (){
    $("#add-shoe").click(function (){
-       var size = $("#new-pair-size").val();
-       var selectedIndex = $("#new-pair-size-selector").options.selectedIndex;
-       var status = $("#new-pair-size-selector").options[selectedIndex].value;
-       var modelId = $("#model-id").val();
+       let size = $("#new-pair-size").val();
+       let selectedIndex = $("#new-pair-size-selector").options.selectedIndex;
+       let status = $("#new-pair-size-selector").options[selectedIndex].value;
+       let modelId = $("#model-id").val();
        if(size > 15 && size < 55){
           postNewPair(size, modelId, status);
        }else{
@@ -11,7 +11,7 @@ $(function (){
        }
    })
    $("#update-price").click(function (){
-       var newPrice = $("#new-price").val();
+       let newPrice = $("#new-price").val();
        if(newPrice > 0){
            updateModel(newPrice);
        }else{
@@ -19,8 +19,8 @@ $(function (){
        }
    })
     $("#status-selector").change(function (){
-        var status = this.value;
-        var shoeId = $("shoe-id").val();
+        let status = this.value;
+        let shoeId = $("shoe-id").val();
         updateShoe(shoeId, status);
     })
 });

@@ -43,7 +43,7 @@
                                 <tr>
                                     <td>${model.brand}</td>
                                     <td>
-                                        <a href="/model?id=${model.id}">${model.name}</a>
+                                        <a href="/shoestore/model?id=${model.id}">${model.name}</a>
                                     </td>
                                     <td>${model.gender}</td>
                                     <td>${model.season}</td>
@@ -52,7 +52,7 @@
                                     <td>${shoe.value}</td>
                                     <td>${model.price}</td>
                                     <td>
-                                        <a href="/cart/remove?modelId=${model.id}&size=${shoe.value}">Удалить</a>
+                                        <a href="/shoestore/cart/remove?modelId=${model.id}&size=${shoe.value}">Удалить</a>
                                     </td>
                                 </tr>
                             </c:if>

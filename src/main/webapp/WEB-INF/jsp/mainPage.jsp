@@ -171,7 +171,7 @@
                         <tr>
                             <td>${model.brand}</td>
                             <td>
-                                <a href="model?id=${model.id}">${model.name}</a>
+                                <a href="/shoestore/model?id=${model.id}">${model.name}</a>
                             </td>
                             <td>${model.gender}</td>
                             <td>${model.season}</td>

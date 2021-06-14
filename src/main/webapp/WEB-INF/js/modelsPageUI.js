@@ -1,10 +1,10 @@
 $(function () {
     $("#new-model").click(function () {
-        var button = document.getElementById("new-model");
+        let button = document.getElementById("new-model");
         button.disabled = true;
-        var form = document.getElementById("edit-info-form");
-        var suppliers = getSuppliers();
-        var str = "<h3>Введите данные</h3>" +
+        let form = document.getElementById("edit-info-form");
+        let suppliers = getSuppliers();
+        let str = "<h3>Введите данные</h3>" +
             "<label>Бренд</label>\n" +
             "<input id=\"brand\" type=\"text\" placeholder=\"Введите бренд\">\n" +
             "<label>Название</label>\n" +
@@ -32,17 +32,17 @@ $(function () {
 
         form.innerHTML = str;
         $("#submit").click(function () {
-            var brand = $("#brand").val();
-            var name = $("#name").val();
-            var price = $("#price").val();
-            var type = $("#type").val();
-            var color = $("#color").val();
-            var selectedIndex = $("#season-selector").options.selectedIndex;
-            var season = $("#season-selector").options[selectedIndex].value;
+            let brand = $("#brand").val();
+            let name = $("#name").val();
+            let price = $("#price").val();
+            let type = $("#type").val();
+            let color = $("#color").val();
+            let selectedIndex = $("#season-selector").options.selectedIndex;
+            let season = $("#season-selector").options[selectedIndex].value;
             selectedIndex = $("#gender-selector").options.selectedIndex;
-            var gender = $("#gender-selector").options[selectedIndex].value;
+            let gender = $("#gender-selector").options[selectedIndex].value;
             selectedIndex = $("#supplier-selector").options.selectedIndex;
-            var supplierId = $("#supplier-selector").options[selectedIndex].value;
+            let supplierId = $("#supplier-selector").options[selectedIndex].value;
             if(price > 0){
                 form.remove();
                 postModel(brand, name, price, type, color, season, gender, supplierId);
@@ -51,9 +51,9 @@ $(function () {
             }
         })
         function onSuppliersReceived(suppliers){
-            var selector = "<select id=\"supplier-selector\">\n";
+            let selector = "<select id=\"supplier-selector\">\n";
             suppliers.forEach(el => {
-                selector = selector.concat("<option>").concat(el[8]).concat("</option>");
+                selector = selector.concat("<option>").concat(el[1]).concat("</option>");
             })
             selector = selector.concat("</selector>")
             return selector;

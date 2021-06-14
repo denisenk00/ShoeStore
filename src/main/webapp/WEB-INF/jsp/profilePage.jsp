@@ -18,37 +18,43 @@
         <script>
             <%@include file='../js/profilePageUI.js' %>
             <%@include file='../js/ajaxRequests.js' %>
+            <%@include file='../js/validationData.js'%>
         </script>
     </head>
     <body>
         <jsp:include page="header.jsp" />
         <div id="main-part">
             <h2>Профиль</h2>
-            <table id="customUser-info">
+            <table id="user-info">
                 <tr>
                     <td>Имя: </td>
-                    <td id="customUser-name">${customUser.name}</td>
+                    <td id="user-name">${user.name}</td>
                 </tr>
                 <tr>
                     <td>Фамилия: </td>
-                    <td id="customUser-surname">${customUser.surname}</td>
+                    <td id="user-surname">${user.surname}</td>
                 </tr>
                 <tr>
                     <td>Телефон: </td>
-                    <td id="customUser-phone">${customUser.phone}</td>
+                    <td id="user-phone">${user.phone}</td>
                 </tr>
                 <tr>
                     <td>Почта: </td>
-                    <td id="customUser-email">${customUser.email}</td>
+                    <td id="user-email">${user.email}</td>
                 </tr>
             </table>
             <br>
             <button id="edit-info">Изменить данные</button>
-            <security:authorize access="hasRole('ADMIN')">
-                <button id="admin-panel">Перейти в админ-панель</button>
-            </security:authorize>
-            <button id="logout">Выйти из аккаунта</button>
             <div id="edit-info-form"></div>
+            <security:authorize access="hasRole('ADMIN')">
+                <form action="/shoestore/store/removeFilters" method="get" >
+                    <button id="admin-panel">Перейти в админ-панель</button>
+                    <input name="goTo" type="hidden" value="adminPanel">
+                </form>
+            </security:authorize>
+            <form action="/shoestore/logout">
+                <button id="logout">Выйти из аккаунта</button>
+            </form>
             <div id="orders">
                 <h3>Архив заказов</h3>
                 <table>

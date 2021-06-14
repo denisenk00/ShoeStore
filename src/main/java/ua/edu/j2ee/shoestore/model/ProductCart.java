@@ -84,4 +84,19 @@ public class ProductCart {
     public double getWishedMinPrice() {
         return wishedMinPrice;
     }
+
+    @Override
+    public String toString() {
+        return "ProductCart{" +
+                "shoeCart=" + shoeCart.toString() +
+                ", wishedBrands=" + wishedBrands.toString() +
+                ", wishedTypes=" + wishedTypes.toString() +
+                ", wishedSeasons=" + wishedSeasons.toString() +
+                ", wishedColors=" + wishedColors.toString() +
+                ", wishedGenders=" + wishedGenders.toString()+
+                ", wishedSizes=" + wishedSizes.toString() +
+                ", wishedMaxPrice=" + wishedMaxPrice +
+                ", wishedMinPrice=" + wishedMinPrice +
+                '}';
+    }
 }

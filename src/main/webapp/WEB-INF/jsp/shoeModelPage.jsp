@@ -16,6 +16,7 @@
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script>
             <%@include file='../js/shoeModelPage.js' %>
+            <%@include file='../js/ajaxRequests.js'%>
         </script>
     </head>
     <body>
@@ -59,7 +60,7 @@
                     </td>
                 </tr>
             </table>
-            <div id="model-id"hidden>${model.id}</div>
+            <input type="hidden" id="model-id" value="${model.id}">
             <button id="addToBasket">Добавить в корзину</button>
         </div>
     </body>

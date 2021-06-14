@@ -18,7 +18,7 @@
     </head>
     <body>
         <jsp:include page="headerForAdminPanel.jsp" />
-        <p><a href="/admin/allModels">Назад</a></p>
+        <p><a href="/shoestore/admin/allModels">Назад</a></p>
         <h2>${model.brand} ${model.name}</h2>
         <div>
             <h3>Описание</h3>
@@ -82,13 +82,15 @@
                             <td>${shoe.size}</td>
                             <td>
                                 <select id="status-selector">
-                                    <c:forEach var="status" items="statuses">
-                                        <c:when test="${status.equals(shoe.status)}">
-                                            <option selected>${status}</option>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <option>${status}</option>
-                                        </c:otherwise>
+                                    <c:forEach var="status" items="${statuses}">
+                                        <c:choose>
+                                            <c:when test="${status.equals(shoe.status)}">
+                                                <option selected>${status}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option>${status}</option>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:forEach>
                                 </select>
                             </td>

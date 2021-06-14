@@ -28,8 +28,9 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public void registerUser(@ModelAttribute("user") CustomUser user){
+    public String registerUser(@ModelAttribute("user") CustomUser user){
         userService.registerAccount(user);
+        return "redirect:/store/";
     }
 
     @GetMapping("/registration/checkPhoneNumber")
@@ -42,6 +43,13 @@ public class RegistrationController {
     @ResponseBody
     public boolean checkEmail(@RequestParam(name="email") String email){
         return userService.emailExists(email);
+    }
+
+    @GetMapping("/login")
+    public ModelAndView login(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
     }
 
 }

@@ -133,11 +133,12 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
     @Override
     public double getExistingMinPrice() {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT MIN(PRICE) FROM MODELS");
+            PreparedStatement ps = connection.prepareStatement("SELECT MIN(PRICE) AS PRICE FROM MODELS");
             ResultSet rs = ps.executeQuery();
             rs.next();
             return extractPrice(rs);
         } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
             throw new RuntimeException("Cant get minimal price");
         }
     }
@@ -145,7 +146,7 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
     @Override
     public double getExistingMaxPrice() {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT MAX(PRICE) FROM MODELS");
+            PreparedStatement ps = connection.prepareStatement("SELECT MAX(PRICE) AS PRICE FROM MODELS");
             ResultSet rs = ps.executeQuery();
             rs.next();
             return extractPrice(rs);
@@ -189,7 +190,7 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
     @Override
     public Set<Integer> getExistingSizes() {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT 'SIZE' FROM PRODUCTS");
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT \"SIZE\" FROM PRODUCTS");
             ResultSet rs = ps.executeQuery();
 
             Set<Integer> sizes = new HashSet<>();
@@ -205,7 +206,7 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
     @Override
     public Set<Integer> getExistingSizesByModelId(int id) {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT 'SIZE' " +
+            PreparedStatement ps = connection.prepareStatement("SELECT DISTINCT \"SIZE\" " +
                     "FROM PRODUCTS WHERE MODELID = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();

@@ -44,12 +44,11 @@ public class SupplierController {
     }
 
     @PostMapping("/addSupplier")
-    public String addSupplier(@RequestParam(name="company") String company, @RequestParam(name="city") String city,
+    public void addSupplier(@RequestParam(name="company") String company, @RequestParam(name="city") String city,
                               @RequestParam(name="country") String country, @RequestParam(name="address") String address,
                               @RequestParam(name="phone") String phone, @RequestParam(name="postalCode") String postalCode){
         Supplier supplier = new Supplier(company, city, country, address, phone, postalCode);
         supplierDao.save(supplier);
-        return "redirect:/admin/allSuppliers";
     }
 
     @GetMapping("/updateSupplier")
@@ -62,8 +61,9 @@ public class SupplierController {
     }
 
     @PostMapping("/updateSupplier")
-    public void updateSupplier(@ModelAttribute("supplier") Supplier supplier){
+    public String updateSupplier(@ModelAttribute("supplier") Supplier supplier){
         supplierDao.update(supplier);
+        return "redirect:/admin/allSuppliers";
     }
 
 }

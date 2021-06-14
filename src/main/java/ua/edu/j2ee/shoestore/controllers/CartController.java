@@ -23,11 +23,12 @@ public class CartController {
     }
 
     @PostMapping("/add")
+    @ResponseBody
     public String addToCart(@AuthenticationPrincipal UserDetails userSession, @RequestParam(name = "modelId") int modelId, @RequestParam(name="size") int size){
         CustomUser customUser = userDao.getByEmail(userSession.getUsername());
         ProductCart userCart = customUser.getProductCart();
         userCart.addToCart(modelId, size);
-        return "redirect:/store/basket";
+        return "{\"msg\":\"success\"}";
     }
 
     @PostMapping("/remove")

@@ -1,76 +1,83 @@
 function postNewPair(size, modelId, status){
-    var url = "/shoe/add?size=".concat(size);
-    url = url.concat("&modelId=").concat(modelId);
-    url = url.concat("&status=").concat(status);
-    const promise = $.ajax(url);
+    let url = "/shoestore/shoe/add"
+    const promise = $.ajax({
+        url: url,
+        data:{"size":size, "modelId":modelId, "status":status},
+        method: "POST",
+        dataType: "JSON"
+    });
     return promise;
 }
 function updateModel(modelId, newPrice){
-    var url = "model/updateModel?";
-    url = url.concat("id=").concat(modelId);
-    url = url.concat("&price=").concat(newPrice);
-    const promice = $.ajax(url);
+    let url = "/shoestore/model/updateModel";
+    const promice = $.ajax({
+        url: url,
+        data:{"id":modelId, "price":newPrice},
+        method: "POST",
+        dataType: "JSON"
+    });
     return promice;
 }
 function updateShoe(shoeId, status){
-    var url = "shoe/update?";
+    let url = "/shoestore/shoe/update";
     url = url.concat("id=").concat(shoeId);
     url = url.concat("&status=").concat(status);
-    const promice = $.ajax(url);
+    const promice = $.ajax({
+        url: url,
+        data:{"id":shoeId, "status":status},
+        method: "POST",
+        dataType: "JSON"
+    });
     return promice;
 }
 
 function postModel(brand, name, price, type, color, season, gender, supplierId){
-    var url = "model/addModel?";
-    url = url.concat("name=").concat(name);
-    url = url.concat("&brand=").concat(brand);
-    url = url.concat("&price=").concat(price);
-    url = url.concat("&type=").concat(type);
-    url = url.concat("&season=").concat(season);
-    url = url.concat("&supplierId=").concat(supplierId);
-    url = url.concat("&color=").concat(color);
-    url = url.concat("&gender=").concat(gender);
-    $.ajax(url);
+    let url = "/shoestore/model/addModel";
+    $.ajax({
+        url: url,
+        data:{"name":name, "brand":brand, "price":price, "type":type, "season":season,
+            "supplierId":supplierId, "color":color, "gender":gender},
+        method: "POST"
+    });
 }
 function getSuppliers(){
-    var url = "getAllSuppliers";
-    var suppliers = $.ajax(url);
+    let url = "getAllSuppliers";
+    let suppliers = $.ajax(url);
     return suppliers;
 }
 
 function postUserInfo(name, surname, phone, email){
-    var url = "user/edit?";
-    url = url.concat("name=").concat(name);
-    url = url.concat("&surname=").concat(surname);
-    url = url.concat("&phone=").concat(phone)
-    url = url.concat("&email=").concat(email)
+    let url = "/shoestore/user/edit";
     const promise = $.ajax({
-        type: "POST",
-        url: url
+        method: "POST",
+        url: url,
+        dataType: "JSON",
+        data: {"name":name, "surname":surname, "phone":phone, "email":email}
     });
     return promise;
 }
 function logout(){
     $.ajax("logout");
 }
-function goToAdminPanel(){
-    $.ajax("store/removeFilters?goTo=adminPanel");
-}
 
-function addToBasket(modelId, size){
-    let url = "cart/add?modelId=";
-    url = url.concat(modelId);
-    url = url.concat("&size=").concat(size);
-    const promise = $.ajax(url);
+function addToProductCart(modelId, size){
+    let url = "/shoestore/cart/add";
+    const promise = $.ajax({
+        url:url,
+        method:"POST",
+        dataType: "JSON",
+        data: {"modelId":modelId, "size":size}
+    });
     return promise;
 }
 
 function setFilters(seasons, types, brands, colors,  sizes, genders, minPrice, maxPrice){
-    var url = "updateFilters?seasons=";
+    let url = "/shoestore/store/updateFilters?seasons=";
     function urlBuilder(currentValue, index, arr){
-        url = url.concat(currentValue);
+        url = url.concat(encodeURIComponent(currentValue));
         if(index != arr.length-1) url = url.concat("+");
     }
+
     seasons.forEach(urlBuilder);
     url = url.concat("&types=");
     types.forEach(urlBuilder);
@@ -84,30 +91,42 @@ function setFilters(seasons, types, brands, colors,  sizes, genders, minPrice, m
     genders.forEach(urlBuilder);
     url = url.concat("&minPrice=").concat(minPrice);
     url = url.concat("&maxPrice=").concat(maxPrice);
-    const promise = $.ajax(url);
+    const promise = $.ajax({
+        url:url,
+        method: "POST",
+        dataType: "JSON"
+    });
     return promise;
 }
 function getModels(currentPage){
-    var url = "getModelsByFilter?page=".concat(currentPage);
-    const promise = $.ajax(url);
+    let url = "/shoestore/store/getModelsByFilter";
+    const promise = $.ajax({
+        url:url,
+        data:{"page":currentPage},
+        method: "GET",
+        dataType: "JSON"
+    });
     return promise;
 }
 
 function getPagination(currentPage, pageLocation){
-    var url = "getPaginationByFilter?page=".concat(currentPage);
-    url = url.concat("&pageLocation=").concat(pageLocation);
-    const promise = $.ajax(url);
+    var url = "/shoestore/store/getPaginationByFilter";
+    const promise = $.ajax({
+        url:url,
+        method: "GET",
+        dataType: "JSON",
+        data:{"page":currentPage, "pageLocation":pageLocation}
+    });
     return promise;
 }
 
 function postNewSupplier(company, city, country, address, phone, postalCode){
-    var url = "addSupplier?";
-    url = url.concat("company=").concat(company);
-    url = url.concat("&city=").concat(city);
-    url = url.concat("&country=").concat(country);
-    url = url.concat("&address=").concat(address);
-    url = url.concat("&phone=").concat(phone);
-    url = url.concat("&postalCode").concat(postalCode);
-    const promise = $.ajax(url);
+    var url = "/shoestore/addSupplier";
+    const promise = $.ajax({
+        url:url,
+        data: {"company":company, "city":city, "country":country,
+            "address":address, "phone":phone, "postalCode":postalCode},
+        method:"POST"
+    });
     return promise;
 }
