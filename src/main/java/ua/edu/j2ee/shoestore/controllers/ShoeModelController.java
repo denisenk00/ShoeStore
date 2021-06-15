@@ -3,20 +3,20 @@ package ua.edu.j2ee.shoestore.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ua.edu.j2ee.shoestore.dao.ShoeDao;
 import ua.edu.j2ee.shoestore.dao.ShoeModelDao;
 import ua.edu.j2ee.shoestore.dao.UserDao;
-import ua.edu.j2ee.shoestore.model.CustomUser;
 import ua.edu.j2ee.shoestore.model.ProductCart;
 import ua.edu.j2ee.shoestore.model.Shoe;
 import ua.edu.j2ee.shoestore.model.ShoeModel;
+import ua.edu.j2ee.shoestore.model.User;
 import ua.edu.j2ee.shoestore.services.PaginationService;
 import ua.edu.j2ee.shoestore.services.ShoeModelFilterService;
 
@@ -61,10 +61,9 @@ public class ShoeModelController {
 
     @GetMapping("/admin/allModels")
     @PreAuthorize("hasRole('ADMIN')")
-    public ModelAndView allModels(@AuthenticationPrincipal UserDetails userSession,
+    public ModelAndView allModels(@AuthenticationPrincipal User user,
                                   @RequestParam(name="page", required = false, defaultValue = "1") int currentPage){
-        CustomUser customUser = userDao.getByEmail(userSession.getUsername());
-        ProductCart userProductCart = customUser.getProductCart();
+        ProductCart userProductCart = user.getProductCart();
         List<ShoeModel> allModels = modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
                 userProductCart.getWishedMinPrice(),
                 userProductCart.getWishedMaxPrice(),
@@ -100,21 +99,24 @@ public class ShoeModelController {
 
     @PostMapping("/addModel")
     @PreAuthorize("hasRole('ADMIN')")
+    @ResponseBody
     public String addModel(@RequestParam(name="name") String name, @RequestParam(name="brand") String brand,
                            @RequestParam(name="price") double price, @RequestParam(name="type") String type,
                            @RequestParam(name="season") String season, @RequestParam(name = "supplierId") int supplierId,
                            @RequestParam(name="color") String color, @RequestParam(name="gender") String gender){
         ShoeModel shoeModel = new ShoeModel(name, brand, price, type, season, color, gender, supplierId);
         modelDao.save(shoeModel);
-        return "redirect:/admin/allModels";
+        return "{\"msg\":\"success\"}";
     }
 
     @PostMapping("/updateModel")
     @PreAuthorize("hasRole('ADMIN')")
-    public void updateModel(@RequestParam(name="id") int id, @RequestParam(name="price") double price){
+    @ResponseBody
+    public String updateModel(@RequestParam(name="id") int id, @RequestParam(name="price") double price){
         ShoeModel shoeModel = modelDao.get(id);
         shoeModel.setPrice(price);
         modelDao.update(shoeModel);
+        return "{\"msg\":\"success\"}";
     }
 
     @GetMapping("/admin/model")

@@ -49,6 +49,8 @@ public class ProductCart {
         shoeCart.remove(modelId, size);
     }
 
+    public void clearCart(){ shoeCart = new HashMap<>(); }
+
     public Map<Integer, Integer> getShoeCart() {
         return shoeCart;
     }

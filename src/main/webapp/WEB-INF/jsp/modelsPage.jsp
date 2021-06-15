@@ -22,7 +22,7 @@
         </script>
     </head>
     <body>
-    <div id="page-location"hidden>modelsPage</div>
+        <input id="page-name" type="hidden" value="modelsPage">
         <jsp:include page="headerForAdminPanel.jsp" />
         <div class="filters">
             <h3>Сезон</h3>

@@ -21,7 +21,7 @@
         </script>
     </head>
     <body>
-        <div id="page-location"hidden>mainPage</div>
+        <input id="page-name" type="hidden" value="mainPage">
         <jsp:include page="header.jsp" />
         <div class="filters">
             <h3>Сезон</h3>

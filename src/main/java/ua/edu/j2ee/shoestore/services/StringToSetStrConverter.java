@@ -8,11 +8,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Component
-public class StringToSetConverter implements Converter<String, Set<String>> {
+public class StringToSetStrConverter implements Converter<String, Set<String>> {
 
     @Override
     public Set<String> convert(String s) {
-        new HashSet<>(Arrays.asList(s.split("\\+")));
-        return null;
+        String[] values = s.split(" ");
+        return new HashSet<>(Arrays.asList(values));
     }
 }

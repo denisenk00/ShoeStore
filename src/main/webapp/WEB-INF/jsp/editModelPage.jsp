@@ -49,11 +49,11 @@
                 </tr>
                 <tr>
                     <td>Цена: </td>
-                    <td>${model.price}</td>
+                    <td id="price">${model.price}</td>
                 </tr>
             </table>
         </div>
-        <div id="model-id"hidden>${model.id}</div>
+        <input id="model-id" type="hidden" value="${model.id}">
         <input id="new-price" type="text" placeholder="Новая цена">
         <button id="update-price">Изменить цену</button>
         <div id="new-pair-form">

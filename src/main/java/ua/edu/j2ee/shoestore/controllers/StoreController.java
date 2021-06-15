@@ -1,11 +1,10 @@
 package ua.edu.j2ee.shoestore.controllers;
 
+import com.oracle.webservices.internal.api.message.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,9 +12,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ua.edu.j2ee.shoestore.dao.OrderDao;
 import ua.edu.j2ee.shoestore.dao.ShoeModelDao;
 import ua.edu.j2ee.shoestore.dao.UserDao;
-import ua.edu.j2ee.shoestore.model.CustomUser;
 import ua.edu.j2ee.shoestore.model.ProductCart;
 import ua.edu.j2ee.shoestore.model.ShoeModel;
+import ua.edu.j2ee.shoestore.model.User;
 import ua.edu.j2ee.shoestore.services.PaginationService;
 import ua.edu.j2ee.shoestore.services.ShoeModelFilterService;
 
@@ -42,9 +41,8 @@ public class StoreController {
 
     @GetMapping("/")
     public ModelAndView mainPage(@RequestParam(name="page", required = false, defaultValue = "1") int currentPage,
-                                 @AuthenticationPrincipal UserDetails userSession){
-        CustomUser customUser = userDao.getByEmail(userSession.getUsername());
-        ProductCart userProductCart = customUser.getProductCart();
+                                 @AuthenticationPrincipal User user){
+        ProductCart userProductCart = user.getProductCart();
         List<ShoeModel> models = modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
                                                                               userProductCart.getWishedMinPrice(),
                                                                               userProductCart.getWishedMaxPrice(),
@@ -78,7 +76,7 @@ public class StoreController {
 
     @PostMapping("/updateFilters")
     @ResponseBody
-    public String updateFilters(@AuthenticationPrincipal UserDetails userSession,
+    public String updateFilters(@AuthenticationPrincipal User user,
                               @RequestParam("seasons") Set<String> seasons,
                               @RequestParam("types") Set<String> types,
                               @RequestParam("brands") Set<String> brands,
@@ -87,16 +85,14 @@ public class StoreController {
                               @RequestParam("genders") Set<String> genders,
                               @RequestParam("minPrice") double minPrice,
                               @RequestParam("maxPrice") double maxPrice){
-        CustomUser customUser = userDao.getByEmail(userSession.getUsername());
-        customUser.getProductCart().updateFilters(brands, types, seasons, colors, genders, sizes, minPrice, maxPrice);
+        user.getProductCart().updateFilters(brands, types, seasons, colors, genders, sizes, maxPrice, minPrice);
         return "{\"msg\":\"success\"}";
     }
 
-    @GetMapping("/getModelsByFilter")
+    @GetMapping(value = "/getModelsByFilter")
     @ResponseBody
-    public List<ShoeModel> getModels(@AuthenticationPrincipal UserDetails userSession, @RequestParam(name = "page", defaultValue = "1") int page){
-        CustomUser customUser = userDao.getByEmail(userSession.getUsername());
-        ProductCart userProductCart = customUser.getProductCart();
+    public List<ShoeModel> getModels(@AuthenticationPrincipal User user, @RequestParam(name = "page", defaultValue = "1") int page, @RequestParam(name="status", required = false) String status){
+        ProductCart userProductCart = user.getProductCart();
         List<ShoeModel> allModels = modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
                 userProductCart.getWishedMinPrice(),
                 userProductCart.getWishedMaxPrice(),
@@ -105,19 +101,18 @@ public class StoreController {
                 userProductCart.getWishedColors(),
                 userProductCart.getWishedGenders(),
                 userProductCart.getWishedSizes(),
-                "IN_STOCK");
+                status);
         PaginationService paginationService = new PaginationService(allModels.size(), 25, page, allModels);
         return paginationService.makeBatchOfItems();
     }
 
-    @GetMapping("/getPaginationByFilter")
+    @GetMapping(value = "/getPaginationByFilter")
     @ResponseBody
-    public String getPagination(@AuthenticationPrincipal UserDetails userSession, @RequestParam(name = "page", defaultValue = "1") int page,
+    public String getPagination(@AuthenticationPrincipal User user, @RequestParam(name = "page", defaultValue = "1") int page,
                                 @RequestParam(name = "pageLocation") String pageLocation){
         String status = null;
-        if(pageLocation.equals("")) status = "IN_STOCK";
-        CustomUser customUser = userDao.getByEmail(userSession.getUsername());
-        ProductCart userProductCart = customUser.getProductCart();
+        if(pageLocation.equals("/")) status = "IN_STOCK";
+        ProductCart userProductCart = user.getProductCart();
         List<ShoeModel> allModels = modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
                 userProductCart.getWishedMinPrice(),
                 userProductCart.getWishedMaxPrice(),
@@ -132,22 +127,19 @@ public class StoreController {
     }
 
     @GetMapping("/profile")
-    public ModelAndView profile(@AuthenticationPrincipal UserDetails userSession){
-        CustomUser customUser = userDao.getByEmail(userSession.getUsername());
+    public ModelAndView profile(@AuthenticationPrincipal User user){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("profilePage");
-        modelAndView.addObject("user", customUser);
-        modelAndView.addObject("orders", orderDao.getOrdersByUser(customUser.getId()));
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("orders", orderDao.getOrdersByUser(user.getId()));
         return modelAndView;
     }
 
     @GetMapping("/basket")
     public ModelAndView basket(@AuthenticationPrincipal User user){
-        CustomUser customUser = userDao.getByEmail(user.getUsername());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("basketPage");
-        System.out.println(customUser.getProductCart().getShoeCart().toString());
-        modelAndView.addObject("wishedShoes", customUser.getProductCart().getShoeCart());
+        modelAndView.addObject("wishedShoes", user.getProductCart().getShoeCart());
         modelAndView.addObject("models", modelDao.getAllByStatus("IN_STOCK"));
         return modelAndView;
     }
@@ -159,8 +151,7 @@ public class StoreController {
 
     @GetMapping("/removeFilters")
     public String removeFiltersAndGo(@AuthenticationPrincipal User user, @RequestParam(name = "goTo") String location){
-        CustomUser customUser = userDao.getByEmail(user.getUsername());
-        customUser.setProductCart(new ProductCart());
+        user.setProductCart(new ProductCart());
         if(location.equals("mainPage")) return "redirect:/store/";
         if(location.equals("adminPanel")) return "redirect:/store/adminPanel";
         else return null;

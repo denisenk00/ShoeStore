@@ -15,9 +15,6 @@
         <%@include file='../css/basketPage.css' %>
     </style>
     <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-        <%@include file='../js/basketPage.js' %>
-    </script>
     <body>
         <jsp:include page="header.jsp" />
         <div id="main-part">
@@ -52,7 +49,11 @@
                                     <td>${shoe.value}</td>
                                     <td>${model.price}</td>
                                     <td>
-                                        <a href="/shoestore/cart/remove?modelId=${model.id}&size=${shoe.value}">Удалить</a>
+                                        <form action="/shoestore/cart/remove" method="post">
+                                            <input type="hidden" name="modelId" value="${model.id}">
+                                            <input type="hidden" name="size" value="${shoe.value}">
+                                            <button id="remove-button">Удалить</button>
+                                        </form>
                                     </td>
                                 </tr>
                             </c:if>
@@ -60,7 +61,9 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <button id="book">Заказать</button>
+            <form action="/shoestore/order/create" method="post">
+                <button id="create-order">Заказать</button>
+            </form>
         </div>
     </body>
 </html>

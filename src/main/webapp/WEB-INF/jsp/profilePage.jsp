@@ -79,7 +79,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td><a href="/modelByShoe?shoeId=${shoeId}">${shoeId}</a></td>
+                                    <td><a href="/shoestore/modelByShoe?shoeId=${shoeId}">${shoeId}</a></td>
                                 </tr>
                             </c:forEach>
                         </c:forEach>

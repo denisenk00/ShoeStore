@@ -17,6 +17,7 @@
             <ul>
                 <li><a href="/shoestore/admin/allModels">Управление продукцией</a></li>
                 <li><a href="/shoestore/admin/allSuppliers">Управление поставщиками</a></li>
+                <li><a href="/shoestore/admin/allUsers">Управление пользователями</a></li>
             </ul>
         </div>
     </body>

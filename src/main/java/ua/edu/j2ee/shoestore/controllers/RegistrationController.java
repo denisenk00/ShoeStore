@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import ua.edu.j2ee.shoestore.model.CustomUser;
+import ua.edu.j2ee.shoestore.model.User;
 import ua.edu.j2ee.shoestore.services.UserService;
 
 @Controller
@@ -23,12 +23,12 @@ public class RegistrationController {
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("registrationPage");
-        modelAndView.addObject("customUser", new CustomUser());
+        modelAndView.addObject("customUser", new User());
         return modelAndView;
     }
 
     @PostMapping("/registration")
-    public String registerUser(@ModelAttribute("user") CustomUser user){
+    public String registerUser(@ModelAttribute("user") User user){
         userService.registerAccount(user);
         return "redirect:/store/";
     }
