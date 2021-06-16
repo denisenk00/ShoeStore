@@ -1,21 +1,24 @@
 package ua.edu.j2ee.shoestore.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ua.edu.j2ee.shoestore.model.User;
 import ua.edu.j2ee.shoestore.services.UserService;
 
 @Controller
-@EnableWebMvc
-public class RegistrationController {
+@RequestMapping("/authorization")
+public class AuthorizationController {
 
     private UserService userService;
 
     @Autowired
-    public RegistrationController(UserService userService) {
+    public AuthorizationController(UserService userService) {
         this.userService = userService;
     }
 
@@ -33,23 +36,15 @@ public class RegistrationController {
         return "redirect:/store/";
     }
 
-    @GetMapping("/registration/checkPhoneNumber")
-    @ResponseBody
-    public boolean checkPhoneNumber(@RequestParam(name="number") String number){
-        return userService.phoneExists(number);
-    }
-
-    @GetMapping("/registration/checkEmail")
-    @ResponseBody
-    public boolean checkEmail(@RequestParam(name="email") String email){
-        return userService.emailExists(email);
-    }
-
     @GetMapping("/login")
     public ModelAndView login(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("loginPage");
         return modelAndView;
     }
 
+    @GetMapping("/logout")
+    public String logout(@AuthenticationPrincipal User user){
+        return "redirect:/login";
+    }
 }
