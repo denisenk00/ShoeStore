@@ -2,6 +2,7 @@ package ua.edu.j2ee.shoestore.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,14 +27,14 @@ public class AuthorizationController {
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("registrationPage");
-        modelAndView.addObject("customUser", new User());
+        modelAndView.addObject("user", new User());
         return modelAndView;
     }
 
     @PostMapping("/registration")
     public String registerUser(@ModelAttribute("user") User user){
         userService.registerAccount(user);
-        return "redirect:/store/";
+        return "redirect:/authorization/login";
     }
 
     @GetMapping("/login")
@@ -41,10 +42,5 @@ public class AuthorizationController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("loginPage");
         return modelAndView;
-    }
-
-    @GetMapping("/logout")
-    public String logout(@AuthenticationPrincipal User user){
-        return "redirect:/login";
     }
 }
