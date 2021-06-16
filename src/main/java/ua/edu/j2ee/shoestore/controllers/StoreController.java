@@ -82,7 +82,7 @@ public class StoreController {
         return "redirect:/users/basket";
     }
 
-    @GetMapping("/users/basket")
+    @GetMapping("/users/productCart")
     public ModelAndView productCartPage(@AuthenticationPrincipal User user){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("productCartPage");
