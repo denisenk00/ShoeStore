@@ -79,10 +79,10 @@ public class StoreController {
                                         @RequestParam(name="size") int size){
         ProductCart userCart = user.getProductCart();
         userCart.removeFromCart(modelId, size);
-        return "redirect:/users/basket";
+        return "redirect:/store/users/productCart";
     }
 
-    @GetMapping("/users/basket")
+    @GetMapping("/users/productCart")
     public ModelAndView productCartPage(@AuthenticationPrincipal User user){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("productCartPage");
@@ -119,7 +119,7 @@ public class StoreController {
         ProductCart userCart = user.getProductCart();
         orderService.createOrder(user.getId(), userCart);
         userCart.clearCart();
-        return "redirect:/users/basket";
+        return "redirect:/store/users/productCart";
     }
 
     @GetMapping("/models")
@@ -171,10 +171,10 @@ public class StoreController {
     @GetMapping("/models/modelByShoe")
     public String modelPageByShoe(@RequestParam(name="shoeId") int shoeId){
         Shoe shoe = shoeDao.get(shoeId);
-        return "redirect:/models/model?id=".concat(String.valueOf(shoe.getModelId()));
+        return "redirect:/store/models/model?id=".concat(String.valueOf(shoe.getModelId()));
     }
 
-    @GetMapping(value = "models/getModelsByFilter")
+    @GetMapping(value = "/models/getModelsByFilter")
     @ResponseBody
     public ResponseEntity getModels(@AuthenticationPrincipal User user, @RequestParam(name = "page", defaultValue = "1") int page,
                                     @RequestParam(name="status", required = false) String status){
