@@ -1,10 +1,9 @@
 $(function () {
     $("#new-model").click(function () {
-        var button = document.getElementById("new-model");
+        let button = document.getElementById("new-model");
         button.disabled = true;
-        var form = document.getElementById("edit-info-form");
-        var suppliers = getSuppliers();
-        var str = "<h3>Введите данные</h3>" +
+        let form = document.getElementById("new-model-form");
+        let str = "<h3>Введите данные</h3>" +
             "<label>Бренд</label>\n" +
             "<input id=\"brand\" type=\"text\" placeholder=\"Введите бренд\">\n" +
             "<label>Название</label>\n" +
@@ -26,36 +25,39 @@ $(function () {
             "<option>Мужская</option>\n" +
             "<option>Женская</option>\n" +
             "<option>Унисекс</option>\n" +
-            "</select>\n";
-        str = str.concat(onSuppliersReceived(suppliers));
-        str = str.concat("<input id=\"submit\" type=\"button\" value=\"Применить\">");
-
+            "</select>\n" +
+            "<label>Id Поставщика</label>";
+        $.when(getSuppliers()).then(function (data){
+            let s = onSuppliersReceived(data);
+            str = str.concat(s);
+        })
+        str = str.concat("<form action=\"/shoestore/store/removeFilters\" method=\"get\" >\n" +
+            "                    <button id=\"admin-panel\">Перейти в админ-панель</button>\n" +
+            "                    <input name=\"goTo\" type=\"hidden\" value=\"adminPanel\">\n" +
+            "                </form><input id=\"submit\" type=\"button\" value=\"Применить\">");
         form.innerHTML = str;
         $("#submit").click(function () {
-            var brand = $("#brand").val();
-            var name = $("#name").val();
-            var price = $("#price").val();
-            var type = $("#type").val();
-            var color = $("#color").val();
-            var selectedIndex = $("#season-selector").options.selectedIndex;
-            var season = $("#season-selector").options[selectedIndex].value;
-            selectedIndex = $("#gender-selector").options.selectedIndex;
-            var gender = $("#gender-selector").options[selectedIndex].value;
-            selectedIndex = $("#supplier-selector").options.selectedIndex;
-            var supplierId = $("#supplier-selector").options[selectedIndex].value;
+            let brand = $("#brand").val();
+            let name = $("#name").val();
+            let price = $("#price").val();
+            let type = $("#type").val();
+            let color = $("#color").val();
+            let season = $("#season-selector").val();
+            let gender = $("#gender-selector").val();
+            let supplierId = $("#supplier-selector").val();
             if(price > 0){
-                form.remove();
+                form.innerHTML = "";
                 postModel(brand, name, price, type, color, season, gender, supplierId);
             }else{
                 alert("Некорректные данные");
             }
         })
         function onSuppliersReceived(suppliers){
-            var selector = "<select id=\"supplier-selector\">\n";
+            let selector = "<select id=\"supplier-selector\">\n";
             suppliers.forEach(el => {
-                selector = selector.concat("<option>").concat(el[8]).concat("</option>");
+                selector = selector.concat("<option>").concat(el.id).concat("</option>\n");
             })
-            selector = selector.concat("</selector>")
+            selector = selector.concat("</selector>\n")
             return selector;
         }
     })

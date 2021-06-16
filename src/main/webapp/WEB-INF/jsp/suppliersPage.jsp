@@ -14,15 +14,16 @@
         <script>
             <%@include file='../js/suppliersPageUI.js'%>
             <%@include file='../js/ajaxRequests.js'%>
+            <%@include file='../js/validationData.js'%>
         </script>
     </head>
     <body>
         <jsp:include page="headerForAdminPanel.jsp" />
-        <p><a href="/store/adminPanel">Назад</a></p>
+        <p><a href="/shoestore/store/adminPanel">Назад</a></p>
         <h2>Панель управления поставщиками</h2>
         <button id="new-supplier">Новый поставщик</button>
         <div id="new-supplier-form"></div>
-        <table>
+        <table id="suppliers-table">
             <thead>
                 <tr>
                     <td>Компания</td>
@@ -35,7 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="supplier" items="suppliers">
+                <c:forEach var="supplier" items="${suppliers}">
                     <tr>
                         <td>${supplier.company}</td>
                         <td>${supplier.city}</td>
@@ -44,7 +45,7 @@
                         <td>${supplier.phone}</td>
                         <td>${supplier.postalCode}</td>
                         <td>
-                            <p><a href="/updateSupplier?id=${supplier.id}">Изменить</a></p>
+                            <p><a href="/shoestore/updateSupplier?id=${supplier.id}">Изменить</a></p>
                         </td>
                     </tr>
                 </c:forEach>

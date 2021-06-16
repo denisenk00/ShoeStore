@@ -1,7 +1,7 @@
 $(function () {
     (function ($) {
         function setChecked(target) {
-            var checked = $(target).find("input[type='checkbox']:checked").length;
+            let checked = $(target).find("input[type='checkbox']:checked").length;
             if (checked) {
                 $(target).find('select option:first').html('Выбрано: ' + checked);
             } else {

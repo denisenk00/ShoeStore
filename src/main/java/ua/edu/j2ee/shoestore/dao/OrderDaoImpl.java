@@ -3,7 +3,6 @@ package ua.edu.j2ee.shoestore.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.edu.j2ee.shoestore.model.Order;
-import ua.edu.j2ee.shoestore.model.User;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -14,12 +13,8 @@ import java.util.List;
 @Repository
 public class OrderDaoImpl implements OrderDao {
 
-    private DataSource dataSource;
-
     @Autowired
-    public OrderDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    private DataSource dataSource;
 
     @Override
     public List<Order> getAll() {

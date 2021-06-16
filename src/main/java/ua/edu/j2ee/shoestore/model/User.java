@@ -1,8 +1,14 @@
 package ua.edu.j2ee.shoestore.model;
 
-import java.util.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class User {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class User implements UserDetails {
 
     private int id = -1;
     private String name;
@@ -14,17 +20,8 @@ public class User {
     private ProductCart productCart;
 
     public User() {
-
-    }
-
-    public User(String name, String surname, String phone, String email, String password, String role, ProductCart productCart) {
-        this.name = name;
-        this.surname = surname;
-        this.phone = phone;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.productCart = productCart;
+        role = "USER";
+        productCart = new ProductCart();
     }
 
     public User(int id, String name, String surname, String phone, String email, String password, String role) {
@@ -78,8 +75,41 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> grantList = new ArrayList<>();
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + getRole());
+        grantList.add(authority);
+        return grantList;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {

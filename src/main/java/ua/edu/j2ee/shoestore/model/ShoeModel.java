@@ -113,4 +113,19 @@ public class ShoeModel {
     public void setSupplierId(int supplierId) {
         this.supplierId = supplierId;
     }
+
+    @Override
+    public String toString() {
+        return "ShoeModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", price=" + price +
+                ", type='" + type + '\'' +
+                ", season='" + season + '\'' +
+                ", color='" + color + '\'' +
+                ", gender='" + gender + '\'' +
+                ", supplierId=" + supplierId +
+                '}';
+    }
 }

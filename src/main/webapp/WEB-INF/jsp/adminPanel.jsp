@@ -15,8 +15,9 @@
         <h2>Админ панель</h2>
         <div id="options">
             <ul>
-                <li><a href="/admin/allModels">Управление продукцией</a></li>
-                <li><a href="/admin/allSuppliers">Управление поставщиками</a></li>
+                <li><a href="/shoestore/admin/allModels">Управление продукцией</a></li>
+                <li><a href="/shoestore/admin/allSuppliers">Управление поставщиками</a></li>
+                <li><a href="/shoestore/admin/allUsers">Управление пользователями</a></li>
             </ul>
         </div>
     </body>

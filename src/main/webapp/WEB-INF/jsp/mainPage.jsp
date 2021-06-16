@@ -21,7 +21,7 @@
         </script>
     </head>
     <body>
-        <div id="page-location"hidden>mainPage</div>
+        <input id="page-name" type="hidden" value="mainPage">
         <jsp:include page="header.jsp" />
         <div class="filters">
             <h3>Сезон</h3>
@@ -171,7 +171,7 @@
                         <tr>
                             <td>${model.brand}</td>
                             <td>
-                                <a href="model?id=${model.id}">${model.name}</a>
+                                <a href="/shoestore/model?id=${model.id}">${model.name}</a>
                             </td>
                             <td>${model.gender}</td>
                             <td>${model.season}</td>

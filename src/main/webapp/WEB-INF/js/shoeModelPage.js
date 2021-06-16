@@ -1,9 +1,8 @@
 $(function (){
     $("#addToBasket").click(function (){
-        const modelId = $("#model-id").val();
-        const selectedIndex = $("#size-selector").options.selectedIndex;
-        const size = $("#size-selector").options[selectedIndex].value;
-        const promise = addToBasket(modelId, size);
+        let modelId = $("#model-id").val();
+        let size = $("#size-selector").val();
+        const promise = addToProductCart(modelId, size)
         promise.then(alert("Товар успешно добавлен в корзину"));
     })
 })

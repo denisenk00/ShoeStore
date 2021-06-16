@@ -18,6 +18,7 @@
         <script>
             <%@include file='../js/profilePageUI.js' %>
             <%@include file='../js/ajaxRequests.js' %>
+            <%@include file='../js/validationData.js'%>
         </script>
     </head>
     <body>
@@ -44,11 +45,16 @@
             </table>
             <br>
             <button id="edit-info">Изменить данные</button>
-            <security:authorize access="hasRole('ADMIN')">
-                <button id="admin-panel">Перейти в админ-панель</button>
-            </security:authorize>
-            <button id="logout">Выйти из аккаунта</button>
             <div id="edit-info-form"></div>
+            <security:authorize access="hasRole('ADMIN')">
+                <form action="/shoestore/store/removeFilters" method="get" >
+                    <button id="admin-panel">Перейти в админ-панель</button>
+                    <input name="goTo" type="hidden" value="adminPanel">
+                </form>
+            </security:authorize>
+            <form action="/shoestore/logout">
+                <button id="logout">Выйти из аккаунта</button>
+            </form>
             <div id="orders">
                 <h3>Архив заказов</h3>
                 <table>
@@ -73,7 +79,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td><a href="/modelByShoe?shoeId=${shoeId}">${shoeId}</a></td>
+                                    <td><a href="/shoestore/modelByShoe?shoeId=${shoeId}">${shoeId}</a></td>
                                 </tr>
                             </c:forEach>
                         </c:forEach>

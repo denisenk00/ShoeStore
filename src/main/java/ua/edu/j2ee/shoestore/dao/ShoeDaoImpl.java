@@ -15,14 +15,8 @@ import java.util.List;
 @Repository
 public class ShoeDaoImpl implements ShoeDao {
 
-    private DataSource dataSource;
-
     @Autowired
-    public ShoeDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-
+    private DataSource dataSource;
 
     @Override
     public List<Shoe> getAll() {
@@ -106,7 +100,7 @@ public class ShoeDaoImpl implements ShoeDao {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM PRODUCTS " +
                     "WHERE MODELID = ? AND \"SIZE\" = ?");
             preparedStatement.setInt(1, modelId);
-            preparedStatement.setInt(1, size);
+            preparedStatement.setInt(2, size);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return extractShoe(resultSet);

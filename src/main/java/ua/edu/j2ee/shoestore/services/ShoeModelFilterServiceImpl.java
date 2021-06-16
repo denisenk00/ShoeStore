@@ -6,6 +6,7 @@ import ua.edu.j2ee.shoestore.dao.ShoeDao;
 import ua.edu.j2ee.shoestore.dao.ShoeModelDao;
 import ua.edu.j2ee.shoestore.model.ShoeModel;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,7 +31,9 @@ public class ShoeModelFilterServiceImpl implements ShoeModelFilterService {
                                                     Set<Integer> wishedSizes,
                                                     String status) {
         List<ShoeModel> allModels;
-        if(status == null) allModels = shoeModelDao.getAll();
+        if(status == null){
+            allModels = shoeModelDao.getAll();
+        }
         else allModels = shoeModelDao.getAllByStatus(status);
 
         List<ShoeModel> filteredModels;
@@ -45,7 +48,6 @@ public class ShoeModelFilterServiceImpl implements ShoeModelFilterService {
                         && (wishedSizes.isEmpty() || shoeDao.getAllByModel(model.getId()).stream()
                             .anyMatch(shoe -> wishedSizes.contains(shoe.getSize()))))
                 .collect(Collectors.toList());
-
         return filteredModels;
     }
 }

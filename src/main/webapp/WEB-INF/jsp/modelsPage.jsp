@@ -22,7 +22,7 @@
         </script>
     </head>
     <body>
-    <div id="page-location"hidden>modelsPage</div>
+        <input id="page-name" type="hidden" value="modelsPage">
         <jsp:include page="headerForAdminPanel.jsp" />
         <div class="filters">
             <h3>Сезон</h3>
@@ -153,7 +153,7 @@
             <button id="filterbutton">Фильтровать</button>
         </div>
         <div id="main-part">
-            <p><a href="/store/adminPanel">Назад</a></p>
+            <p><a href="/shoestore/store/adminPanel">Назад</a></p>
             <h2>Панель управления товаром</h2>
             <button id="new-model">Новая модель</button>
             <div id="new-model-form"></div>
@@ -174,7 +174,7 @@
                         <tr>
                             <td>${model.brand}</td>
                             <td>
-                                <a href="/admin/model?id=${model.id}">${model.name}</a>
+                                <a href="/shoestore/admin/model?id=${model.id}">${model.name}</a>
                             </td>
                             <td>${model.gender}</td>
                             <td>${model.season}</td>

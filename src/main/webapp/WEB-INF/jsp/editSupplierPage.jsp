@@ -13,9 +13,10 @@
     </head>
     <body>
         <jsp:include page="headerForAdminPanel.jsp" />
-        <p><a href="/admin/allSuppliers">Назад</a></p>
+        <p><a href="/shoestore/admin/allSuppliers">Назад</a></p>
 
         <form:form action="updateSupplier" method="post" modelAttribute="supplier">
+            <form:hidden path="id"></form:hidden>
             <form:label path="company">Компания:</form:label>
             <form:input path="company" id="company"/><br/>
 
