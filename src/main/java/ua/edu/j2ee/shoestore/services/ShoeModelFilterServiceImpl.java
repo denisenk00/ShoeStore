@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class ShoeModelFilterServiceImpl implements ShoeModelFilterService {
+public class ShoeModelFilterServiceImpl {
 
     @Autowired
     private ShoeModelDao shoeModelDao;
@@ -20,7 +20,6 @@ public class ShoeModelFilterServiceImpl implements ShoeModelFilterService {
     @Autowired
     private ShoeDao shoeDao;
 
-    @Override
     public List<ShoeModel> getModelsByFilters(Set<String> wishedBrands,
                                                     double minPrice,
                                                     double maxPrice,
