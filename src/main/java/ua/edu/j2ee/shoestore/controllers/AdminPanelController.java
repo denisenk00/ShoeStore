@@ -105,7 +105,7 @@ public class AdminPanelController {
         statuses.add("EXPECTED");
         statuses.add("NOT_AVAILABLE");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("adminModelPage");
+        modelAndView.setViewName("editModelPage");
         modelAndView.addObject("statuses", statuses);
         modelAndView.addObject("model", shoeModel);
         modelAndView.addObject("shoes", shoes);
