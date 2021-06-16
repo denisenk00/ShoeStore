@@ -15,6 +15,13 @@ public class Order {
 
     }
 
+    public Order(int userId, double totalPrice, LocalDate orderDate, List<Integer> shoeIdList) {
+        this.userId = userId;
+        this.totalPrice = totalPrice;
+        this.orderDate = orderDate;
+        this.shoeIdList = shoeIdList;
+    }
+
     public Order(int id, int userId, double totalPrice, LocalDate orderDate, List<Integer> shoeIdList) {
         this.id = id;
         this.userId = userId;

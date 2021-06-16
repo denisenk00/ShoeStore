@@ -18,6 +18,17 @@ public class ShoeModel {
 
     }
 
+    public ShoeModel(String name, String brand, double price, String type, String season, String color, String gender, int supplierId) {
+        this.name = name;
+        this.brand = brand;
+        this.price = price;
+        this.type = type;
+        this.season = season;
+        this.color = color;
+        this.gender = gender;
+        this.supplierId = supplierId;
+    }
+
     public ShoeModel(int id, String name, String brand, double price, String type,
                      String season, String color, String gender, int supplierId) {
         this.id = id;
@@ -101,5 +112,20 @@ public class ShoeModel {
 
     public void setSupplierId(int supplierId) {
         this.supplierId = supplierId;
+    }
+
+    @Override
+    public String toString() {
+        return "ShoeModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", price=" + price +
+                ", type='" + type + '\'' +
+                ", season='" + season + '\'' +
+                ", color='" + color + '\'' +
+                ", gender='" + gender + '\'' +
+                ", supplierId=" + supplierId +
+                '}';
     }
 }

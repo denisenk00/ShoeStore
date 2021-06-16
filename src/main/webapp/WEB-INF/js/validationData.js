@@ -1,5 +1,5 @@
 function checkNameWord(str){
-    return str.match(/[A-Z][a-z]+/);
+    return str.match(/[А-я][а-я]+/) != null || str.match(/[A-z][a-z]+/) != null;
 }
 function checkPhoneNumber(number) {
     number = number.replace(/[\s\-]/g, '');
@@ -9,13 +9,33 @@ function checkEmail(email){
     return email.match(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/) != null;
 }
 function phoneNumberIsPresent(number) {
-    var url = "checkPhoneNumber?number=".concat(number);
-    const promise = $.ajax(url);
-    return promise;
+    let url = "registration/checkPhoneNumber?number=".concat(number);
+    let bool = false;
+    $.ajax({
+        url:url,
+        type:"get",
+        dataType: "text",
+        async: false,
+        success: function (data){
+            if(data == "true") bool = true;
+            else bool = false;
+        }
+    });
+    return bool;
 }
 function emailIsPresent(email){
-    var url = "checkEmail?email=".concat(email);
-    const promise = $.ajax(url);
-    return promise;
+    let url = "registration/checkEmail?email=".concat(email);
+    let bool = false;
+    $.ajax({
+        url:url,
+        type:"get",
+        dataType: "text",
+        async: false,
+        success: function (data){
+            if(data == "true") bool = true;
+            else bool = false;
+        }
+    });
+    return bool;
 }
 

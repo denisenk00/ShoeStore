@@ -1,28 +1,29 @@
 <%--
   Created by IntelliJ IDEA.
-  User: denisenk00
-  Date: 09.05.2021
-  Time: 12:08
+  User: Admin
+  Date: 11.06.2021
+  Time: 15:43
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <head>
-        <title>ShoeStore</title>
+        <title>ShoeStore - product management</title>
         <style>
             <%@include file='../css/mainPage.css' %>
         </style>
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script>
-            <%@include file='../js/checkBoxSelectList.js' %>
-            <%@include file='../js/mainPageUI.js' %>
+            <%@include file='../js/checkBoxSelectList.js'%>
+            <%@include file='../js/modelsPageUI.js' %>
+            <%@include file='../js/mainPageUI.js'%>
             <%@include file='../js/ajaxRequests.js'%>
         </script>
     </head>
     <body>
-        <input id="page-name" type="hidden" value="mainPage">
-        <jsp:include page="header.jsp" />
+        <input id="page-name" type="hidden" value="modelsPage">
+        <jsp:include page="headerForAdminPanel.jsp" />
         <div class="filters">
             <h3>Сезон</h3>
             <div class="checkselect">
@@ -152,8 +153,10 @@
             <button id="filterbutton">Фильтровать</button>
         </div>
         <div id="main-part">
-            <h2>Shoes</h2>
-            <br>
+            <p><a href="/shoestore/store/adminPanel">Назад</a></p>
+            <h2>Панель управления товаром</h2>
+            <button id="new-model">Новая модель</button>
+            <div id="new-model-form"></div>
             <table>
                 <thead>
                     <tr>
@@ -171,7 +174,7 @@
                         <tr>
                             <td>${model.brand}</td>
                             <td>
-                                <a href="/shoestore/model?id=${model.id}">${model.name}</a>
+                                <a href="/shoestore/admin/model?id=${model.id}">${model.name}</a>
                             </td>
                             <td>${model.gender}</td>
                             <td>${model.season}</td>
@@ -182,7 +185,7 @@
                     </c:forEach>
                 </tbody>
             </table>
+            <div id="pagination">${pagination}</div>
         </div>
-        <div id="pagination">${pagination}</div>
     </body>
 </html>

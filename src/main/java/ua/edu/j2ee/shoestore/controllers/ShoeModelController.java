@@ -7,9 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ua.edu.j2ee.shoestore.dao.ShoeDao;
 import ua.edu.j2ee.shoestore.dao.ShoeModelDao;
+import ua.edu.j2ee.shoestore.dao.UserDao;
 import ua.edu.j2ee.shoestore.model.ProductCart;
 import ua.edu.j2ee.shoestore.model.Shoe;
 import ua.edu.j2ee.shoestore.model.ShoeModel;
@@ -17,22 +20,27 @@ import ua.edu.j2ee.shoestore.model.User;
 import ua.edu.j2ee.shoestore.services.PaginationService;
 import ua.edu.j2ee.shoestore.services.ShoeModelFilterService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Controller
+@EnableWebMvc
 public class ShoeModelController {
 
     private ShoeModelDao modelDao;
     private ShoeModelFilterService modelFilterService;
     private ShoeDao shoeDao;
+    private UserDao userDao;
 
     @Autowired
-    public ShoeModelController(ShoeModelDao modelDao, ShoeModelFilterService modelFilterService, ShoeDao shoeDao) {
+    public ShoeModelController(ShoeModelDao modelDao, ShoeModelFilterService modelFilterService, ShoeDao shoeDao, UserDao userDao) {
         this.modelDao = modelDao;
         this.modelFilterService = modelFilterService;
         this.shoeDao = shoeDao;
+        this.userDao = userDao;
     }
+
 
     @GetMapping("/model")
     public ModelAndView modelPage(@RequestParam(name="id") int id){
@@ -63,10 +71,19 @@ public class ShoeModelController {
                 userProductCart.getWishedSeasons(),
                 userProductCart.getWishedColors(),
                 userProductCart.getWishedGenders(),
-                userProductCart.getWishedSizes());
+                userProductCart.getWishedSizes(),
+                null);
         PaginationService paginationService = new PaginationService(allModels.size(), 25, currentPage, allModels);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("allModels");
+        modelAndView.setViewName("modelsPage");
+        modelAndView.addObject("wishedTypes", userProductCart.getWishedTypes());
+        modelAndView.addObject("wishedBrands", userProductCart.getWishedBrands());
+        modelAndView.addObject("wishedSizes", userProductCart.getWishedSizes());
+        modelAndView.addObject("wishedColors", userProductCart.getWishedColors());
+        modelAndView.addObject("wishedMinPrice", userProductCart.getWishedMinPrice());
+        modelAndView.addObject("wishedMaxPrice", userProductCart.getWishedMaxPrice());
+        modelAndView.addObject("wishedGenders", userProductCart.getWishedGenders());
+        modelAndView.addObject("wishedSeasons", userProductCart.getWishedSeasons());
         modelAndView.addObject("allTypes", modelDao.getExistingTypes());
         modelAndView.addObject("allBrands", modelDao.getExistingBrands());
         modelAndView.addObject("allSizes", modelDao.getExistingSizes());
@@ -74,7 +91,7 @@ public class ShoeModelController {
         modelAndView.addObject("minPrice", modelDao.getExistingMinPrice());
         modelAndView.addObject("maxPrice", modelDao.getExistingMaxPrice());
         modelAndView.addObject("allShoeModel", paginationService.makeBatchOfItems());
-        modelAndView.addObject("pagination", paginationService.makePagingLinks("admin/models", ""));
+        modelAndView.addObject("pagination", paginationService.makePagingLinks("admin/allModels", ""));
         return modelAndView;
     }
 
@@ -82,21 +99,24 @@ public class ShoeModelController {
 
     @PostMapping("/addModel")
     @PreAuthorize("hasRole('ADMIN')")
+    @ResponseBody
     public String addModel(@RequestParam(name="name") String name, @RequestParam(name="brand") String brand,
                            @RequestParam(name="price") double price, @RequestParam(name="type") String type,
                            @RequestParam(name="season") String season, @RequestParam(name = "supplierId") int supplierId,
                            @RequestParam(name="color") String color, @RequestParam(name="gender") String gender){
-        ShoeModel shoeModel = new ShoeModel(0, name, brand, price, type, season, color, gender, supplierId);
+        ShoeModel shoeModel = new ShoeModel(name, brand, price, type, season, color, gender, supplierId);
         modelDao.save(shoeModel);
-        return "redirect:/admin/allModels";
+        return "{\"msg\":\"success\"}";
     }
 
     @PostMapping("/updateModel")
     @PreAuthorize("hasRole('ADMIN')")
-    public void updateModel(@RequestParam(name="id") int id, @RequestParam(name="price") double price){
+    @ResponseBody
+    public String updateModel(@RequestParam(name="id") int id, @RequestParam(name="price") double price){
         ShoeModel shoeModel = modelDao.get(id);
         shoeModel.setPrice(price);
         modelDao.update(shoeModel);
+        return "{\"msg\":\"success\"}";
     }
 
     @GetMapping("/admin/model")
@@ -104,8 +124,14 @@ public class ShoeModelController {
     public ModelAndView editModelPanel(@RequestParam(name="id") int id){
         ShoeModel shoeModel = modelDao.get(id);
         List<Shoe> shoes = shoeDao.getAllByModel(id);
+        Set<String> statuses = new HashSet<>();
+        statuses.add("IN_STOCK");
+        statuses.add("BOOKED");
+        statuses.add("EXPECTED");
+        statuses.add("NOT_AVAILABLE");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("editModelPage");
+        modelAndView.addObject("statuses", statuses);
         modelAndView.addObject("model", shoeModel);
         modelAndView.addObject("shoes", shoes);
         return modelAndView;

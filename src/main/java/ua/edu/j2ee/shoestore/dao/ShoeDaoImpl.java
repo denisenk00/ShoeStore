@@ -100,7 +100,7 @@ public class ShoeDaoImpl implements ShoeDao {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM PRODUCTS " +
                     "WHERE MODELID = ? AND \"SIZE\" = ?");
             preparedStatement.setInt(1, modelId);
-            preparedStatement.setInt(1, size);
+            preparedStatement.setInt(2, size);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return extractShoe(resultSet);

@@ -1,162 +1,121 @@
 $(function (){
-    (function($) {
-        function setChecked(target) {
-            var checked = $(target).find("input[type='checkbox']:checked").length;
-            if (checked) {
-                $(target).find('select option:first').html('Выбрано: ' + checked);
-            } else {
-                $(target).find('select option:first').html('Выберите из списка');
-            }
-        }
-
-        $.fn.checkselect = function() {
-            this.wrapInner('<div class="checkselect-popup"></div>');
-            this.prepend(
-                '<div class="checkselect-control">' +
-                '<select class="form-control"><option></option></select>' +
-                '<div class="checkselect-over"></div>' +
-                '</div>'
-            );
-
-            this.each(function(){
-                setChecked(this);
-            });
-            this.find('input[type="checkbox"]').click(function(){
-                setChecked($(this).parents('.checkselect'));
-            });
-
-            this.parent().find('.checkselect-control').on('click', function(){
-                $popup = $(this).next();
-                $('.checkselect-popup').not($popup).css('display', 'none');
-                if ($popup.is(':hidden')) {
-                    $popup.css('display', 'block');
-                    $(this).find('select').focus();
-                } else {
-                    $popup.css('display', 'none');
-                }
-            });
-
-            $('html, body').on('click', function(e){
-                if ($(e.target).closest('.checkselect').length == 0){
-                    $('.checkselect-popup').css('display', 'none');
-                }
-            });
-        };
-    })(jQuery);
-
     $('.checkselect').checkselect();
+    let pageName = $('#page-name').val();
     $("#filterbutton").click(function (){
-        var wishedSeasons = [];
-        var wishedBrands = [];
-        var wishedTypes = [];
-        var wishedSizes = [];
-        var wishedColors = [];
-        var wishedGenders = [];
-        var minPrice = $('#minprice').val();
-        var maxPrice = $('#maxprice').val();
-
-
+        let pageLocation;
+        let wishedSeasons = [];
+        let wishedBrands = [];
+        let wishedTypes = [];
+        let wishedSizes = [];
+        let wishedColors = [];
+        let wishedGenders = [];
+        let minPrice = $('#minprice').val();
+        let maxPrice = $('#maxprice').val();
+        if(pageName == "mainPage") pageLocation = "/";
+        if(pageName == "modelsPage") pageLocation = "admin/allModels";
         if(maxPrice < minPrice || minPrice < 0){
-            alert("Некоректні дані");
+            alert("Некорректные данные");
             return;
         }
         $('.season:checked').each(function (){
-            var val = $(this).val();
+            let val = $(this).val();
             wishedSeasons.push(val);
         })
         $('.brand:checked').each(function (){
-            var val = $(this).val();
+            let val = $(this).val();
             wishedBrands.push(val);
         })
         $('.type:checked').each(function (){
-            var val = $(this).val();
+            let val = $(this).val();
             wishedTypes.push(val);
         })
         $('.size:checked').each(function (){
-            var val = $(this).val();
+            let val = $(this).val();
             wishedSizes.push(val);
         })
         $('.color:checked').each(function (){
-            var val = $(this).val();
+            let val = $(this).val();
             wishedColors.push(val);
         })
         $('.gender:checked').each(function (){
-            var val = $(this).val();
+            let val = $(this).val();
             wishedGenders.push(val);
         })
         if(wishedSeasons.length == 0){
             $('.season').each(function (){
-                var val = $(this).val();
+                let val = $(this).val();
                 wishedSeasons.push(val);
             })
         }
         if(wishedBrands.length == 0){
             $('.brand').each(function (){
-                var val = $(this).val();
+                let val = $(this).val();
                 wishedBrands.push(val);
             })
         }
         if(wishedColors.length == 0){
             $('.color').each(function (){
-                var val = $(this).val();
+                let val = $(this).val();
                 wishedColors.push(val);
             })
         }
         if(wishedGenders.length == 0){
             $('.gender').each(function (){
-                var val = $(this).val();
+                let val = $(this).val();
                 wishedGenders.push(val);
             })
         }
         if(wishedTypes.length == 0){
             $('.type').each(function (){
-                var val = $(this).val();
+                let val = $(this).val();
                 wishedTypes.push(val);
             })
         }
         if(wishedSizes.length == 0){
             $('.size').each(function (){
-                var val = $(this).val();
+                let val = $(this).val();
                 wishedSizes.push(val);
             })
         }
-
-        const promise = setFilters(wishedSeasons, wishedTypes, wishedBrands, wishedColors,
-            wishedSizes, wishedGenders, minPrice, maxPrice);
-        promise.then(getModels(1).then(onModelsReceived)).then(getPagination(1).then(onPaginationReceived));
+        $.when(setFilters(wishedSeasons, wishedTypes, wishedBrands, wishedColors,
+            wishedSizes, wishedGenders, minPrice, maxPrice)).then(function (){
+                getModels(1, pageName).then(onModelsReceived);
+                getPagination(1, pageLocation, pageName).then(onPaginationReceived);
+        })
     });
 
-    function onModelsReceived(models){
-        var thead = document.getElementById("models");
-        thead.remove();
-        var tbody = document.createElement("tbody");
-        tbody.setAttribute("id", "models");
-        models.forEach(el => {
+    function onModelsReceived(data){
+        let tbody = document.getElementsByTagName("tbody").item(0);
+        tbody.innerHTML = "";
+        data.forEach(el => {
             var tr = tbody.insertRow();
             var brand = tr.insertCell(0);
             var name = tr.insertCell(1);
             var gender = tr.insertCell(2);
-            var seasone = tr.insertCell(3);
+            var season = tr.insertCell(3);
             var type = tr.insertCell(4);
             var color = tr.insertCell(5);
             var price = tr.insertCell(6);
-            brand.innerHTML = el[2];
-            name.innerHTML = el[1];
-            gender.innerHTML = el[8];
-            seasone.innerHTML = el[6];
-            type.innerHTML = el[4];
-            color.innerHTML = el[7];
-            price.innerHTML = el[3];
+            brand.innerText = el.brand;
+            if(pageName == "mainPage"){
+                name.innerHTML = "<a href=\"/shoestore/model?id=".concat(el.id).concat("\">").concat(el.name).concat("</a>");
+            }else if(pageName == "modelsPage"){
+                name.innerHTML = "<a href=\"/shoestore/admin/model?id=".concat(el.id).concat("\">").concat(el.name).concat("</a>");
+            }
+            gender.innerText = el.gender;
+            season.innerText = el.season;
+            type.innerText = el.type;
+            color.innerText = el.color;
+            price.innerText = el.price;
+            tbody.appendChild(tr);
         })
-        var table = document.getElementsByTagName('table').item(0);
-        table.appendChild(tbody);
     }
     function onPaginationReceived(pagination){
-        var oldPagination = document.getElementById("pagination");
+        let oldPagination = document.getElementById("pagination");
         oldPagination.remove();
-        var newPagination = document.createElement("div");
+        let newPagination = document.createElement("div");
         newPagination.setAttribute("id", "pagination");
-        var blockBody = document.getElementById("block-body");
+        let blockBody = document.getElementsByTagName("body").item(0);
         newPagination.innerHTML = pagination;
         blockBody.appendChild(newPagination);
     }
