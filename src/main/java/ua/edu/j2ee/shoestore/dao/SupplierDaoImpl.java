@@ -1,5 +1,6 @@
 package ua.edu.j2ee.shoestore.dao;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -16,8 +17,13 @@ import java.util.List;
 @Repository
 public class SupplierDaoImpl implements Dao<Supplier> {
 
-    @Autowired
+    private static final Logger LOG = Logger.getLogger(ShoeDaoImpl.class);
     private DataSource dataSource;
+
+    @Autowired
+    public SupplierDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public List<Supplier> getAll() {

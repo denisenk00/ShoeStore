@@ -32,6 +32,8 @@ public class OrderManagementServiceImpl implements OrderManagementService {
         for (Map.Entry<Integer, Integer> entry : cart.getShoeCart().entrySet()) {
             Shoe shoe = shoeDao.getAnyExistingByParams(entry.getKey(), entry.getValue());
             shoeList.add(shoe.getId());
+            shoe.setStatus("BOOKED");
+            shoeDao.update(shoe);
             totalPrice += shoeModelDao.get(shoe.getModelId()).getPrice();
         }
         orderDao.save(new Order(-1, userId, totalPrice, LocalDate.now(), shoeList));

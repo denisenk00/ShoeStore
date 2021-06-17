@@ -1,5 +1,6 @@
 package ua.edu.j2ee.shoestore.dao;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.edu.j2ee.shoestore.model.Order;
@@ -13,8 +14,14 @@ import java.util.List;
 @Repository
 public class OrderDaoImpl implements OrderDao {
 
-    @Autowired
+    private static final Logger LOG = Logger.getLogger(OrderDaoImpl.class);
+
     private DataSource dataSource;
+
+    @Autowired
+    public OrderDaoImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public List<Order> getAll() {
@@ -29,6 +36,7 @@ public class OrderDaoImpl implements OrderDao {
 
             return orders;
         } catch (SQLException sqlException) {
+            //LOG.error("getAll: SQL exception ");
             throw new RuntimeException("Cant get all orders");
         }
     }
