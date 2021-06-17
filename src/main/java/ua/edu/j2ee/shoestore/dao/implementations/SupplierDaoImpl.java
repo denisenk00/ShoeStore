@@ -17,7 +17,7 @@ import java.util.List;
 @Repository
 public class SupplierDaoImpl implements Dao<Supplier> {
 
-    private static final Logger LOG = Logger.getLogger(ShoeDaoImpl.class);
+    private static final Logger LOG = Logger.getLogger(SupplierDaoImpl.class);
     private DataSource dataSource;
 
     @Autowired
@@ -37,7 +37,8 @@ public class SupplierDaoImpl implements Dao<Supplier> {
             }
             return suppliers;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get all suppliers");
+            LOG.error("SupplierDao, getAll: cant get all suppliers. SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить всех поставщиков");
         }
     }
 
@@ -50,7 +51,8 @@ public class SupplierDaoImpl implements Dao<Supplier> {
             rs.next();
             return extractSupplier(rs);
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get supplier " + id);
+            LOG.error("SupplierDao, get: cant get supplier " + id + ". SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить поставщика");
         }
     }
 
@@ -68,7 +70,9 @@ public class SupplierDaoImpl implements Dao<Supplier> {
             ps.setString(6, supplier.getPostalCode());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant save supplier");
+            LOG.error("SupplierDao, save: cant save supplier. SQL error code: " + sqlException.getErrorCode());
+            LOG.error("Supplier info: " + supplier);
+            throw new DaoRuntimeException("Невозможно сохранить поставщика");
         }
     }
 
@@ -86,7 +90,9 @@ public class SupplierDaoImpl implements Dao<Supplier> {
             ps.setInt(7, supplier.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant update supplier");
+            LOG.error("SupplierDao, update: cant update supplier. SQL error code: " + sqlException.getErrorCode());
+            LOG.error("Supplier info: " + supplier);
+            throw new DaoRuntimeException("Невозможно обновить поставщика");
         }
     }
 

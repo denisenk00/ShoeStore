@@ -17,7 +17,7 @@ import java.util.List;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-    private static final Logger LOG = Logger.getLogger(ShoeDaoImpl.class);
+    private static final Logger LOG = Logger.getLogger(UserDaoImpl.class);
     private DataSource dataSource;
 
     @Autowired
@@ -37,7 +37,8 @@ public class UserDaoImpl implements UserDao {
             }
             return users;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get all users");
+            LOG.error("UserDao, getAll: cant get all users. SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить всех пользователей");
         }
     }
 
@@ -50,7 +51,8 @@ public class UserDaoImpl implements UserDao {
             rs.next();
             return extractUser(rs);
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get user " + id);
+            LOG.error("UserDao, get: cant get user " + id + ". SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить пользователя");
         }
     }
 
@@ -68,7 +70,9 @@ public class UserDaoImpl implements UserDao {
             ps.setString(6, user.getRole());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant save user");
+            LOG.error("UserDao, save: cant save user. SQL error code: " + sqlException.getErrorCode());
+            LOG.error("User info: " + user);
+            throw new DaoRuntimeException("Невозможно сохранить пользователя");
         }
     }
 
@@ -84,7 +88,9 @@ public class UserDaoImpl implements UserDao {
             ps.setInt(5, user.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant update user " + user.getId());
+            LOG.error("UserDao, update: cant update user. SQL error code: " + sqlException.getErrorCode());
+            LOG.error("User info: " + user);
+            throw new DaoRuntimeException("Невозможно обновить пользователя");
         }
     }
 
@@ -97,6 +103,8 @@ public class UserDaoImpl implements UserDao {
             rs.next();
             return extractUser(rs);
         } catch (SQLException sqlException) {
+            LOG.warn("UserDao, getByPhone: no user was found with email " +
+                    email + ". SQL error code: " + sqlException.getErrorCode());
             return null;
         }
     }
@@ -110,6 +118,8 @@ public class UserDaoImpl implements UserDao {
             rs.next();
             return extractUser(rs);
         } catch (SQLException sqlException) {
+            LOG.warn("UserDao, getByPhone: no user was found with phone " +
+                    phone + ". SQL error code: " + sqlException.getErrorCode());
             return null;
         }
     }

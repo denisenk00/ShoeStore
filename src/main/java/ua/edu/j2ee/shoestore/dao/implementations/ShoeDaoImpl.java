@@ -37,7 +37,8 @@ public class ShoeDaoImpl implements ShoeDao {
             }
             return shoes;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get shoes");
+            LOG.error("ShoeDao, getAll: cant get shoes. SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить всю обувь");
         }
     }
 
@@ -51,7 +52,8 @@ public class ShoeDaoImpl implements ShoeDao {
             resultSet.next();
             return extractShoe(resultSet);
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get shoe " + id);
+            LOG.error("ShoeDao, get" + id + ": cant get shoes. SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить обувь " + id);
         }
     }
 
@@ -66,7 +68,9 @@ public class ShoeDaoImpl implements ShoeDao {
             ps.setString(3, shoe.getStatus());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant save shoe");
+            LOG.error("ShoeDao, save: cant save shoe. SQL error code: " + sqlException.getErrorCode());
+            LOG.error("Shoe info: " + shoe);
+            throw new DaoRuntimeException("Невозможно сохранить обувь");
         }
     }
 
@@ -79,7 +83,9 @@ public class ShoeDaoImpl implements ShoeDao {
             ps.setInt(2, shoe.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant update shoe " + shoe.getId());
+            LOG.error("ShoeDao, update: cant update shoe. SQL error code: " + sqlException.getErrorCode());
+            LOG.error("Shoe info: " + shoe);
+            throw new DaoRuntimeException("Невозможно обновить обувь ");
         }
     }
 
@@ -97,7 +103,9 @@ public class ShoeDaoImpl implements ShoeDao {
             }
             return shoes;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get shoes");
+            LOG.error("ShoeDao, getAllByModel: cant get shoes by model " + modelId +
+                    ". SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить всю обувь по модели " + modelId);
         }
     }
 
@@ -112,7 +120,9 @@ public class ShoeDaoImpl implements ShoeDao {
             resultSet.next();
             return extractShoe(resultSet);
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get shoe of model " + modelId + " and of size " + size);
+            LOG.error("ShoeDao, getAnyExistingByParams: cant get shoe by model "+ modelId + " and size" + size +
+                    ". SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить обувь по модели " + modelId + " и размеру" + size);
         }
     }
 
@@ -121,7 +131,6 @@ public class ShoeDaoImpl implements ShoeDao {
         int modelId = resultSet.getInt("modelid");
         int size = resultSet.getInt("size");
         String status = resultSet.getString("status");
-
         return new Shoe(id, modelId, size, status);
     }
 }

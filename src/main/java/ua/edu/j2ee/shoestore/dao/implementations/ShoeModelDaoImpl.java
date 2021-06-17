@@ -19,7 +19,7 @@ import java.util.Set;
 @Repository
 public class ShoeModelDaoImpl implements ShoeModelDao {
 
-    private static final Logger LOG = Logger.getLogger(ShoeDaoImpl.class);
+    private static final Logger LOG = Logger.getLogger(ShoeModelDaoImpl.class);
     private DataSource dataSource;
 
     @Autowired
@@ -39,7 +39,8 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             }
             return models;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get shoe models");
+            LOG.error("ShoeModelDao, getAll: cant get models. SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить все модели");
         }
     }
 
@@ -52,7 +53,8 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             rs.next();
             return extractShoeModel(rs);
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get shoe models");
+            LOG.error("ShoeModelDao, get: cant get model " + id + ". SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить модель" + id);
         }
     }
 
@@ -72,7 +74,9 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             ps.setInt(8, model.getSupplierId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant save shoe model");
+            LOG.error("ShoeModelDao, save: cant save mode. SQL error code: " + sqlException.getErrorCode());
+            LOG.error("Model info: " + model);
+            throw new DaoRuntimeException("Невозможно сохранить модель");
         }
     }
 
@@ -85,7 +89,9 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             ps.setInt(2, model.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant update shoe model");
+            LOG.error("ShoeModelDao, update: cant update model. SQL error code: " + sqlException.getErrorCode());
+            LOG.error("Model info: " + model);
+            throw new DaoRuntimeException("Невозможно обновить обувь");
         }
     }
 
@@ -117,7 +123,9 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             }
             return models;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get shoe models");
+            LOG.error("ShoeModelDao, getAllByStatus: cant get all models by status " + status +
+                    ". SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Cant get shoe models");
         }
     }
 
@@ -133,7 +141,9 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             }
             return brands;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get existing brands");
+            LOG.error("ShoeModelDao, getExistingBrands: cant get brands. SQL error code: " +
+                    sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить бренды в наличии");
         }
     }
 
@@ -146,7 +156,9 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             return extractPrice(rs);
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-            throw new RuntimeException("Cant get minimal price");
+            LOG.error("ShoeModelDao, getExistingMinPrice: cant get min price. SQL error code: " +
+                    sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить минимальную цену");
         }
     }
 
@@ -158,7 +170,9 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             rs.next();
             return extractPrice(rs);
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get max price");
+            LOG.error("ShoeModelDao, getExistingMaxPrice: cant get max price. SQL error code: " +
+                    sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить максимальную цену");
         }
     }
 
@@ -174,7 +188,9 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             }
             return types;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get existing types");
+            LOG.error("ShoeModelDao, getExistingTypes: cant get types. SQL error code: " +
+                    sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить типы обуви");
         }
     }
 
@@ -190,7 +206,9 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             }
             return colors;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get existing colors");
+            LOG.error("ShoeModelDao, getExistingColors: cant get colors. SQL error code: " +
+                    sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить цвета");
         }
     }
 
@@ -206,7 +224,9 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             }
             return sizes;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get existing sizes");
+            LOG.error("ShoeModelDao, getExistingSizes: cant get sizes. SQL error code: " +
+                    sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить размеры");
         }
     }
 
@@ -224,7 +244,9 @@ public class ShoeModelDaoImpl implements ShoeModelDao {
             }
             return sizes;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get existing sizes for model " + id);
+            LOG.error("ShoeModelDao, getExistingSizesByModelId: cant get sizes by model " +
+                    id + ". SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить размеры для обуви по модели");
         }
     }
 
