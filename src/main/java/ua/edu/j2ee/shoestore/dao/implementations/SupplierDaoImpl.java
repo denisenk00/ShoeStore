@@ -1,9 +1,9 @@
-package ua.edu.j2ee.shoestore.dao;
+package ua.edu.j2ee.shoestore.dao.implementations;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import ua.edu.j2ee.shoestore.dao.interfaces.Dao;
 import ua.edu.j2ee.shoestore.model.Supplier;
 
 import javax.sql.DataSource;

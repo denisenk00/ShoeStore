@@ -2,8 +2,8 @@ package ua.edu.j2ee.shoestore.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.edu.j2ee.shoestore.dao.ShoeDao;
-import ua.edu.j2ee.shoestore.dao.ShoeModelDao;
+import ua.edu.j2ee.shoestore.dao.interfaces.ShoeDao;
+import ua.edu.j2ee.shoestore.dao.interfaces.ShoeModelDao;
 import ua.edu.j2ee.shoestore.model.ShoeModel;
 
 import java.util.List;

@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ua.edu.j2ee.shoestore.dao.UserDao;
+import ua.edu.j2ee.shoestore.dao.interfaces.UserDao;
 import ua.edu.j2ee.shoestore.model.User;
 
 import java.util.ArrayList;

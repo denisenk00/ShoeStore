@@ -1,4 +1,4 @@
-package ua.edu.j2ee.shoestore.dao;
+package ua.edu.j2ee.shoestore.dao.interfaces;
 
 import java.util.List;
 import java.util.Optional;
