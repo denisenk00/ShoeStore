@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.edu.j2ee.shoestore.dao.interfaces.OrderDao;
+import ua.edu.j2ee.shoestore.exceptions.DaoRuntimeException;
 import ua.edu.j2ee.shoestore.model.Order;
 
 import javax.sql.DataSource;
@@ -37,8 +38,8 @@ public class OrderDaoImpl implements OrderDao {
 
             return orders;
         } catch (SQLException sqlException) {
-            //LOG.error("getAll: SQL exception ");
-            throw new RuntimeException("Cant get all orders");
+            LOG.error("OrderDao, getAll: cant get orders. SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно достать все заказы");
         }
     }
 
@@ -51,7 +52,8 @@ public class OrderDaoImpl implements OrderDao {
             rs.next();
             return extractOrder(connection, rs);
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get order with ID " + id);
+            LOG.error("OrderDao, get " + id + ": cant get order. SQL error code: " + sqlException.getErrorCode());
+            throw new DaoRuntimeException("Невозможно получить заказ #" + id);
         }
     }
 
@@ -74,7 +76,9 @@ public class OrderDaoImpl implements OrderDao {
                 ps.executeUpdate();
             }
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant save order " + order.getId());
+            LOG.error("OrderDao, save: cant save order. SQL error code: " + sqlException.getErrorCode());
+            LOG.error("Order info: " + order);
+            throw new DaoRuntimeException("Невозможно сохранить заказ");
         }
     }
 
@@ -97,7 +101,10 @@ public class OrderDaoImpl implements OrderDao {
 
             return orders;
         } catch (SQLException sqlException) {
-            throw new RuntimeException("Cant get order history for user " + id);
+            LOG.error("OrderDao, getOrdersByUser: cant get orders by user. SQL error code: " +
+                    sqlException.getErrorCode());
+            LOG.error("User id: " + id);
+            throw new DaoRuntimeException("Невозможно получить историю заказов");
         }
     }
 
