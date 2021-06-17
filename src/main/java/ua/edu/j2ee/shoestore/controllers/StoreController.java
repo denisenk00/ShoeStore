@@ -100,8 +100,8 @@ public class StoreController {
                                 @RequestParam("colors") Set<String> colors,
                                 @RequestParam("sizes") Set<Integer> sizes,
                                 @RequestParam("genders") Set<String> genders,
-                                @RequestParam("minPrice") double minPrice,
-                                @RequestParam("maxPrice") double maxPrice){
+                                @RequestParam(value = "minPrice", required = false) double minPrice,
+                                @RequestParam(value = "maxPrice", required = false) double maxPrice){
         user.getProductCart().updateFilters(brands, types, seasons, colors, genders, sizes, maxPrice, minPrice);
         return ResponseEntity.ok().body("{\"msg\":\"success\"}");
     }
@@ -109,8 +109,9 @@ public class StoreController {
     @GetMapping("/users/removeFilters")
     public String removeFiltersAndGo(@AuthenticationPrincipal User user, @RequestParam(name = "goTo") String location){
         user.setProductCart(new ProductCart());
-        if(location.equals("mainPage")) return "redirect:/store/models";
+        if(location.equals("store")) return "redirect:/store/models";
         if(location.equals("adminPanel")) return "redirect:/admin/";
+        if(location.equals("profile")) return "redirect:/store/users/profile";
         else return null;
     }
 
@@ -197,7 +198,7 @@ public class StoreController {
     public ResponseEntity getPagination(@AuthenticationPrincipal User user, @RequestParam(name = "page", defaultValue = "1") int page,
                                         @RequestParam(name = "pageLocation") String pageLocation) {
         String status = null;
-        if (pageLocation.equals("/")) status = "IN_STOCK";
+        if (pageLocation.equals("/shoestore/store/models")) status = "IN_STOCK";
         ProductCart userProductCart = user.getProductCart();
         List<ShoeModel> allModels = modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
                 userProductCart.getWishedMinPrice(),

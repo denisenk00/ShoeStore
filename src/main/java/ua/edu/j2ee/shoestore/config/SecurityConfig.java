@@ -51,6 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/authorization/login?error=true")
                 .usernameParameter("userName")
                 .passwordParameter("password")
-                .and().logout().logoutUrl("/authorization/logout").logoutSuccessUrl("/authorization/login");
+                .and().logout().logoutUrl("/authorization/logout").logoutSuccessUrl("/authorization/registration");
     }
 }

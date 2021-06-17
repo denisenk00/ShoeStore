@@ -9,16 +9,30 @@
 <html>
     <head>
         <title>ShoeStore - admin panel</title>
+        <style>
+            #main-part{
+                margin-left: 10%;
+            }
+            h2{
+                margin-bottom: 30px;
+            }
+            li {
+                list-style-type: none;
+                margin-bottom: 20px;
+            }
+        </style>
     </head>
     <body>
         <jsp:include page="headerForAdminPanel.jsp" />
-        <h2>Админ панель</h2>
-        <div id="options">
-            <ul>
-                <li><a href="/shoestore/admin/allModels">Управление продукцией</a></li>
-                <li><a href="/shoestore/admin/allSuppliers">Управление поставщиками</a></li>
-                <li><a href="/shoestore/admin/allUsers">Управление пользователями</a></li>
-            </ul>
+        <div id="main-part">
+            <h2>Админ панель</h2>
+            <div id="options">
+                <ul>
+                    <li><form method="get" action="/shoestore/admin/models"> <button>Управление продукцией</button></form></li>
+                    <li><form method="get" action="/shoestore/admin/suppliers"> <button>Управление поставщиками</button></form></li>
+                    <li><form method="get" action="/shoestore/admin/users"> <button>Управление пользователями</button></form></li>
+                </ul>
+            </div>
         </div>
     </body>
 </html>

@@ -2,13 +2,22 @@ body{
     width: auto;
 }
 
-#mainpart{
-    float: right;
-    width: 90%;
+#main-part{
+    margin-left: 10%;
+    width: 60%;
+}
+
+h2{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#description table tr{
+    height: 20px;
 }
 
 #addToBasket{
-    margin-top: 30px;
     height: 30px;
 }
 

@@ -1,28 +1,29 @@
 <%--
   Created by IntelliJ IDEA.
-  User: denisenk00
-  Date: 09.05.2021
-  Time: 12:08
+  User: Admin
+  Date: 11.06.2021
+  Time: 15:43
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <head>
-        <title>ShoeStore</title>
+        <title>ShoeStore - product management</title>
         <style>
-            <%@include file='../css/mainPage.css' %>
+            <%@include file='../css/modelsPage.css' %>
         </style>
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script>
-            <%@include file='../js/checkBoxSelectList.js' %>
-            <%@include file='../js/mainPageUI.js' %>
+            <%@include file='../js/checkBoxSelectList.js'%>
+            <%@include file='../js/adminModelsPage.js' %>
             <%@include file='../js/ajaxRequests.js'%>
+            <%@include file='../js/updateModelsOnPage.js'%>
         </script>
     </head>
     <body>
-        <input id="page-name" type="hidden" value="mainPage">
-        <jsp:include page="header.jsp" />
+        <input id="page-name" type="hidden" value="adminModelsPage">
+        <jsp:include page="headerForAdminPanel.jsp" />
         <div class="filters">
             <h3>Сезон</h3>
             <div class="checkselect">
@@ -77,19 +78,6 @@
                     </c:choose>
                 </c:forEach>
             </div>
-            <h3>Размер</h3>
-            <div class="checkselect">
-                <c:forEach var="size" items="${allSizes}">
-                    <c:choose>
-                        <c:when test="${wishedSizes.contains(size)}">
-                            <label><input class="size" type="checkbox" value="${size}" checked>${size}</label>
-                        </c:when>
-                        <c:otherwise>
-                            <label><input class="size" type="checkbox" value="${size}">${size}</label>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </div>
             <h3>Цвет</h3>
             <div class="checkselect">
                 <c:forEach var="color" items="${allColors}">
@@ -132,28 +120,33 @@
             </div>
             <h3>Цена</h3>
             <div class="price-area">
+                <label>от</label>
                 <c:choose>
                     <c:when test="${wishedMinPrice != 0}">
-                        <input id="minprice" value="${wishedMinPrice}" type="number" name="minPrice" min="0" placeholder="от">
+                        <input id="min-price" value="${wishedMinPrice}" type="number" name="minPrice" min="0" placeholder="от">
                     </c:when>
                     <c:otherwise>
-                        <input id="minprice" value="${minPrice}" type="number" name="minPrice" min="0" placeholder="от">
+                        <input id="min-price" value="${minPrice}" type="number" name="minPrice" min="0" placeholder="от">
                     </c:otherwise>
                 </c:choose>
+                <br>
+                <label>до</label>
                 <c:choose>
                     <c:when test="${wishedMaxPrice != 0}">
-                        <input id="maxprice" value="${wishedMaxPrice}" type="number" name="maxPrice" min="0" placeholder="до">
+                        <input id="max-price" value="${wishedMaxPrice}" type="number" name="maxPrice" min="0" placeholder="до">
                     </c:when>
                     <c:otherwise>
-                        <input id="maxprice" value="${maxPrice}" type="number" name="maxPrice" min="0" placeholder="до">
+                        <input id="max-price" value="${maxPrice}" type="number" name="maxPrice" min="0" placeholder="до">
                     </c:otherwise>
                 </c:choose>
             </div>
-            <button id="filterbutton">Фильтровать</button>
+            <button id="filter-button">Фильтровать</button>
         </div>
         <div id="main-part">
-            <h2>Shoes</h2>
-            <br>
+            <h2>Панель управления товаром</h2>
+            <p><a href="/shoestore/admin/">Назад</a></p>
+            <button id="new-model">Новая модель</button>
+            <div id="new-model-form"></div>
             <table>
                 <thead>
                     <tr>
@@ -171,7 +164,7 @@
                         <tr>
                             <td>${model.brand}</td>
                             <td>
-                                <a href="/shoestore/model?id=${model.id}">${model.name}</a>
+                                <a href="/shoestore/admin/models/model?id=${model.id}">${model.name}</a>
                             </td>
                             <td>${model.gender}</td>
                             <td>${model.season}</td>
@@ -182,7 +175,7 @@
                     </c:forEach>
                 </tbody>
             </table>
+            <div id="pagination">${pagination}</div>
         </div>
-        <div id="pagination">${pagination}</div>
     </body>
 </html>

@@ -11,18 +11,19 @@ $(function (){
             event.preventDefault();
             alert("Введены некорректные данные");
         }
-        if(password.toString().length < 6){
+        else if(password.toString().length < 6){
             event.preventDefault();
             alert("Пароль слишком короткий");
         }
-        if(emailIsPresent(email) == true){
+        else if(emailIsPresent(email) == true){
             event.preventDefault();
             alert("Пользователь с таким email уже существует");
         }
-        if(phoneNumberIsPresent(phone) == true){
+        else if(phoneNumberIsPresent(phone) == true){
             event.preventDefault();
             alert("Пользователь с таким номером телефона уже существует");
         }
+
     })
 
 });

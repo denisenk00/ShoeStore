@@ -24,7 +24,7 @@ $(function (){
                     promise.then(changeUserInfo(newName, newSurname, newPhone, newEmail));
                     button.disabled = false;
                 }else {
-                    alert("Некорректные данные");
+                    alert("Введены некорректные данные");
                 }
             })
             function changeUserInfo(name, surname, phone, email){
@@ -37,8 +37,5 @@ $(function (){
                 let userEmail = document.getElementById("user-email");
                 userEmail.innerText = email;
             }
-    })
-    $("#logout").click(function (){
-        logout();
     })
 });

@@ -27,16 +27,18 @@ label {
     text-align: left;
 }
 input{
-    width: 200px;
+    width: 250px;
+    height: 35px;
 }
 
 
 button {
     padding: 10px;
-    margin: 10px;
+    margin: 20px;
+    width: 200px;
 }
 
 #main-part{
-    margin-left: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
+    text-align: center;
 }

@@ -12,6 +12,7 @@ public class StringToSetStrConverter implements Converter<String, Set<String>> {
 
     @Override
     public Set<String> convert(String s) {
+        if(s.isEmpty()) return new HashSet<>();
         String[] values = s.split(" ");
         return new HashSet<>(Arrays.asList(values));
     }

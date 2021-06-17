@@ -13,15 +13,19 @@
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script>
             <%@include file='../js/ajaxRequests.js'%>
-            <%@include file="../js/usersPage.js"%>
+            <%@include file="../js/adminUsersPage.js"%>
         </script>
+        <style>
+            <%@include file='../css/adminUsersPage.css'%>
+        </style>
     </head>
     <body>
         <jsp:include page="headerForAdminPanel.jsp" />
-        <p><a href="/shoestore/store/adminPanel">Назад</a></p>
-        <h2>Панель управления пользователями</h2>
-        <table>
-            <thead>
+        <div id="main-part">
+            <h2>Панель управления пользователями</h2>
+            <p><a href="/shoestore/admin/">Назад</a></p>
+            <table>
+                <thead>
                 <tr>
                     <td>Имя</td>
                     <td>Фамилия</td>
@@ -29,8 +33,8 @@
                     <td>E-mail</td>
                     <td>Роль</td>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <c:forEach var="user" items="${users}">
                     <tr>
                         <td>${user.name}</td>
@@ -38,7 +42,7 @@
                         <td>${user.phone}</td>
                         <td>${user.email}</td>
                         <td>
-                            <select id="roles-selector">
+                            <select class="roles-selector" name="${user.id}">
                                 <c:choose>
                                     <c:when test="${user.role.equals('USER')}">
                                         <option selected>USER</option>
@@ -52,9 +56,9 @@
                             </select>
                         </td>
                     </tr>
-                    <input type="hidden" id="user-id" value="${user.id}">
                 </c:forEach>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>

@@ -1,7 +1,7 @@
 $(function (){
-    $("#roles-selector").change(function (){
+    $(".roles-selector").change(function (){
         let role = this.value;
-        let userId = $("#user-id").val();
+        let userId = $(this).attr("name");
         updateUser(userId, role);
     })
 })

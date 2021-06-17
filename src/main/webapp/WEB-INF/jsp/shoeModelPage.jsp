@@ -23,44 +23,52 @@
         <jsp:include page="header.jsp" />
         <div id="main-part">
             <h2>${model.brand} ${model.name}</h2>
-            <h3>Описание</h3>
-            <table id="description">
-                <tr>
-                    <td>Название: </td>
-                    <td>${model.name}</td>
-                </tr>
-                <tr>
-                    <td>Бренд: </td>
-                    <td>${model.brand}</td>
-                </tr>
-                <tr>
-                    <td>Тип: </td>
-                    <td>${model.type}</td>
-                </tr>
-                <tr>
-                    <td>Сезон: </td>
-                    <td>${model.season}</td>
-                </tr>
-                <tr>
-                    <td>Цвет: </td>
-                    <td>${model.color}</td>
-                </tr>
-                <tr>
-                    <td>Стать: </td>
-                    <td>${model.gender}</td>
-                </tr>
-                <tr>
-                    <td><p>Доступные размеры:</p></td>
-                    <td>
-                        <select id="size-selector">
-                            <c:forEach var="size" items="${modelSizes}">
-                                <option>${size}</option>
-                            </c:forEach>
-                        </select>
-                    </td>
-                </tr>
-            </table>
+            <div id="description">
+                <table>
+                    <th>
+                        <h3>Описание</h3>
+                    </th>
+                    <tr>
+                        <td>Название: </td>
+                        <td>${model.name}</td>
+                    </tr>
+                    <tr>
+                        <td>Бренд: </td>
+                        <td>${model.brand}</td>
+                    </tr>
+                    <tr>
+                        <td>Тип: </td>
+                        <td>${model.type}</td>
+                    </tr>
+                    <tr>
+                        <td>Сезон: </td>
+                        <td>${model.season}</td>
+                    </tr>
+                    <tr>
+                        <td>Цвет: </td>
+                        <td>${model.color}</td>
+                    </tr>
+                    <tr>
+                        <td>Стать: </td>
+                        <td>${model.gender}</td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr>
+                        <td>
+                            <p>Доступные размеры:</p>
+                        </td>
+                        <td>
+                            <select id="size-selector">
+                                <c:forEach var="size" items="${modelSizes}">
+                                    <option>${size}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <input type="hidden" id="model-id" value="${model.id}">
+            <br>
             <button id="addToBasket">Добавить в корзину</button>
         </div>
     </body>

@@ -78,7 +78,6 @@ public class AdminPanelController {
         modelAndView.setViewName("adminModelsPage");
         modelAndView.addObject("wishedTypes", userProductCart.getWishedTypes());
         modelAndView.addObject("wishedBrands", userProductCart.getWishedBrands());
-        modelAndView.addObject("wishedSizes", userProductCart.getWishedSizes());
         modelAndView.addObject("wishedColors", userProductCart.getWishedColors());
         modelAndView.addObject("wishedMinPrice", userProductCart.getWishedMinPrice());
         modelAndView.addObject("wishedMaxPrice", userProductCart.getWishedMaxPrice());
@@ -86,12 +85,11 @@ public class AdminPanelController {
         modelAndView.addObject("wishedSeasons", userProductCart.getWishedSeasons());
         modelAndView.addObject("allTypes", modelDao.getExistingTypes());
         modelAndView.addObject("allBrands", modelDao.getExistingBrands());
-        modelAndView.addObject("allSizes", modelDao.getExistingSizes());
         modelAndView.addObject("allColors", modelDao.getExistingColors());
         modelAndView.addObject("minPrice", modelDao.getExistingMinPrice());
         modelAndView.addObject("maxPrice", modelDao.getExistingMaxPrice());
         modelAndView.addObject("allShoeModel", paginationService.makeBatchOfItems());
-        modelAndView.addObject("pagination", paginationService.makePagingLinks("admin/models", ""));
+        modelAndView.addObject("pagination", paginationService.makePagingLinks("/shoestore/admin/models", ""));
         return modelAndView;
     }
 
