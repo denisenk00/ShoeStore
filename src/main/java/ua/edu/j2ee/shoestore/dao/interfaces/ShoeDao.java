@@ -1,9 +1,7 @@
-package ua.edu.j2ee.shoestore.dao;
+package ua.edu.j2ee.shoestore.dao.interfaces;
 
 import ua.edu.j2ee.shoestore.model.Shoe;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.List;
 
 public interface ShoeDao extends Dao<Shoe> {

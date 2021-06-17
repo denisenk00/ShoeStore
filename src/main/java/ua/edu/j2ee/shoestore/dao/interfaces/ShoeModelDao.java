@@ -1,4 +1,4 @@
-package ua.edu.j2ee.shoestore.dao;
+package ua.edu.j2ee.shoestore.dao.interfaces;
 
 import ua.edu.j2ee.shoestore.model.ShoeModel;
 
