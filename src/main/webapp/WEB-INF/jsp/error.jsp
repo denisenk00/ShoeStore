@@ -10,11 +10,16 @@
 
 <html>
   <head>
-    <title>ShoeStore - Error Page</title>
+    <title>ShoeStore - error Page</title>
+    <style>
+      body{
+        margin: 5%;
+      }
+    </style>
   </head>
   <body>
     <h1>Упс...</h1>
-    <p>Произошла ошибка!</p>
+    <h3>Произошла ошибка!</h3>
     <p>${message}</p>
   </body>
 </html>
