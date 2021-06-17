@@ -3,9 +3,9 @@ $(function () {
         function setChecked(target) {
             let checked = $(target).find("input[type='checkbox']:checked").length;
             if (checked) {
-                $(target).find('select option:first').html('Выбрано: ' + checked);
+                $(target).find('select option:first').html("Выбрано: " + checked);
             } else {
-                $(target).find('select option:first').html('Выберите из списка');
+                $(target).find('select option:first').html("Выберите из списка");
             }
         }
 
@@ -25,20 +25,20 @@ $(function () {
                 setChecked($(this).parents('.checkselect'));
             });
 
-            this.parent().find('.checkselect-control').on('click', function () {
+            this.parent().find(".checkselect-control").on("click", function () {
                 $popup = $(this).next();
-                $('.checkselect-popup').not($popup).css('display', 'none');
-                if ($popup.is(':hidden')) {
-                    $popup.css('display', 'block');
-                    $(this).find('select').focus();
+                $(".checkselect-popup").not($popup).css("display", "none");
+                if ($popup.is(":hidden")) {
+                    $popup.css("display", "block");
+                    $(this).find("select").focus();
                 } else {
-                    $popup.css('display', 'none');
+                    $popup.css("display", "none");
                 }
             });
 
             $('html, body').on('click', function (e) {
                 if ($(e.target).closest('.checkselect').length == 0) {
-                    $('.checkselect-popup').css('display', 'none');
+                    $(".checkselect-popup").css("display", "none");
                 }
             });
         };

@@ -1,18 +1,18 @@
-function postNewPair(size, modelId, status){
-    let url = "/shoestore/shoe/add"
+function postNewShoe(size, modelId, status){
+    let url = "/shoestore/rest/shoes/add"
     return $.ajax({
         url: url,
         data:{"size":size, "modelId":modelId, "status":status},
         method: "POST",
         dataType: "JSON",
         success:function (){
-            let url = "/shoestore/admin/model?id=".concat(modelId);
+            let url = "/shoestore/admin/models/model?id=".concat(modelId);
             window.location.href = url;
         }
     });
 }
 function updateModel(modelId, newPrice){
-    let url = "/shoestore/updateModel";
+    let url = "/shoestore/rest/models/update";
     return  $.ajax({
         url: url,
         data:{"id":modelId, "price":newPrice},
@@ -21,9 +21,7 @@ function updateModel(modelId, newPrice){
     });
 }
 function updateShoe(shoeId, status){
-    let url = "/shoestore/shoe/update";
-    url = url.concat("id=").concat(shoeId);
-    url = url.concat("&status=").concat(status);
+    let url = "/shoestore/rest/shoes/update";
     return $.ajax({
         url: url,
         data:{"id":shoeId, "status":status},
@@ -33,19 +31,19 @@ function updateShoe(shoeId, status){
 }
 
 function postModel(brand, name, price, type, color, season, gender, supplierId){
-    let url = "/shoestore/addModel";
+    let url = "/shoestore/rest/models/add";
     return $.ajax({
         url: url,
         data:{"name":name, "brand":brand, "price":price, "type":type, "season":season,
             "supplierId":supplierId, "color":color, "gender":gender},
         method: "POST",
         success:function (){
-            window.location.href = "/shoestore/admin/allModels"
+            window.location.href = "/shoestore/admin/models"
         }
     });
 }
 function getSuppliers(){
-    let url = "/shoestore/getAllSuppliers";
+    let url = "/shoestore/rest/suppliers/getAll";
      return $.ajax({
          url:url,
          method:"get",
@@ -55,7 +53,7 @@ function getSuppliers(){
 }
 
 function postUserInfo(name, surname, phone, email){
-    let url = "/shoestore/user/edit";
+    let url = "/shoestore/store/users/update";
     return  $.ajax({
         method: "POST",
         url: url,
@@ -63,12 +61,10 @@ function postUserInfo(name, surname, phone, email){
         data: {"name":name, "surname":surname, "phone":phone, "email":email}
     });
 }
-function logout(){
-    return $.ajax("logout");
-}
+
 
 function addToProductCart(modelId, size){
-    let url = "/shoestore/cart/add";
+    let url = "/shoestore/store/users/addToPCart";
     return  $.ajax({
         url:url,
         method:"POST",
@@ -78,12 +74,11 @@ function addToProductCart(modelId, size){
 }
 
 function setFilters(seasons, types, brands, colors,  sizes, genders, minPrice, maxPrice){
-    let url = "/shoestore/store/updateFilters?seasons=";
+    let url = "/shoestore/store/users/updateFilters?seasons=";
     function urlBuilder(currentValue, index, arr){
         url = url.concat(encodeURIComponent(currentValue));
         if(index != arr.length-1) url = url.concat("+");
     }
-
     seasons.forEach(urlBuilder);
     url = url.concat("&types=");
     types.forEach(urlBuilder);
@@ -92,7 +87,9 @@ function setFilters(seasons, types, brands, colors,  sizes, genders, minPrice, m
     url = url.concat("&colors=");
     colors.forEach(urlBuilder);
     url = url.concat("&sizes=");
-    sizes.forEach(urlBuilder);
+    if(sizes != null) {
+        sizes.forEach(urlBuilder);
+    }
     url = url.concat("&genders=");
     genders.forEach(urlBuilder);
     url = url.concat("&minPrice=").concat(minPrice);
@@ -103,11 +100,11 @@ function setFilters(seasons, types, brands, colors,  sizes, genders, minPrice, m
         dataType: "JSON"
     });
 }
-function getModels(currentPage, pageName){
-    let url = "/shoestore/store/getModelsByFilter";
+function getModels(currentPage, status){
+    let url = "/shoestore/store/models/getModelsByFilter";
     let data = {"page":currentPage}
-    if(pageName == "mainPage"){
-        data = {"page":currentPage, "status":"IN_STOCK"}
+    if(status != null){
+        data = {"page":currentPage, "status":status}
     }
     return $.ajax({
         url:url,
@@ -119,11 +116,11 @@ function getModels(currentPage, pageName){
     });
 }
 
-function getPagination(currentPage, pageLocation, pageName){
-    let url = "/shoestore/store/getPaginationByFilter";
+function getPagination(currentPage, pageLocation, status){
+    let url = "/shoestore/store/models/getPaginationByFilter";
     let data = {"page":currentPage, "pageLocation":pageLocation};
-    if(pageName == "mainPage"){
-        data = {"page":currentPage,"pageLocation":pageLocation, "status":"IN_STOCK"};
+    if(status != null){
+        data = {"page":currentPage,"pageLocation":pageLocation, "status":status};
     }
     return $.ajax({
         url:url,
@@ -134,7 +131,7 @@ function getPagination(currentPage, pageLocation, pageName){
 }
 
 function postNewSupplier(company, city, country, address, phone, postalCode){
-    var url = "/shoestore/addSupplier";
+    let url = "/shoestore/rest/suppliers/add";
     return  $.ajax({
         url:url,
         data: {"company":company, "city":city, "country":country,
@@ -144,10 +141,23 @@ function postNewSupplier(company, city, country, address, phone, postalCode){
 }
 
 function updateUser(userId, role){
-    var url = "/shoestore/user/changeRole";
+    let url = "/shoestore/admin/users/changeRole";
     return $.ajax({
         url:url,
         data: {"id":userId, "role":role},
-        method:"POST"
+        method:"POST",
     })
 }
+
+function updateSupplier(id, company, city, country, address, phone, postalCode){
+    let url = "/shoestore/rest/suppliers/update";
+    return $.ajax({
+        url:url,
+        data: {"id":id, "company":company, "city":city, "country":country, "address":address, "phone":phone, "postalCode":postalCode},
+        method:"POST",
+        success: function (){
+            window.location.href = "/shoestore/admin/suppliers"
+        }
+    })
+}
+

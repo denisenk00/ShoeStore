@@ -12,76 +12,87 @@
         <title>ShoeStore - edit model</title>
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script>
-            <%@include file='../js/editModelPageUI.js'%>
+            <%@include file='../js/editModelPage.js'%>
             <%@include file="../js/ajaxRequests.js"%>
         </script>
+        <style>
+            <%@include file='../css/editModelPage.css' %>
+        </style>
     </head>
     <body>
         <jsp:include page="headerForAdminPanel.jsp" />
-        <p><a href="/shoestore/admin/allModels">Назад</a></p>
         <h2>${model.brand} ${model.name}</h2>
-        <div>
-            <h3>Описание</h3>
-            <table id="description">
-                <tr>
-                    <td>Название: </td>
-                    <td>${model.name}</td>
-                </tr>
-                <tr>
-                    <td>Бренд: </td>
-                    <td>${model.brand}</td>
-                </tr>
-                <tr>
-                    <td>Тип: </td>
-                    <td>${model.type}</td>
-                </tr>
-                <tr>
-                    <td>Сезон: </td>
-                    <td>${model.season}</td>
-                </tr>
-                <tr>
-                    <td>Цвет: </td>
-                    <td>${model.color}</td>
-                </tr>
-                <tr>
-                    <td>Стать: </td>
-                    <td>${model.gender}</td>
-                </tr>
-                <tr>
-                    <td>Цена: </td>
-                    <td id="price">${model.price}</td>
-                </tr>
-            </table>
-        </div>
-        <input id="model-id" type="hidden" value="${model.id}">
-        <input id="new-price" type="text" placeholder="Новая цена">
-        <button id="update-price">Изменить цену</button>
-        <div id="new-pair-form">
-            <input id="new-pair-size" type="number" placeholder="Размер">
-            <select id="new-pair-size-selector">
-                <c:forEach var="status" items="${statuses}">
-                    <option>${status}</option>
-                </c:forEach>
-            </select>
-        </div>
-        <button id="add-shoe">Добавить пару</button>
-
-        <div id="shoes">
-            <table>
-                <thead>
+        <div id="main-part">
+            <p><a href="/shoestore/admin/models/">Назад</a></p>
+            <div id="description">
+                <table>
+                    <th>
+                        <h3>Описание</h3>
+                    </th>
+                    <tr>
+                        <td>Название: </td>
+                        <td>${model.name}</td>
+                    </tr>
+                    <tr>
+                        <td>Бренд: </td>
+                        <td>${model.brand}</td>
+                    </tr>
+                    <tr>
+                        <td>Тип: </td>
+                        <td>${model.type}</td>
+                    </tr>
+                    <tr>
+                        <td>Сезон: </td>
+                        <td>${model.season}</td>
+                    </tr>
+                    <tr>
+                        <td>Цвет: </td>
+                        <td>${model.color}</td>
+                    </tr>
+                    <tr>
+                        <td>Стать: </td>
+                        <td>${model.gender}</td>
+                    </tr>
+                    <tr>
+                        <td>Цена: </td>
+                        <td id="price">${model.price}</td>
+                    </tr>
+                </table>
+            </div>
+            <input id="model-id" type="hidden" value="${model.id}">
+            <br>
+            <h3>Изменить цену</h3>
+            <input id="new-price" type="text" placeholder="Новая цена">
+            <button id="update-price">Изменить</button>
+            <br>
+            <div id="new-pair-form">
+                <h3>Добавить пару обуви этой модели</h3>
+                <input id="new-pair-size" type="number" placeholder="Размер">
+                <select id="new-pair-size-selector">
+                    <c:forEach var="status" items="${statuses}">
+                        <option>${status}</option>
+                    </c:forEach>
+                </select>
+                <br><br>
+                <button id="add-shoe">Добавить пару</button>
+            </div>
+            <div id="shoes">
+                <h3>Изменить статус пары обуви этой модели</h3>
+                <table>
+                    <thead>
                     <tr>
                         <td>id</td>
                         <td>size</td>
                         <td>status</td>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     <c:forEach var="shoe" items="${shoes}">
                         <tr>
-                            <td id="shoe-id">${shoe.id}</td>
+                            <td class="shoe-id">${shoe.id}</td>
                             <td>${shoe.size}</td>
                             <td>
-                                <select id="status-selector">
+                                <select class="status-selector" name="${shoe.id}">
                                     <c:forEach var="status" items="${statuses}">
                                         <c:choose>
                                             <c:when test="${status.equals(shoe.status)}">
@@ -96,8 +107,9 @@
                             </td>
                         </tr>
                     </c:forEach>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </body>
 </html>

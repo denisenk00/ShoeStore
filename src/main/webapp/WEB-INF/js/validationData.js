@@ -8,8 +8,8 @@ function checkPhoneNumber(number) {
 function checkEmail(email){
     return email.match(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/) != null;
 }
-function phoneNumberIsPresent(number) {
-    let url = "registration/checkPhoneNumber?number=".concat(number);
+function phoneNumberIsPresent(phone) {
+    let url = "/shoestore/service/checkPhoneForExistence?phone=".concat(phone);
     let bool = false;
     $.ajax({
         url:url,
@@ -24,7 +24,7 @@ function phoneNumberIsPresent(number) {
     return bool;
 }
 function emailIsPresent(email){
-    let url = "registration/checkEmail?email=".concat(email);
+    let url = "/shoestore/service/checkEmailForExistence?email=".concat(email);
     let bool = false;
     $.ajax({
         url:url,

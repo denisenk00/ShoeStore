@@ -14,11 +14,11 @@
     </head>
     <body>
         <header>
-            <h1 id="logo"><a href="/shoestore/store/">ShoeStore</a></h1>
+            <h1 id="logo"><a href="/shoestore/store/models/">ShoeStore</a></h1>
             <nav class="nav-panel">
                 <ul>
-                    <li><a href="/shoestore/store/profile">Профиль</a></li>
-                    <li><a href="/shoestore/store/basket">Корзина</a></li>
+                    <li><a href="/shoestore/store/users/profile">Профиль</a></li>
+                    <li><a href="/shoestore/store/users/productCart">Корзина</a></li>
                 </ul>
             </nav>
         </header>

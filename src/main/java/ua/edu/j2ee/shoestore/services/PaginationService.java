@@ -56,7 +56,7 @@ public class PaginationService {
         }
         List batchOfItems = new LinkedList();
         int beginIndex = itemsPerPage * (currentPageNumber - 1);
-        for(int i = beginIndex; i < beginIndex + itemsPerPage || i < items.size(); i++){
+        for(int i = beginIndex; i < beginIndex + itemsPerPage && i < items.size(); i++){
             batchOfItems.add(items.get(i));
         }
         return batchOfItems;

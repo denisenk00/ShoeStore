@@ -91,7 +91,7 @@ body{
 .filters{
     float: left;
     width: 18%;
-    margin-left: 20px;
+    margin-left: 30px;
     margin-top: 20px;
     margin-right: 20px;
 }
@@ -99,17 +99,23 @@ body{
 .price-area input{
     height: 30px;
 }
-#maxprice{
+#max-price{
     margin-top: 20px;
     margin-bottom: 30px;
 }
-#mainpart{
+#main-part{
     float: right;
-    width: 75%;
+    width: 78%;
 }
 
-#mainpart table{
-    width: 100%;
+h2{
+    text-align: center;
+}
+
+#main-part table{
+    margin-top: 30px;
+    margin-right: 40px;
+    width: 90%;
     text-align: center;
     border-bottom: 2px solid #dfdfdf;
     border-radius: 6px;
@@ -120,6 +126,9 @@ table thead tr {
     color: #ffffff;
     font-weight: bold;
     background: gray;
+}
+tr{
+    height: 25px;
 }
 table tbody tr td{
     border-right: 1px solid #dfdfdf;
@@ -139,17 +148,17 @@ table tbody tr:nth-child(2n) {
     background: #e6e6e6;
 }
 
-#filterbutton{
+#filter-button{
     width: 100px;
     margin-bottom: 100px;
     height: 25px;
 }
 
 #pagination{
-    float: left;
+    text-align: center;
     margin-top: 40px;
-    margin-left: 50%;
     margin-bottom: 40px;
 }
+
 
 

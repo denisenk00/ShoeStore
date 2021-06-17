@@ -12,19 +12,23 @@
         <title>ShoeStore - suppliers</title>
         <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
         <script>
-            <%@include file='../js/suppliersPageUI.js'%>
+            <%@include file='../js/adminSuppliersPage.js'%>
             <%@include file='../js/ajaxRequests.js'%>
             <%@include file='../js/validationData.js'%>
         </script>
+        <style>
+            <%@include file='../css/adminSuppliersPage.css'%>
+        </style>
     </head>
     <body>
         <jsp:include page="headerForAdminPanel.jsp" />
-        <p><a href="/shoestore/store/adminPanel">Назад</a></p>
-        <h2>Панель управления поставщиками</h2>
-        <button id="new-supplier">Новый поставщик</button>
-        <div id="new-supplier-form"></div>
-        <table id="suppliers-table">
-            <thead>
+        <div id="main-part">
+            <h2>Панель управления поставщиками</h2>
+            <p><a href="/shoestore/admin/">Назад</a></p>
+            <button id="new-supplier">Новый поставщик</button>
+            <div id="new-supplier-form"></div>
+            <table id="suppliers-table">
+                <thead>
                 <tr>
                     <td>Компания</td>
                     <td>Город</td>
@@ -34,8 +38,8 @@
                     <td>Почтовый индекс</td>
                     <td></td>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <c:forEach var="supplier" items="${suppliers}">
                     <tr>
                         <td>${supplier.company}</td>
@@ -45,12 +49,13 @@
                         <td>${supplier.phone}</td>
                         <td>${supplier.postalCode}</td>
                         <td>
-                            <p><a href="/shoestore/updateSupplier?id=${supplier.id}">Изменить</a></p>
+                            <p><a href="/shoestore/admin/suppliers/update?id=${supplier.id}">Изменить</a></p>
                         </td>
                     </tr>
                 </c:forEach>
-            </tbody>
-        </table>
-        <div id="pagination">${pagination}</div>
+                </tbody>
+            </table>
+            <div id="pagination">${pagination}</div>
+        </div>
     </body>
 </html>
