@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.edu.j2ee.shoestore.dao.interfaces.OrderDao;
+import ua.edu.j2ee.shoestore.exceptions.DaoRuntimeException;
 import ua.edu.j2ee.shoestore.model.Order;
 
 import javax.sql.DataSource;
