@@ -1,7 +1,8 @@
 package ua.edu.j2ee.shoestore.model;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
-import java.util.List;
 
+@JacksonXmlRootElement(localName = "shoeModel")
 public class ShoeModel {
 
     private int id;

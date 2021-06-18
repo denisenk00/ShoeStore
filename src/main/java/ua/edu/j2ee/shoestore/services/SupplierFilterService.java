@@ -25,11 +25,11 @@ public class SupplierFilterService {
         List<Supplier> filteredSuppliers;
 
         filteredSuppliers = allSuppliers.stream()
-                .filter(supplier -> (companies.isEmpty() || companies.contains(supplier.getCompany()))
-                        && (cities.isEmpty() || cities.contains(supplier.getCity()))
-                        && (addresses.isEmpty() || addresses.contains(supplier.getAddress()))
-                        && (phones.isEmpty() || phones.contains(supplier.getPhone()))
-                        && (postalCodes.isEmpty() || postalCodes.contains(supplier.getPostalCode())))
+                .filter(supplier -> (companies == null || companies.isEmpty() || companies.contains(supplier.getCompany()))
+                        && (cities == null || cities.isEmpty() || cities.contains(supplier.getCity()))
+                        && (addresses == null || addresses.isEmpty() || addresses.contains(supplier.getAddress()))
+                        && (phones == null || phones.isEmpty() || phones.contains(supplier.getPhone()))
+                        && (postalCodes == null || postalCodes.isEmpty() || postalCodes.contains(supplier.getPostalCode())))
                 .collect(Collectors.toList());
 
         return filteredSuppliers;
