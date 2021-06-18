@@ -58,4 +58,14 @@ public class Shoe {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Shoe{" +
+                "id=" + id +
+                ", modelId=" + modelId +
+                ", size=" + size +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

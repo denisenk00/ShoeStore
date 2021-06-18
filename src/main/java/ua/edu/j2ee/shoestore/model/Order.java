@@ -69,4 +69,15 @@ public class Order {
     public void setShoeIdList(List<Integer> shoeIdList) {
         this.shoeIdList = shoeIdList;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", totalPrice=" + totalPrice +
+                ", orderDate=" + orderDate +
+                ", shoeIdList=" + shoeIdList +
+                '}';
+    }
 }
