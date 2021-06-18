@@ -131,4 +131,18 @@ public class User implements UserDetails {
     public void setProductCart(ProductCart productCart) {
         this.productCart = productCart;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", productCart=" + productCart +
+                '}';
+    }
 }

@@ -93,4 +93,17 @@ public class Supplier {
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
+
+    @Override
+    public String toString() {
+        return "Supplier{" +
+                "id=" + id +
+                ", company='" + company + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                '}';
+    }
 }

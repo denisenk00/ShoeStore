@@ -1,11 +1,13 @@
 package ua.edu.j2ee.shoestore.controllers;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.edu.j2ee.shoestore.dao.implementations.OrderDaoImpl;
 import ua.edu.j2ee.shoestore.dao.interfaces.OrderDao;
 import ua.edu.j2ee.shoestore.dao.interfaces.ShoeDao;
 import ua.edu.j2ee.shoestore.dao.interfaces.ShoeModelDao;
@@ -24,6 +26,8 @@ import java.util.Set;
 @Controller
 @RequestMapping("/store")
 public class StoreController {
+
+    private static final Logger LOG = Logger.getLogger(OrderDaoImpl.class);
 
     private UserDao userDao;
     private OrderDao orderDao;
@@ -48,6 +52,8 @@ public class StoreController {
     public ResponseEntity updateUser(@AuthenticationPrincipal User user, @RequestParam(name = "name") String name,
                                      @RequestParam(name="surname") String surname, @RequestParam(name="phone") String phone,
                                      @RequestParam(name="email") String email){
+        LOG.info("StoreController, updateUser: user " + user.getUsername() + " try to change profile info.\n New info: " +
+                "name = " + name + ", surname = " + surname + ", phone = " + phone + ", email = " + email);
         user.setName(name);
         user.setSurname(surname);
         user.setPhone(phone);
@@ -58,6 +64,7 @@ public class StoreController {
 
     @GetMapping("/users/profile")
     public ModelAndView profilePage(@AuthenticationPrincipal User user){
+        LOG.info("StoreController, profilePage: user " + user.getUsername() + " go to profile page");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("profilePage");
         modelAndView.addObject("user", user);
@@ -69,6 +76,8 @@ public class StoreController {
     @ResponseBody
     public ResponseEntity addProductToCart(@AuthenticationPrincipal User user, @RequestParam(name = "modelId") int modelId,
                                            @RequestParam(name="size") int size){
+        LOG.info("StoreController, addToProductCart: user " + user.getUsername() + " try to add product with parameters modelId = " +
+                modelId  + ", size = " + size + " to his product cart");
         ProductCart userCart = user.getProductCart();
         userCart.addToCart(modelId, size);
         return ResponseEntity.ok().body("{\"msg\":\"success\"}");
@@ -77,6 +86,8 @@ public class StoreController {
     @PostMapping("/users/removeFromPCart")
     public String removeFromProductCart(@AuthenticationPrincipal User user, @RequestParam(name = "modelId") int modelId,
                                         @RequestParam(name="size") int size){
+        LOG.info("StoreController, removeFromProductCart: user " + user.getUsername() + " try to remove product with parameters modelId = " +
+                modelId  + ", size = " + size + " from his product cart");
         ProductCart userCart = user.getProductCart();
         userCart.removeFromCart(modelId, size);
         return "redirect:/store/users/productCart";
@@ -84,6 +95,7 @@ public class StoreController {
 
     @GetMapping("/users/productCart")
     public ModelAndView productCartPage(@AuthenticationPrincipal User user){
+        LOG.info("StoreController, productCartPage: user " + user.getUsername() + " go to product cart page");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("productCartPage");
         modelAndView.addObject("wishedShoes", user.getProductCart().getShoeCart());
@@ -102,6 +114,10 @@ public class StoreController {
                                 @RequestParam("genders") Set<String> genders,
                                 @RequestParam(value = "minPrice", required = false) double minPrice,
                                 @RequestParam(value = "maxPrice", required = false) double maxPrice){
+        LOG.info("StoreController, updateFilters: user " + user.getUsername() + " try to update his filters.\nNew filters: " +
+                "seasons = " + seasons.toString() + ", types = " + types.toString() + "\nbrands = " + brands.toString() +
+                ", colors = " + colors.toString() + "\nsizes = " + sizes.toString() + ", genders = " + genders.toString() +
+                "\nminPrice = " + minPrice + ", maxPrice = " + maxPrice);
         user.getProductCart().updateFilters(brands, types, seasons, colors, genders, sizes, maxPrice, minPrice);
         return ResponseEntity.ok().body("{\"msg\":\"success\"}");
     }
@@ -117,6 +133,7 @@ public class StoreController {
 
     @PostMapping("/orders/create")
     public String createOrder(@AuthenticationPrincipal User user){
+        LOG.info("StoreController, createOrder: user " + user.getUsername() + " try to create new order");
         ProductCart userCart = user.getProductCart();
         orderService.createOrder(user.getId(), userCart);
         userCart.clearCart();
@@ -126,6 +143,7 @@ public class StoreController {
     @GetMapping("/models")
     public ModelAndView mainPage(@RequestParam(name="page", required = false, defaultValue = "1") int currentPage,
                                  @AuthenticationPrincipal User user){
+        LOG.info("StoreController, mainPage: user " + user.getUsername() + " go to main page");
         ProductCart userProductCart = user.getProductCart();
         List<ShoeModel> models = modelFilterService.getModelsByFilters(userProductCart.getWishedBrands(),
                 userProductCart.getWishedMinPrice(),
@@ -159,7 +177,8 @@ public class StoreController {
     }
 
     @GetMapping("/models/model")
-    public ModelAndView modelPage(@RequestParam(name="id") int id){
+    public ModelAndView modelPage(@RequestParam(name="id") int id, @AuthenticationPrincipal User user){
+        LOG.info("StoreController, modelPage: user " + user.getUsername() + " go to model page with modelId = " + id);
         ShoeModel model = modelDao.get(id);
         Set<Integer> sizes = modelDao.getExistingSizesByModelId(id);
         ModelAndView modelAndView = new ModelAndView();
