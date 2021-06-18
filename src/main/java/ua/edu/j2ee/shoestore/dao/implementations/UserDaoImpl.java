@@ -81,12 +81,13 @@ public class UserDaoImpl implements UserDao {
     public void update(User user) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("UPDATE USERS " +
-                    "SET NAME = ?, SURNAME = ?, PHONE = ?, PASSWORD = ? WHERE USERID = ?");
+                    "SET NAME = ?, SURNAME = ?, PHONE = ?, PASSWORD = ?, ROLE = ? WHERE USERID = ?");
             ps.setString(1, user.getName());
             ps.setString(2, user.getSurname());
             ps.setString(3, user.getPhone());
             ps.setString(4, user.getPassword());
-            ps.setInt(5, user.getId());
+            ps.setString(5, user.getRole());
+            ps.setInt(6, user.getId());
             ps.executeUpdate();
         } catch (SQLException sqlException) {
             LOG.error("UserDao, update: cant update user. SQL error code: " + sqlException.getErrorCode());

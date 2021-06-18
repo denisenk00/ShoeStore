@@ -36,12 +36,12 @@ public class ShoeModelFilterService {
 
         filteredModels = allModels.stream()
                 .filter(model -> (maxPrice == 0 || model.getPrice() >= minPrice && model.getPrice() <= maxPrice)
-                        && (wishedBrands.isEmpty() || wishedBrands.contains(model.getBrand()))
-                        && (wishedTypes.isEmpty() || wishedTypes.contains(model.getType()))
-                        && (wishedSeasons.isEmpty() || wishedSeasons.contains(model.getSeason()))
-                        && (wishedColors.isEmpty() || wishedColors.contains(model.getColor()))
-                        && (wishedGenders.isEmpty() || wishedGenders.contains(model.getGender()))
-                        && (wishedSizes.isEmpty() || shoeDao.getAllByModel(model.getId()).stream()
+                        && (wishedBrands == null || wishedBrands.isEmpty() || wishedBrands.contains(model.getBrand()))
+                        && (wishedTypes == null || wishedTypes.isEmpty() || wishedTypes.contains(model.getType()))
+                        && (wishedSeasons == null || wishedSeasons.isEmpty() || wishedSeasons.contains(model.getSeason()))
+                        && (wishedColors == null || wishedColors.isEmpty() || wishedColors.contains(model.getColor()))
+                        && (wishedGenders == null || wishedGenders.isEmpty() || wishedGenders.contains(model.getGender()))
+                        && (wishedSizes == null || wishedSizes.isEmpty() || shoeDao.getAllByModel(model.getId()).stream()
                             .anyMatch(shoe -> wishedSizes.contains(shoe.getSize()))))
                 .collect(Collectors.toList());
 
