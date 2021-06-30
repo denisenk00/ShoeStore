@@ -30,6 +30,7 @@
             <table id="suppliers-table">
                 <thead>
                 <tr>
+                    <td>id</td>
                     <td>Компания</td>
                     <td>Город</td>
                     <td>Страна</td>
@@ -42,6 +43,7 @@
                 <tbody>
                 <c:forEach var="supplier" items="${suppliers}">
                     <tr>
+                        <td>${supplier.id}</td>
                         <td>${supplier.company}</td>
                         <td>${supplier.city}</td>
                         <td>${supplier.country}</td>

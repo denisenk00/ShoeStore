@@ -150,6 +150,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>id</th>
                         <th>Бренд</th>
                         <th>Название</th>
                         <th>Стать</th>
@@ -162,6 +163,7 @@
                 <tbody id="models">
                     <c:forEach var="model" items="${allShoeModel}">
                         <tr>
+                            <td>${model.id}</td>
                             <td>${model.brand}</td>
                             <td>
                                 <a href="/shoestore/admin/models/model?id=${model.id}">${model.name}</a>
